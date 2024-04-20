@@ -1,0 +1,26 @@
+/* Dashboard.css */
+
+/* ... tus otros estilos ... */
+
+.logout-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #f44336; /* Un color rojo para indicar acción de cierre de sesión */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .logout-button:hover {
+    background-color: #d32f2f; /* Un tono más oscuro para el efecto hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .logout-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.5);
+  }
+  

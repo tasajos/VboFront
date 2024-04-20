@@ -42,4 +42,19 @@
   .submit-btn:hover {
     background-color: #1e88e5;  /* Un tono más oscuro para el hover */
   }
+  .reset-btn {
+    background: none;
+    border: none;
+    color: #069;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
   
+  .reset-btn:hover {
+    text-decoration: underline;
+  }
+  .error-message {
+    color: #f44336;
+    margin-bottom: 10px;
+  }
