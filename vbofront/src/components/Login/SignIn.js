@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
-import { auth } from '../../firebase';  
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import './SignUp.css';  // Asegúrate de crear este archivo de estilos CSS
+import { auth } from '../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import './SignIn.css';  
 
-function SignUp() {
+function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = async () => {
+  const handleSignIn = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Usuario registrado');
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('Inicio de sesión exitoso');
     } catch (error) {
-      console.error('Error al registrar el usuario', error);
+      console.error('Error en el inicio de sesión', error);
     }
   };
 
   return (
-    <div className="signup-container">
-      <img src="path/to/your/logo.png" alt="Logo de la Empresa" className="logo" />
+    <div className="signin-container">
+     <img src="/img/chlogotrans.png" alt="chakuy" className="logo" />
+        <h2>INICIAR SESION</h2>
+
       <div className="form-container">
         <input
           type="email"
@@ -34,10 +36,10 @@ function SignUp() {
           placeholder="Contraseña"
           className="input-field"
         />
-        <button onClick={handleSignUp} className="submit-btn">Registrar</button>
+        <button onClick={handleSignIn} className="submit-btn">Iniciar sesión</button>
       </div>
     </div>
   );
 }
 
-export default SignUp;
+export default SignIn;
