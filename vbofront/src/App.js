@@ -6,6 +6,7 @@ import './App.css';
 import SignUp from './components/Auth/SignUp';
 import SignIn from './components/Login/SignIn';
 import Dashboard from './components/Portal/Dashboard';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
