@@ -6,6 +6,8 @@ import NavBar from '../../NavBar/navbar';
 function TablaEmergencias() {
   const [emergencias, setEmergencias] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [ordenColumna, setOrdenColumna] = useState('');
+  const [ordenDireccion, setOrdenDireccion] = useState('asc');
 
   useEffect(() => {
     const db = getDatabase();
@@ -13,32 +15,48 @@ function TablaEmergencias() {
 
     const onEmergenciasChange = (snapshot) => {
       const emergenciasRaw = snapshot.val();
-      const emergenciasList = emergenciasRaw ? Object.values(emergenciasRaw) : [];
+      // Filtra solo los estados activos al recibir los datos
+      const emergenciasList = emergenciasRaw 
+        ? Object.values(emergenciasRaw).filter(emergencia => emergencia.estado === 'Activo')
+        : [];
       setEmergencias(emergenciasList);
     };
 
-    // Agrega el listener
     onValue(emergenciasRef, onEmergenciasChange);
 
-    // Retorna una función para desmontar el listener
-    return () => {
-      // Usa el método 'off' del objeto 'emergenciasRef' directamente
-      off(emergenciasRef, 'value', onEmergenciasChange);
-    };
+    return () => off(emergenciasRef, 'value', onEmergenciasChange);
   }, []);
 
+  // Filtra las emergencias antes de cualquier ordenación
   const emergenciasFiltradas = busqueda
-  ? emergencias.filter((emergencia) =>
-      (emergencia.Titulo && emergencia.Titulo.toLowerCase().includes(busqueda.toLowerCase())) ||
-      (emergencia.descripcion && emergencia.descripcion.toLowerCase().includes(busqueda.toLowerCase()))||
-      (emergencia.tipo && emergencia.tipo.toLowerCase().includes(busqueda.toLowerCase()))
-      
-    )
-  : emergencias;
+    ? emergencias.filter((emergencia) =>
+        (emergencia.Titulo && emergencia.Titulo.toLowerCase().includes(busqueda.toLowerCase())) ||
+        (emergencia.descripcion && emergencia.descripcion.toLowerCase().includes(busqueda.toLowerCase())) ||
+        (emergencia.tipo && emergencia.tipo.toLowerCase().includes(busqueda.toLowerCase()))
+      )
+    : emergencias;
+
+  // Ordena las emergencias filtradas
+  const emergenciasOrdenadas = emergenciasFiltradas.sort((a, b) => {
+    const isAsc = ordenDireccion === 'asc';
+    if (a[ordenColumna] < b[ordenColumna]) {
+      return isAsc ? -1 : 1;
+    }
+    if (a[ordenColumna] > b[ordenColumna]) {
+      return isAsc ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const handleOrdenar = (columna) => {
+    const nuevaDireccion = ordenColumna === columna && ordenDireccion === 'asc' ? 'desc' : 'asc';
+    setOrdenColumna(columna);
+    setOrdenDireccion(nuevaDireccion);
+  };
 
   return (
     <div className="tabla-container">
-         <NavBar />
+      <NavBar />
       <input
         type="text"
         placeholder="Buscar emergencias..."
@@ -49,31 +67,28 @@ function TablaEmergencias() {
       <table className="emergencias-table">
         <thead>
           <tr>
-            <th>Título</th>
-            <th>Ciudad</th>
-            <th>Descripción</th>
-            <th>Tipo</th>
-            <th>Estado</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            
-            {/* Agregar más columnas si es necesario */}
+            <th onClick={() => handleOrdenar('Titulo')}>Título</th>
+            <th onClick={() => handleOrdenar('ciudad')}>Ciudad</th>
+            <th onClick={() => handleOrdenar('descripcion')}>Descripción</th>
+            <th onClick={() => handleOrdenar('tipo')}>Tipo</th>
+            <th onClick={() => handleOrdenar('estado')}>Estado</th>
+            <th onClick={() => handleOrdenar('fecha')}>Fecha</th>
+            <th onClick={() => handleOrdenar('hora')}>Hora</th>
           </tr>
         </thead>
         <tbody>
-  {emergenciasFiltradas.map((emergencia) => (
-    <tr key={emergencia.id}>
-      <td>{emergencia.Titulo || 'No especificado'}</td>
-      <td>{emergencia.ciudad || 'No especificado'}</td>
-      <td>{emergencia.descripcion || 'No especificado'}</td>
-      <td>{emergencia.tipo || 'No especificado'}</td>
-      <td>{emergencia.estado || 'No especificado'}</td>
-      <td>{emergencia.fecha || 'No especificado'}</td>
-      <td>{emergencia.hora || 'No especificado'}</td>
-      {/* Agregar más celdas si es necesario */}
-    </tr>
-  ))}
-</tbody>
+          {emergenciasOrdenadas.map((emergencia) => (
+            <tr key={emergencia.id}>
+              <td>{emergencia.Titulo || 'No especificado'}</td>
+              <td>{emergencia.ciudad || 'No especificado'}</td>
+              <td>{emergencia.descripcion || 'No especificado'}</td>
+              <td>{emergencia.tipo || 'No especificado'}</td>
+              <td>{emergencia.estado || 'No especificado'}</td>
+              <td>{emergencia.fecha || 'No especificado'}</td>
+              <td>{emergencia.hora || 'No especificado'}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
