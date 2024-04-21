@@ -29,7 +29,7 @@ function NavBar({ handleSignOut }) {  // Aceptar handleSignOut como prop
           <Nav.Link as={Link} to="/situacion-actual">Situacion Actual</Nav.Link>
           <NavDropdown title="Emergencias" id="navbarScrollingDropdown">
               <NavDropdown.Item href="/solicitudes">Solicitudes</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">Atenciones</NavDropdown.Item>
+              <NavDropdown.Item href="/AtencionesEmergencias">Atenciones</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">Reporte</NavDropdown.Item>
             </NavDropdown>

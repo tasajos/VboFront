@@ -8,6 +8,7 @@ import SignIn from './components/Login/SignIn';
 import SituacionActual from './components/SituacionActual/Situacion';
 import Dashboard from './components/Portal/Dashboard';
 import Solicitudes from './components/Emergencias/Solicitudes/EmerSol';
+import TablaEmergencias from './components/Emergencias/Atenciones/AtencionesEmergencias';
 import EditarEmergencia from './components/Emergencias/Solicitudes/EditarEmergencia';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/inicio" element={<Dashboard />} />
           <Route path="/solicitudes" element={<Solicitudes />} />
           <Route path="/editar/:id" element={<EditarEmergencia />} />
+          <Route path="/AtencionesEmergencias" element={<TablaEmergencias />} />
         </Routes>
       </div>
     </Router>
