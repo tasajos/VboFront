@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import NavBar from '../../NavBar/navbar';
+import './EditarEmergencia.css';
+
 
 function EditarEmergencia() {
   let { id } = useParams();
@@ -11,6 +13,7 @@ function EditarEmergencia() {
   const [Titulo, setTitulo] = useState('');
   const [ciudad, setCiudad] = useState('');
   const [ubicacion, setUbicacion] = useState('');
+  const [mensaje, setMensaje] = useState('');
 
   useEffect(() => {
     const db = getDatabase();
@@ -47,10 +50,16 @@ function EditarEmergencia() {
       ciudad,
       ubicacion // Ahora esto tiene el formato de URL completo
     };
-    update(ref(db, `ultimasEmergencias/${id}`), updatedData).catch(error => {
+    update(ref(db, `ultimasEmergencias/${id}`), updatedData)
+    .then(() => {
+      setMensaje('¡Emergencia actualizada con éxito!');
+      setTimeout(() => setMensaje(''), 3000); // Limpiar mensaje después de 3 segundos
+    })
+    .catch(error => {
       console.error("Error al actualizar la emergencia:", error);
+      setMensaje('Error al actualizar la emergencia.');
     });
-  };
+};
 
   // La ubicación ya está formateada como una URL de Google Maps
   const googleMapsUrl = ubicacion;
@@ -65,8 +74,10 @@ function EditarEmergencia() {
   }
 
   return (
-    <div>
+    <div className="editar-emergencia">
+    
       <NavBar />
+      <div className="container">
       <h2>Editando Emergencia {id}</h2>
       <div>
         <label htmlFor="Titulo">Título:</label>
@@ -126,9 +137,13 @@ Potosí</option>
        readOnly
      />
 </div>
-<button onClick={actualizarEmergencia}>Actualizar Emergencia</button>
-</div>
-);
+<button className="actualizar-btn" onClick={actualizarEmergencia}>
+          Actualizar Emergencia
+        </button>
+        {mensaje && <div className="mensaje">{mensaje}</div>}
+      </div>
+    </div>
+  );
 }
 
 export default EditarEmergencia;

@@ -1,0 +1,60 @@
+.editar-emergencia .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .editar-emergencia h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .editar-emergencia label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .editar-emergencia input,
+  .editar-emergencia select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .editar-emergencia button.actualizar-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #5cb85c;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .editar-emergencia button.actualizar-btn:hover {
+    background: #4cae4c;
+  }
+  
+  .editar-emergencia .mensaje {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    text-align: center;
+  }
+  
+  .editar-emergencia .mensaje.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+  
