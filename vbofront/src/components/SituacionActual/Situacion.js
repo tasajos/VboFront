@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { GoogleMap, Marker, LoadScriptNext,InfoWindow  } from '@react-google-maps/api';
 import { ref, onValue, off } from 'firebase/database';
 import { database } from '../../firebase'; // Asegúrate de que la ruta es correcta
+import NavBar from '../NavBar/navbar';
 
 const mapContainerStyle = {
-  height: "600px",
+  //height: "100%",
+  height: "800px",
   width: "100%"
 };
 
@@ -64,6 +66,8 @@ const Situacion = () => {
       };
 
   return (
+    <div>
+    <NavBar />
     <LoadScriptNext googleMapsApiKey="AIzaSyBUgMwsBl7aogNEVLOPzCfTBU2qky9e924">
       <GoogleMap mapContainerStyle={mapContainerStyle} center={center}zoom={zoomLevel}>
        {emergencias.map((emergencia) => {
@@ -101,6 +105,7 @@ const Situacion = () => {
         )}
       </GoogleMap>
     </LoadScriptNext>
+    </div>
   );
 };
 export default Situacion;

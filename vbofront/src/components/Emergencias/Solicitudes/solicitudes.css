@@ -1,0 +1,35 @@
+.custom-card {
+    width: 18rem;
+    margin-bottom: 1rem;
+    margin-top: 5%;
+    margin-left: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .custom-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-img-top {
+    height: 200px; /* Altura fija */
+    width: 100%; /* Ancho completo dentro del card */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+    border-top-left-radius: 8px; /* Redondea las esquinas superiores izquierdas */
+    border-top-right-radius: 8px; /* Redondea las esquinas superiores derechas */
+  }
+  
+  .card-body, .list-group-item {
+    text-align: left;
+  }
+  
+  .card-link {
+    color: #007bff; /* Bootstrap primary color */
+    text-decoration: none;
+  }
+  
+  .card-link:hover {
+    text-decoration: underline;
+  }
+  
