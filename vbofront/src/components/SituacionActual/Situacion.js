@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GoogleMap, Marker, LoadScriptNext } from '@react-google-maps/api';
+import { GoogleMap, Marker, LoadScriptNext,InfoWindow  } from '@react-google-maps/api';
 import { ref, onValue, off } from 'firebase/database';
 import { database } from '../../firebase'; // Asegúrate de que la ruta es correcta
 
@@ -19,60 +19,88 @@ const zoomLevel = 6; // Ajusta según sea necesario para lograr el alcance desea
 
 const Situacion = () => {
   const [emergencias, setEmergencias] = useState([]);
+  const [selectedEmergencia, setSelectedEmergencia] = useState(null);
 
   useEffect(() => {
     const emergenciasRef = ref(database, 'ultimasEmergencias');
 
     const onEmergenciasChange = (snapshot) => {
-      const emergenciasRaw = snapshot.val();
-      const emergenciasList = emergenciasRaw ? Object.keys(emergenciasRaw).map((key) => ({
-        id: key,
-        ...emergenciasRaw[key],
-      })) : [];
-      setEmergencias(emergenciasList);
-    };
+        const emergenciasRaw = snapshot.val();
+        console.log('Emergencias Raw:', emergenciasRaw); // Depuración: Imprime los datos brutos
+  
+        const emergenciasFiltradas = emergenciasRaw 
+          ? Object.keys(emergenciasRaw)
+              .filter(key => emergenciasRaw[key].estado === 'Activo')
+              .map(key => ({
+                id: key,
+                ...emergenciasRaw[key],
+              }))
+          : [];
+        
+        console.log('Emergencias Filtradas:', emergenciasFiltradas); // Depuración: Imprime las emergencias filtradas
+        setEmergencias(emergenciasFiltradas);
+      };
+  
+      onValue(emergenciasRef, onEmergenciasChange);
+  
+      return () => {
+        off(emergenciasRef, 'value', onEmergenciasChange);
+      };
+    }, []);
 
-    onValue(emergenciasRef, onEmergenciasChange);
-
-    return () => {
-      off(emergenciasRef, 'value', onEmergenciasChange); // Usar 'off' con los mismos argumentos que 'onValue'
-    };
-  }, []);
-
-  const parseUbicacion = (ubicacionString) => {
-    if (!ubicacionString) {
-      return null;
-    }
-    const parts = ubicacionString.split(',');
-    if (parts.length === 2) {
-      const lat = parseFloat(parts[0]);
-      const lng = parseFloat(parts[1]);
-      if (!isNaN(lat) && !isNaN(lng)) {
-        return { lat, lng };
-      }
-    }
-    return null;
-  };
+    const parseUbicacion = (ubicacionUrl) => {
+        if (ubicacionUrl) {
+          // Extrae las coordenadas de la URL de Google Maps
+          const match = ubicacionUrl.match(/query=([0-9.-]+),([0-9.-]+)/);
+          if (match && match.length >= 3) {
+            const lat = parseFloat(match[1]);
+            const lng = parseFloat(match[2]);
+            if (!isNaN(lat) && !isNaN(lng)) {
+              return { lat, lng };
+            }
+          }
+        }
+        return null;
+      };
 
   return (
     <LoadScriptNext googleMapsApiKey="AIzaSyBUgMwsBl7aogNEVLOPzCfTBU2qky9e924">
       <GoogleMap mapContainerStyle={mapContainerStyle} center={center}zoom={zoomLevel}>
-        {emergencias.map((emergencia) => {
-          if (!emergencia.ubicacion) {
-            return null; // Si no hay ubicación, no renderizar el marcador
+       {emergencias.map((emergencia) => {
+          if (emergencia.estado !== 'Activo') {
+            return null; // Solo procesar emergencias con estado 'Activo'
           }
           const position = parseUbicacion(emergencia.ubicacion);
           return (
             position && (
-              <Marker key={emergencia.id} position={position}>
-                {/* Puedes incluir más información en el Popup si es necesario */}
-              </Marker>
+              <Marker
+                key={emergencia.id}
+                position={position}
+                onClick={() => setSelectedEmergencia(emergencia)}
+              />
             )
           );
         })}
+
+        {selectedEmergencia && (
+          <InfoWindow
+            position={parseUbicacion(selectedEmergencia.ubicacion)}
+            onCloseClick={() => setSelectedEmergencia(null)}
+          >
+            <div>
+              <h2>{selectedEmergencia.Titulo}</h2>
+              <p>{selectedEmergencia.descripcion}</p>
+              <p>Estado: {selectedEmergencia.estado}</p>
+              <p>Fecha: {selectedEmergencia.fecha}</p>
+              <p>Hora: {selectedEmergencia.hora}</p>
+              {selectedEmergencia.imagen && (
+                <img src={selectedEmergencia.imagen} alt={selectedEmergencia.descripcion} style={{ width: "100%", maxHeight: "200px" }} />
+              )}
+            </div>
+          </InfoWindow>
+        )}
       </GoogleMap>
-      </LoadScriptNext>
+    </LoadScriptNext>
   );
 };
-
 export default Situacion;
