@@ -9,7 +9,6 @@ function TablaEmergencias() {
   const [ordenColumna, setOrdenColumna] = useState('');
   const [ordenDireccion, setOrdenDireccion] = useState('asc');
   const [mensaje, setMensaje] = useState('');
-  const [estadoTemp, setEstadoTemp] = useState({}); // Para manejar estados temporales
 
   useEffect(() => {
     const db = getDatabase();
@@ -28,12 +27,7 @@ function TablaEmergencias() {
     return () => off(emergenciasRef, 'value', onEmergenciasChange);
   }, []);
 
-  const handleActualizarEstado = (id) => {
-    if (!id) {
-      console.error("ID de emergencia no definido");
-      return;
-    }
-    const nuevoEstado = estadoTemp[id];
+  const handleActualizarEstado = (id, nuevoEstado) => {
     const db = getDatabase();
     const emergenciaRef = ref(db, `ultimasEmergencias/${id}`);
 
@@ -41,6 +35,7 @@ function TablaEmergencias() {
       .then(() => {
         setMensaje('Estado actualizado correctamente.');
         setTimeout(() => setMensaje(''), 3000);
+        window.location.reload(); // Recargar la página para reflejar los cambios
       })
       .catch(error => {
         console.error("Error al actualizar el estado:", error);
@@ -49,9 +44,18 @@ function TablaEmergencias() {
       });
   };
 
-  const handleEstadoChange = (id, value) => {
-    setEstadoTemp(prev => ({ ...prev, [id]: value }));
+  const handleOrdenar = (columna) => {
+    const nuevaDireccion = ordenColumna === columna && ordenDireccion === 'asc' ? 'desc' : 'asc';
+    setOrdenColumna(columna);
+    setOrdenDireccion(nuevaDireccion);
   };
+
+  const emergenciasFiltradas = emergencias.filter(emergencia =>
+    (emergencia.Titulo && emergencia.Titulo.toLowerCase().includes(busqueda.toLowerCase())) ||
+    (emergencia.ciudad && emergencia.ciudad.toLowerCase().includes(busqueda.toLowerCase())) ||
+    (emergencia.descripcion && emergencia.descripcion.toLowerCase().includes(busqueda.toLowerCase())) ||
+    (emergencia.tipo && emergencia.tipo.toLowerCase().includes(busqueda.toLowerCase()))
+  );
 
   return (
     <div className="tabla-container">
@@ -61,23 +65,23 @@ function TablaEmergencias() {
         type="text"
         placeholder="Buscar emergencias..."
         value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
+        onChange={(e) => setBusqueda(e.target.value.toLowerCase())}
         className="search-input"
       />
       <table className="emergencias-table">
         <thead>
           <tr>
-            <th>Título</th>
-            <th>Ciudad</th>
-            <th>Descripción</th>
-            <th>Tipo</th>
+            <th onClick={() => handleOrdenar('Titulo')}>Título</th>
+            <th onClick={() => handleOrdenar('ciudad')}>Ciudad</th>
+            <th onClick={() => handleOrdenar('descripcion')}>Descripción</th>
+            <th onClick={() => handleOrdenar('tipo')}>Tipo</th>
             <th>Estado</th>
-            <th>Fecha</th>
-            <th>Hora</th>
+            <th onClick={() => handleOrdenar('fecha')}>Fecha</th>
+            <th onClick={() => handleOrdenar('hora')}>Hora</th>
           </tr>
         </thead>
         <tbody>
-          {emergencias.map((emergencia) => (
+          {emergenciasFiltradas.map((emergencia) => (
             <tr key={emergencia.id}>
               <td>{emergencia.Titulo || 'No especificado'}</td>
               <td>{emergencia.ciudad || 'No especificado'}</td>
@@ -85,15 +89,14 @@ function TablaEmergencias() {
               <td>{emergencia.tipo || 'No especificado'}</td>
               <td>
                 <select
-                  value={estadoTemp[emergencia.id] || emergencia.estado}
-                  onChange={(e) => handleEstadoChange(emergencia.id, e.target.value)}
+                  value={emergencia.estado}
+                  onChange={(e) => handleActualizarEstado(emergencia.id, e.target.value)}
                 >
                     <option value="Activo">Activo</option>
                   <option value="Atendido">Atendido</option>
                   <option value="Controlado">Controlado</option>
                   <option value="Vencido">Vencido</option>
                 </select>
-                <button onClick={() => handleActualizarEstado(emergencia.id)}>Actualizar</button>
               </td>
               <td>{emergencia.fecha || 'No especificado'}</td>
               <td>{emergencia.hora || 'No especificado'}</td>
@@ -106,3 +109,4 @@ function TablaEmergencias() {
 }
 
 export default TablaEmergencias;
+
