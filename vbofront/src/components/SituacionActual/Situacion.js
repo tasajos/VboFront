@@ -51,16 +51,19 @@ const Situacion = () => {
     }, []);
 
     const parseUbicacion = (ubicacionUrl) => {
-        if (ubicacionUrl) {
-          // Extrae las coordenadas de la URL de Google Maps
-          const match = ubicacionUrl.match(/query=([0-9.-]+),([0-9.-]+)/);
-          if (match && match.length >= 3) {
+        // Primero, decodificamos la URL
+        const decodedUrl = decodeURIComponent(ubicacionUrl);
+      
+        // Luego, usamos la versión decodificada para extraer las coordenadas
+        const regex = /query=([0-9.-]+),\s*([0-9.-]+)/;
+        const match = regex.exec(decodedUrl);
+        if (match && match.length === 3) {
             const lat = parseFloat(match[1]);
             const lng = parseFloat(match[2]);
             if (!isNaN(lat) && !isNaN(lng)) {
-              return { lat, lng };
+                console.log(`Parsed position: ${lat}, ${lng}`); // Para depuración
+                return { lat, lng };
             }
-          }
         }
         return null;
       };
