@@ -8,6 +8,7 @@ import SignIn from './components/Login/SignIn';
 import SituacionActual from './components/SituacionActual/Situacion';
 import Dashboard from './components/Portal/Dashboard';
 import Solicitudes from './components/Emergencias/Solicitudes/EmerSol';
+import EditarEmergencia from './components/Emergencias/Solicitudes/EditarEmergencia';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
       setCurrentUser(user);
     });
 
-    // Cleanup subscription on unmount
+  
     return () => unsubscribe();
   }, []);
 
@@ -35,11 +36,10 @@ function App() {
           <Route path="/situacion-actual" element={<SituacionActual />} />
           <Route path="/inicio" element={<Dashboard />} />
           <Route path="/solicitudes" element={<Solicitudes />} />
+          <Route path="/editar/:id" element={<EditarEmergencia />} />
         </Routes>
       </div>
     </Router>
   );
 }
-
-
 export default App;

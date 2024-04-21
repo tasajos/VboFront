@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue, off } from 'firebase/database';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { database } from '../../../firebase';
+//import { database } from '../../../firebase';
 import placeholderImage from '../../../imagenes/noimagen.png';
 import NavBar from '../../NavBar/navbar';
+import { Link } from 'react-router-dom';
 import './solicitudes.css';
 
 function Solicitudes() {
@@ -56,8 +57,10 @@ function Solicitudes() {
                 </ListGroup.Item>
               </ListGroup>
               <Card.Body>
-                <Card.Link href="#">Ver más</Card.Link>
-              </Card.Body>
+  <Link to={`/editar/${emergencia.id}`} className="card-link">
+    Ver más
+  </Link>
+</Card.Body>
             </Card>
           ))
         ) : (
