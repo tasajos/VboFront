@@ -5,6 +5,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import './App.css';
 import SignUp from './components/Auth/SignUp';
 import SignIn from './components/Login/SignIn';
+import SituacionActual from './components/SituacionActual/Situacion';
 import Dashboard from './components/Portal/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -30,6 +31,7 @@ function App() {
           />
           <Route path="/signup" element={!currentUser ? <SignUp /> : <Navigate replace to="/" />} />
           <Route path="/signin" element={!currentUser ? <SignIn /> : <Navigate replace to="/" />} />
+          <Route path="/situacion-actual" element={<SituacionActual />} />
         </Routes>
       </div>
     </Router>
