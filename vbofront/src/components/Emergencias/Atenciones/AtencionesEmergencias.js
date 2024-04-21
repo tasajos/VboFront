@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, off } from 'firebase/database';
+import { getDatabase, ref, onValue, off, update } from 'firebase/database';
 import './TablaEmergencias.css'; 
 import NavBar from '../../NavBar/navbar';
 
@@ -8,6 +8,8 @@ function TablaEmergencias() {
   const [busqueda, setBusqueda] = useState('');
   const [ordenColumna, setOrdenColumna] = useState('');
   const [ordenDireccion, setOrdenDireccion] = useState('asc');
+  const [mensaje, setMensaje] = useState('');
+  const [estadoTemp, setEstadoTemp] = useState({}); // Para manejar estados temporales
 
   useEffect(() => {
     const db = getDatabase();
@@ -15,48 +17,46 @@ function TablaEmergencias() {
 
     const onEmergenciasChange = (snapshot) => {
       const emergenciasRaw = snapshot.val();
-      // Filtra solo los estados activos al recibir los datos
-      const emergenciasList = emergenciasRaw 
-        ? Object.values(emergenciasRaw).filter(emergencia => emergencia.estado === 'Activo')
-        : [];
+      const emergenciasList = emergenciasRaw ? Object.keys(emergenciasRaw).map(key => ({
+        id: key,
+        ...emergenciasRaw[key]
+      })).filter(emergencia => emergencia.estado === 'Activo') : [];
       setEmergencias(emergenciasList);
     };
 
     onValue(emergenciasRef, onEmergenciasChange);
-
     return () => off(emergenciasRef, 'value', onEmergenciasChange);
   }, []);
 
-  // Filtra las emergencias antes de cualquier ordenación
-  const emergenciasFiltradas = busqueda
-    ? emergencias.filter((emergencia) =>
-        (emergencia.Titulo && emergencia.Titulo.toLowerCase().includes(busqueda.toLowerCase())) ||
-        (emergencia.descripcion && emergencia.descripcion.toLowerCase().includes(busqueda.toLowerCase())) ||
-        (emergencia.tipo && emergencia.tipo.toLowerCase().includes(busqueda.toLowerCase()))
-      )
-    : emergencias;
-
-  // Ordena las emergencias filtradas
-  const emergenciasOrdenadas = emergenciasFiltradas.sort((a, b) => {
-    const isAsc = ordenDireccion === 'asc';
-    if (a[ordenColumna] < b[ordenColumna]) {
-      return isAsc ? -1 : 1;
+  const handleActualizarEstado = (id) => {
+    if (!id) {
+      console.error("ID de emergencia no definido");
+      return;
     }
-    if (a[ordenColumna] > b[ordenColumna]) {
-      return isAsc ? 1 : -1;
-    }
-    return 0;
-  });
+    const nuevoEstado = estadoTemp[id];
+    const db = getDatabase();
+    const emergenciaRef = ref(db, `ultimasEmergencias/${id}`);
 
-  const handleOrdenar = (columna) => {
-    const nuevaDireccion = ordenColumna === columna && ordenDireccion === 'asc' ? 'desc' : 'asc';
-    setOrdenColumna(columna);
-    setOrdenDireccion(nuevaDireccion);
+    update(emergenciaRef, { estado: nuevoEstado })
+      .then(() => {
+        setMensaje('Estado actualizado correctamente.');
+        setTimeout(() => setMensaje(''), 3000);
+      })
+      .catch(error => {
+        console.error("Error al actualizar el estado:", error);
+        setMensaje('Error al actualizar el estado.');
+        setTimeout(() => setMensaje(''), 3000);
+      });
+  };
+
+  const handleEstadoChange = (id, value) => {
+    setEstadoTemp(prev => ({ ...prev, [id]: value }));
   };
 
   return (
     <div className="tabla-container">
       <NavBar />
+      {mensaje && <div className="alert">{mensaje}</div>}
       <input
         type="text"
         placeholder="Buscar emergencias..."
@@ -67,23 +67,34 @@ function TablaEmergencias() {
       <table className="emergencias-table">
         <thead>
           <tr>
-            <th onClick={() => handleOrdenar('Titulo')}>Título</th>
-            <th onClick={() => handleOrdenar('ciudad')}>Ciudad</th>
-            <th onClick={() => handleOrdenar('descripcion')}>Descripción</th>
-            <th onClick={() => handleOrdenar('tipo')}>Tipo</th>
-            <th onClick={() => handleOrdenar('estado')}>Estado</th>
-            <th onClick={() => handleOrdenar('fecha')}>Fecha</th>
-            <th onClick={() => handleOrdenar('hora')}>Hora</th>
+            <th>Título</th>
+            <th>Ciudad</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Hora</th>
           </tr>
         </thead>
         <tbody>
-          {emergenciasOrdenadas.map((emergencia) => (
+          {emergencias.map((emergencia) => (
             <tr key={emergencia.id}>
               <td>{emergencia.Titulo || 'No especificado'}</td>
               <td>{emergencia.ciudad || 'No especificado'}</td>
               <td>{emergencia.descripcion || 'No especificado'}</td>
               <td>{emergencia.tipo || 'No especificado'}</td>
-              <td>{emergencia.estado || 'No especificado'}</td>
+              <td>
+                <select
+                  value={estadoTemp[emergencia.id] || emergencia.estado}
+                  onChange={(e) => handleEstadoChange(emergencia.id, e.target.value)}
+                >
+                    <option value="Activo">Activo</option>
+                  <option value="Atendido">Atendido</option>
+                  <option value="Controlado">Controlado</option>
+                  <option value="Vencido">Vencido</option>
+                </select>
+                <button onClick={() => handleActualizarEstado(emergencia.id)}>Actualizar</button>
+              </td>
               <td>{emergencia.fecha || 'No especificado'}</td>
               <td>{emergencia.hora || 'No especificado'}</td>
             </tr>
