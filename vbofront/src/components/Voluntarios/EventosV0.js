@@ -18,9 +18,11 @@ function EventosV0() {
     const [link, setLink] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState({ title: '', body: '' });
+    const [imagenCargada, setImagenCargada] = useState(false);
 
     const handleFileChange = (event) => {
         setImagen(event.target.files[0]);
+        setImagenCargada(false); // Resetear el estado de imagen cargada al seleccionar una nueva imagen
     };
 
     const handleSubmit = async (e) => {
@@ -35,7 +37,7 @@ function EventosV0() {
             const imageRef = storageRef(storage, `eventos/${imagen.name}`);
             const snapshot = await uploadBytes(imageRef, imagen);
             const imageUrl = await getDownloadURL(snapshot.ref);
-
+    
             const db = getDatabase();
             const newEventRef = ref(db, 'eventos');
             await push(newEventRef, {
@@ -47,9 +49,10 @@ function EventosV0() {
                 inscripcion,
                 link
             });
-
+    
             setModalContent({ title: 'Registro Exitoso', body: 'El evento ha sido creado exitosamente.' });
             setShowModal(true);
+            setImagenCargada(true); // Marcar la imagen como cargada después de subirla con éxito
         } catch (error) {
             let message = 'Ocurrió un error desconocido. Por favor, inténtalo de nuevo.';
             if (error.code === 'storage/unauthorized') {
@@ -64,59 +67,59 @@ function EventosV0() {
 
     return (
         <div>
-        <NavBar />
-        <div className="background">
-          
-            <div className="form-container">
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label>Nombre:</label>
-                        <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label>Descripción:</label>
-                        <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label>Estado:</label>
-                        <select value={estado} onChange={(e) => setEstado(e.target.value)} className="form-control">
-                            <option value="Activo">Activo</option>
-                            <option value="Vencido">Vencido</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label>Fecha y Hora:</label>
-                        <DatePicker selected={fecha} onChange={(date) => setFecha(date)} showTimeSelect dateFormat="Pp" className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label>Imagen:</label>
-                        <div className="custom-file">
-                            <input type="file" className="custom-file-input" id="customFile" onChange={handleFileChange} />
-                            <label className="custom-file-label" htmlFor="customFile">Seleccionar archivo</label>
-                            <small id="fileHelp" className="form-text text-muted">Formatos permitidos: jpg, png, gif</small>
+            <NavBar />
+            <div className="background">
+                <div className="form-container">
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>Nombre:</label>
+                            <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="form-control" />
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <label>Inscripción:</label>
-                        <input type="text" value={inscripcion} onChange={(e) => setInscripcion(e.target.value)} className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label>Link:</label>
-                        <input type="text" value={link} onChange={(e) => setLink(e.target.value)} className="form-control" />
-                    </div>
-                    <button type="submit" className="button">Crear Evento</button>
-                </form>
-                <Modal show={showModal} onHide={() => setShowModal(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{modalContent.title}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>{modalContent.body}</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowModal(false)}>Cerrar</Button>
-                    </Modal.Footer>
-                </Modal>
+                        <div className="form-group">
+                            <label>Descripción:</label>
+                            <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} className="form-control" />
+                        </div>
+                        <div className="form-group">
+                            <label>Estado:</label>
+                            <select value={estado} onChange={(e) => setEstado(e.target.value)} className="form-control">
+                                <option value="Activo">Activo</option>
+                                <option value="Vencido">Vencido</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label>Fecha y Hora:</label>
+                            <DatePicker selected={fecha} onChange={(date) => setFecha(date)} showTimeSelect dateFormat="Pp" className="form-control" />
+                        </div>
+                        <div className="form-group">
+                            <label>Imagen:</label>
+                            <div className="custom-file">
+                                <input type="file" className="custom-file-input" id="customFile" onChange={handleFileChange} />
+                                <label className="custom-file-label" htmlFor="customFile">Seleccionar archivo</label>
+                                <small id="fileHelp" className="form-text text-muted">Formatos permitidos: jpg, png, gif</small>
+                            </div>
+                        </div>
+                        {imagenCargada && <p>La imagen se ha cargado correctamente.</p>}
+                        <div className="form-group">
+                            <label>Inscripción:</label>
+                            <input type="text" value={inscripcion} onChange={(e) => setInscripcion(e.target.value)} className="form-control" />
+                        </div>
+                        <div className="form-group">
+                            <label>Link:</label>
+                            <input type="text" value={link} onChange={(e) => setLink(e.target.value)} className="form-control" />
+                        </div>
+                        <button type="submit" className="button">Crear Evento</button>
+                    </form>
+                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{modalContent.title}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>{modalContent.body}</Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setShowModal(false)}>Cerrar</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
             </div>
-        </div>
         </div>
     );
 }
