@@ -40,7 +40,13 @@ function NavBar({ handleSignOut }) {  // Aceptar handleSignOut como prop
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action6">Reporte</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#action2">Voluntarios</Nav.Link>
+
+            <NavDropdown title="Voluntarios" id="navbarScrollingDropdown">
+              <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>
+              <NavDropdown.Item href="">Registrar Oportunidades</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action6">Reporte</NavDropdown.Item>
+            </NavDropdown>
             
             {/* <Nav.Link href="#" disabled>Link</Nav.Link>*/}
           </Nav>

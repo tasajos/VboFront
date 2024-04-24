@@ -12,6 +12,7 @@ import TablaEmergencias from './components/Emergencias/Atenciones/AtencionesEmer
 import EditarEmergencia from './components/Emergencias/Solicitudes/EditarEmergencia';
 import RegistroUsuario from './components/Usuarios/RegistroUsuarios';
 import ListaUsuario from './components/Usuarios/ListaUsuario';
+import Eventos from './components/Voluntarios/EventosV0';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/AtencionesEmergencias" element={<TablaEmergencias />} />
           <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
           <Route path="/ListaUsuario" element={<ListaUsuario />} />
+          <Route path="/Eventos" element={<Eventos />} />
         </Routes>
       </div>
     </Router>
