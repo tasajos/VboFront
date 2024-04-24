@@ -1,0 +1,121 @@
+input[type="text"] {
+    margin: 10px 0;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+    background-color: #e8f4ff;
+  }
+  .search-input {
+    margin: 10px 0;
+    padding: 8px;
+    width: calc(100% - 16px);
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .emergencias-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .emergencias-table, .emergencias-table th, .emergencias-table td {
+    border: 1px solid #ddd;
+  }
+  
+  .emergencias-table th, .emergencias-table td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .emergencias-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .emergencias-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    }
+    
+    .emergencias-table tr:hover {
+    background-color: #e8f4ff;
+    }
+    .tabla-container {
+        max-width: 100%; /* O cualquier otro ancho que prefieras */
+        margin: 20px auto; /* Esto centrará el contenedor en la página */
+        padding: 0 20px; /* Agrega algo de padding a los lados si es necesario */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Opcional: Añade sombra para mejor visibilidad */
+      }
+      
+      /* Asegúrate que la tabla use todo el ancho disponible del contenedor */
+      .emergencias-table {
+        width: 100%; 
+        border-collapse: collapse;
+      }
+      .tabla-container {
+        max-width: 100%; /* Ajusta según tus necesidades */
+        margin: 20px auto; /* Centra la tabla horizontalmente en la página */
+        padding: 0 20px; /* Añade padding a los lados para no pegar el contenido a los bordes */
+      }
+      
+      .usuarios-table {
+        width: 100%; /* Asegura que la tabla use todo el ancho disponible */
+        border-collapse: collapse; /* Elimina el espacio entre bordes de celdas */
+        margin-top: 10px; /* Espacio después del buscador */
+      }
+      
+      .usuarios-table, .usuarios-table th, .usuarios-table td {
+        border: 1px solid #ddd; /* Bordes sutiles para la tabla y celdas */
+      }
+      
+      .usuarios-table th, .usuarios-table td {
+        text-align: left; /* Alineación del texto en las celdas */
+        padding: 8px; /* Espaciado interno en las celdas para texto más legible */
+      }
+      
+      .usuarios-table th {
+        background-color: #f2f2f2; /* Color de fondo para los encabezados */
+      }
+      
+      .usuarios-table tr:nth-child(even) {
+        background-color: #f9f9f9; /* Color de fondo para las filas pares */
+      }
+      
+      .usuarios-table tr:hover {
+        background-color: #e8f4ff; /* Color de fondo al pasar el mouse sobre las filas */
+      }
+      
+      .search-input {
+        width: calc(100% - 16px); /* Ajusta el ancho considerando el padding */
+        margin: 10px 0; /* Margen arriba y abajo del buscador */
+        padding: 8px; /* Padding interno para el buscador */
+        border-radius: 4px; /* Bordes redondeados para el buscador */
+        border: 1px solid #ddd; /* Borde sutil para el buscador */
+      }

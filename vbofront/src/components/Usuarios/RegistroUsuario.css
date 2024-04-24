@@ -1,0 +1,33 @@
+/* RegistroUsuario.css */
+.container {
+    max-width: 600px; /* Limita el ancho para dispositivos grandes */
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .btn-primary {
+    background-color: #0056b3;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #004494;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    border-radius: 5px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
