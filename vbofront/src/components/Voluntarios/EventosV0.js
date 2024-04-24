@@ -20,9 +20,28 @@ function EventosV0() {
     const [modalContent, setModalContent] = useState({ title: '', body: '' });
     const [imagenCargada, setImagenCargada] = useState(false);
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         setImagen(event.target.files[0]);
         setImagenCargada(false); // Resetear el estado de imagen cargada al seleccionar una nueva imagen
+
+        try {
+            const storage = getStorage();
+            const imageRef = storageRef(storage, `eventos/${event.target.files[0].name}`);
+            const snapshot = await uploadBytes(imageRef, event.target.files[0]);
+            const imageUrl = await getDownloadURL(snapshot.ref);
+
+            setImagenCargada(true); // Marcar la imagen como cargada con éxito
+        } catch (error) {
+            setImagenCargada(false); // Marcar la imagen como no cargada en caso de error
+            let message = 'Ocurrió un error desconocido. Por favor, inténtalo de nuevo.';
+            if (error.code === 'storage/unauthorized') {
+                message = 'No tienes permisos para subir imágenes.';
+            } else if (error.code === 'storage/canceled') {
+                message = 'La subida de la imagen fue cancelada.';
+            }
+            setModalContent({ title: 'Error de Registro', body: message });
+            setShowModal(true);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -52,7 +71,6 @@ function EventosV0() {
     
             setModalContent({ title: 'Registro Exitoso', body: 'El evento ha sido creado exitosamente.' });
             setShowModal(true);
-            setImagenCargada(true); // Marcar la imagen como cargada después de subirla con éxito
         } catch (error) {
             let message = 'Ocurrió un error desconocido. Por favor, inténtalo de nuevo.';
             if (error.code === 'storage/unauthorized') {
