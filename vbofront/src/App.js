@@ -14,6 +14,7 @@ import RegistroUsuario from './components/Usuarios/RegistroUsuarios';
 import ListaUsuario from './components/Usuarios/ListaUsuario';
 import Eventos from './components/Voluntarios/EventosV0';
 import RegistrarOportunidades from './components/Voluntarios/RegistrarOportunidades';
+import ListaEventos from './components/Voluntarios/ListaEventos';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -48,6 +49,7 @@ function App() {
           <Route path="/ListaUsuario" element={<ListaUsuario />} />
           <Route path="/Eventos" element={<Eventos />} />
           <Route path="/RegOp" element={<RegistrarOportunidades />} />
+          <Route path="/ListEvent" element={<ListaEventos />} />
         </Routes>
       </div>
     </Router>

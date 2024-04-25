@@ -1,0 +1,32 @@
+.tabla-eventos-container {
+    margin: 20px;
+    overflow-x: auto;
+}
+
+.tabla-eventos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-eventos th, .tabla-eventos td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.tabla-eventos th {
+    background-color: #f2f2f2;
+}
+
+.tabla-eventos tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-eventos tr:hover {
+    background-color: #e8f4ff;
+}
+
+.tabla-eventos img {
+    height: 50px; /* Ajusta según necesites */
+    width: auto;
+}
