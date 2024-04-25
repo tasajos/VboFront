@@ -1,197 +1,139 @@
-.form-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
+/* EventosV0.css */
 
-.form-group {
-    margin-bottom: 20px;
-}
-
-.custom-file {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.custom-file-input {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.custom-file-label {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-}
-
-.button {
-    display: block;
-    width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    border: 1px solid transparent;
-    border-radius: .25rem;
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.button:hover {
-    color: #fff;
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
-.form-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.custom-file {
-    position: relative;
-    margin-top: 10px;
-}
-
-.custom-file-input {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.custom-file-label {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.button {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #007bff;
-}
-
-.button:hover {
-    color: #fff;
-    background-color: #0056b3;
-}
-.background {
-    background-color: #f7f7f7; /* Color de fondo */
-    min-height: 100vh;
+/* Reseteo básico para garantizar la coherencia */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Aplicar un fondo sutil y centrar todo el contenido del formulario */
+  .background {
+    background: #ecf0f3; /* Un color de fondo claro */
+    min-height: 100vh; /* Asegúrate de que ocupe toda la altura de la ventana */
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    box-sizing: border-box;
-}
-
-.form-container {
-    max-width: 400px; /* Ancho máximo del formulario */
+  }
+  
+  /* Estilo del contenedor del formulario */
+  .form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
     width: 100%;
-    padding: 40px;
-    background-color: #fff; /* Color de fondo del formulario */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
-}
-
-.form-group {
+  }
+  
+  /* Estilo para los grupos de formularios y botones */
+  .form-group {
     margin-bottom: 20px;
-}
-
-.custom-file {
-    position: relative;
-    margin-top: 10px;
-}
-
-.custom-file-input {
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select,
+  .custom-file-label {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  /* Estilo para la entrada del tipo archivo */
+  .custom-file-label {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    display: inline-block;
+    width: auto;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .custom-file-input {
+    opacity: 0;
     position: absolute;
-    left: 0;
     top: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
     cursor: pointer;
-}
-
-.custom-file-label {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.button {
+  }
+  
+  /* Estilo del botón principal */
+  .button {
     display: block;
     width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    line-height: 1.5;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: #fff;
     background-color: #007bff;
-}
-
-.button:hover {
-    color: #fff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
     background-color: #0056b3;
-}
+  }
+  
+  /* Estilo para los mensajes de carga de imagen */
+  .imagen-cargada-alerta {
+    color: #28a745;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  /* Media query para móviles para garantizar que el formulario se vea bien en dispositivos más pequeños */
+  @media (max-width: 768px) {
+    .form-container {
+      width: 100%;
+      padding: 20px;
+    }
+  }
+  .custom-file {
+    position: relative; /* Agregamos posición relativa al contenedor */
+    text-align: left;
+  }
+  
+  .custom-file-input {
+    width: 100%;
+    height: 100%;
+    position: absolute; /* Posición absoluta para que se sitúe encima de la etiqueta */
+    top: 0;
+    left: 0;
+    z-index: 2; /* Asegurarse de que esté por encima de la etiqueta */
+    opacity: 0; /* Hacemos el input transparente para que la etiqueta debajo sea visible */
+  }
+  
+  .custom-file-label {
+    display: block; /* Hacemos la etiqueta un bloque para que ocupe toda la línea */
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    margin-top: 0.5rem; /* Espacio arriba del label */
+    cursor: pointer;
+    z-index: 1; /* Asegurarse de que esté debajo del input */
+  }
+  .custom-file .custom-file-label {
+    color: white;
+  }

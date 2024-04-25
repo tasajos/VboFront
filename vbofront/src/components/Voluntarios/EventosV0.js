@@ -109,21 +109,22 @@ function EventosV0() {
                             <DatePicker selected={fecha} onChange={(date) => setFecha(date)} showTimeSelect dateFormat="Pp" className="form-control" />
                         </div>
                         <div className="form-group">
-                            <label>Imagen:</label>
-                            <div className="custom-file">
-                                <input type="file" className="custom-file-input" id="customFile" onChange={handleFileChange} />
-                                <label className="custom-file-label" htmlFor="customFile">Seleccionar archivo</label>
-                                <small id="fileHelp" className="form-text text-muted">Formatos permitidos: jpg, png, gif</small>
-                            </div>
+                         <label>Imagen:</label>
+                        <div className="custom-file">
+                        <input type="file" className="custom-file-input" id="customFile" onChange={handleFileChange} />
+                        {/* Asegúrate de que htmlFor coincida con el id del input */}
+                        <label className="custom-file-label" htmlFor="customFile">Seleccionar archivo</label>
                         </div>
-                        {imagenCargada && <p>La imagen se ha cargado correctamente.</p>}
+                        {imagenCargada && <p className="imagen-cargada-alerta">La imagen se ha cargado correctamente.</p>}
+                        <small id="fileHelp" className="form-text text-muted">Formatos permitidos: jpg, png, gif</small>
+                        </div>
+                        
                         <div className="form-group">
                             <label>Inscripción:</label>
                             <input type="text" value={inscripcion} onChange={(e) => setInscripcion(e.target.value)} className="form-control" />
                         </div>
                         <div className="form-group">
-                            <label>Link:</label>
-                            <input type="text" value={link} onChange={(e) => setLink(e.target.value)} className="form-control" />
+                            <label>Link:</label    ><input type="text" value={link} onChange={(e) => setLink(e.target.value)} className="form-control" />
                         </div>
                         <button type="submit" className="button">Crear Evento</button>
                     </form>
