@@ -1,0 +1,49 @@
+/* ListaOportunidades.css */
+
+.tabla-oportunidades-container {
+    margin: 20px auto; /* Centra el contenedor y añade margen arriba y abajo */
+    overflow-x: auto;
+    max-width: 90%; /* Limita el ancho máximo al 90% del ancho de la ventana */
+    padding: 10px; /* Añade algo de padding para no tener los elementos pegados a los bordes */
+}
+
+.tabla-oportunidades {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Asegura que la tabla no se expanda más allá del contenedor */
+}
+
+.tabla-oportunidades th, .tabla-oportunidades td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    overflow: hidden; /* Añade esto si quieres evitar que el contenido desborde */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el contenido es demasiado largo */
+    white-space: nowrap; /* Evita que el contenido se divida en varias líneas */
+}
+
+.tabla-oportunidades th {
+    background-color: #f2f2f2;
+}
+
+.tabla-oportunidades tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-oportunidades tr:hover {
+    background-color: #e8f4ff;
+}
+
+.tabla-oportunidades img {
+    height: 30px; /* Ajusta según necesites */
+    width: auto;
+}
+
+/* Añade estilos para el input de búsqueda si lo necesitas */
+.search-input {
+    margin: 20px; /* Margen alrededor del input */
+    padding: 8px; /* Padding dentro del input */
+    width: calc(100% - 40px); /* Ancho ajustado considerando el padding */
+    border-radius: 4px; /* Bordes redondeados para el input */
+    border: 1px solid #ccc; /* Borde sutil para el input */
+}
