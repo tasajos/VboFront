@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import SignUp from './components/Auth/SignUp';
 import SignIn from './components/Login/SignIn';

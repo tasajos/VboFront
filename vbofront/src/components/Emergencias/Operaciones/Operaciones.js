@@ -39,6 +39,20 @@ function Operaciones() {
       return () => off(emergenciasRef, 'value', onEmergenciasChange);
     }, []);
 
+    const handleOrdenar = (columna) => {
+        const nuevaDireccion = ordenColumna === columna && ordenDireccion === 'asc' ? 'desc' : 'asc';
+        setOrdenColumna(columna);
+        setOrdenDireccion(nuevaDireccion);
+    
+        const sortedEmergencias = [...emergencias].sort((a, b) => {
+          if (a[columna] < b[columna]) return nuevaDireccion === 'asc' ? -1 : 1;
+          if (a[columna] > b[columna]) return nuevaDireccion === 'asc' ? 1 : -1;
+          return 0;
+        });
+    
+        setEmergencias(sortedEmergencias);
+    };
+
     const handleActualizarEstado = (id, nuevoEstado) => {
       const db = getDatabase();
       const emergenciaRef = ref(db, `ultimasEmergencias/${id}`);
@@ -55,48 +69,36 @@ function Operaciones() {
         });
     };
 
-    const handleOrdenar = (columna) => {
-      const nuevaDireccion = ordenColumna === columna && ordenDireccion === 'asc' ? 'desc' : 'asc';
-      setOrdenColumna(columna);
-      setOrdenDireccion(nuevaDireccion);
-
-      const sortedEmergencias = [...emergencias].sort((a, b) => {
-        if (a[columna] < b[columna]) return nuevaDireccion === 'asc' ? -1 : 1;
-        if (a[columna] > b[columna]) return nuevaDireccion === 'asc' ? 1 : -1;
-        return 0;
-      });
-
-      setEmergencias(sortedEmergencias);
-    };
-
-    const renderTablaEmergencias = () => emergencias.map((emergencia) => (
-      <React.Fragment key={emergencia.id}>
-        <tr className="emergencia-principal">
-          <td>{emergencia.Titulo || 'No especificado'}</td>
-          <td>{emergencia.ciudad || 'No especificado'}</td>
-          <td>{emergencia.descripcion || 'No especificado'}</td>
-          <td>{emergencia.tipo || 'No especificado'}</td>
-          <td>
-            <select value={emergencia.estado} onChange={(e) => handleActualizarEstado(emergencia.id, e.target.value)}>
-              <option value="Activo">Activo</option>
-              <option value="Atendido">Atendido</option>
-              <option value="Controlado">Controlado</option>
-              <option value="Vencido">Vencido</option>
-            </select>
-          </td>
-          <td>{emergencia.fecha || 'No especificado'}</td>
-          <td>{emergencia.hora || 'No especificado'}</td>
-        </tr>
-        {emergencia.historial && emergencia.historial.map((itemHistorial) => (
-          <tr key={itemHistorial.id} className={`historial-detalle ${itemHistorial.subestado === 'Completado' ? 'completado' : ''}`}>
-            <td>Hist. Estado: {itemHistorial.subestado || 'No especificado'}</td>
-            <td>Responsable: {itemHistorial.telefonoResponsable || 'No especificado'}</td>
-            <td>Unidad: {itemHistorial.unidad || 'No especificado'}</td>
-            <td colSpan="4">Fecha: {new Date(itemHistorial.timestamp).toLocaleString() || 'No especificado'}</td>
+    const renderTablaEmergencias = () => {
+      return emergencias.map((emergencia) => (
+        <React.Fragment key={emergencia.id}>
+          <tr className="emergencia-principal">
+            <td>{emergencia.Titulo || 'No especificado'}</td>
+            <td>{emergencia.ciudad || 'No especificado'}</td>
+            <td>{emergencia.descripcion || 'No especificado'}</td>
+            <td>{emergencia.tipo || 'No especificado'}</td>
+            <td>
+              <select value={emergencia.estado} onChange={(e) => handleActualizarEstado(emergencia.id, e.target.value)}>
+                <option value="Activo">Activo</option>
+                <option value="Atendido">Atendido</option>
+                <option value="Controlado">Controlado</option>
+                <option value="Vencido">Vencido</option>
+              </select>
+            </td>
+            <td>{emergencia.fecha || 'No especificado'}</td>
+            <td>{emergencia.hora || 'No especificado'}</td>
           </tr>
-        ))}
-      </React.Fragment>
-    ));
+          {emergencia.historial && emergencia.historial.map((itemHistorial) => (
+            <tr key={itemHistorial.id} className={`historial-detalle ${itemHistorial.subestado === 'Completado' ? 'completado' : ''}`}>
+              <td>Hist. Estado: {itemHistorial.subestado || 'No especificado'}</td>
+              <td>Responsable: {itemHistorial.telefonoResponsable || 'No especificado'}</td>
+              <td>Unidad: {itemHistorial.unidad || 'No especificado'}</td>
+              <td colSpan="4">Fecha: {new Date(itemHistorial.timestamp).toLocaleString() || 'No especificado'}</td>
+            </tr>
+          ))}
+        </React.Fragment>
+      ));
+    };
 
     return (
       <div className="tabla-container">
