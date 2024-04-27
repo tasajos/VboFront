@@ -10,6 +10,7 @@ import Dashboard from './components/Portal/Dashboard';
 import Solicitudes from './components/Emergencias/Solicitudes/EmerSol';
 import TablaEmergencias from './components/Emergencias/Atenciones/AtencionesEmergencias';
 import EditarEmergencia from './components/Emergencias/Solicitudes/EditarEmergencia';
+import Operaciones from './components/Emergencias/Operaciones/Operaciones';
 import RegistroUsuario from './components/Usuarios/RegistroUsuarios';
 import ListaUsuario from './components/Usuarios/ListaUsuario';
 import Eventos from './components/Voluntarios/EventosV0';
@@ -52,6 +53,7 @@ function App() {
           <Route path="/RegOp" element={<RegistrarOportunidades />} />
           <Route path="/ListEvent" element={<ListaEventos />} />
           <Route path="/ListOport" element={<ListaOportunidades />} />
+          <Route path="/ListOperaciones" element={<Operaciones />} />
         </Routes>
       </div>
     </Router>
