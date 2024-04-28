@@ -87,7 +87,10 @@ function Operaciones() {
                   >
                     Hist. Estado: {itemHistorial.subestado}<br/>
                     Teléfono Responsable: {itemHistorial.telefonoResponsable || 'No especificado'}<br/>
-                    Unidad: {itemHistorial.unidad || 'No especificado'}
+                    Unidad: {itemHistorial.unidad || 'No especificado'}<br/>
+                    Necesita Ayuda: {itemHistorial.necesitaAyuda || 'No especificado'}<br/>
+                    Notas: {itemHistorial.notas || 'No especificado'}<br/>
+
                     <span className="badge badge-secondary badge-pill text-dark">
                       {new Date(itemHistorial.timestamp).toLocaleString()}
                     </span>
