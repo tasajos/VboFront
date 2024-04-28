@@ -68,7 +68,7 @@ function Operaciones() {
         } else if (emergencia.fecha) {
           fechaUltimaActualizacion = new Date(emergencia.fecha).toLocaleString();
         }
-
+  
         return (
           <Col md={4} className="mb-4" key={emergencia.id}>
             <Card className="shadow-sm h-100">
@@ -85,7 +85,9 @@ function Operaciones() {
                     key={itemHistorial.id}
                     className={`d-flex justify-content-between align-items-center ${itemHistorial.subestado === 'Completado' ? 'list-group-item-success text-dark' : 'text-dark'}`}
                   >
-                    Hist. Estado: {itemHistorial.subestado}
+                    Hist. Estado: {itemHistorial.subestado}<br/>
+                    Teléfono Responsable: {itemHistorial.telefonoResponsable || 'No especificado'}<br/>
+                    Unidad: {itemHistorial.unidad || 'No especificado'}
                     <span className="badge badge-secondary badge-pill text-dark">
                       {new Date(itemHistorial.timestamp).toLocaleString()}
                     </span>
@@ -105,9 +107,12 @@ function Operaciones() {
   );
 
   return (
-    <Container style={{ maxWidth: '80%' }} className="mt-5">
+    <Container style={{ maxWidth: '90%' }} className="mt-5">
       <NavBar />
       {mensaje && <div className="alert alert-info">{mensaje}</div>}
+      {/* Buscador de emergencias */}
+
+      {/*
       <input
         type="text"
         placeholder="Buscar emergencias..."
@@ -115,6 +120,7 @@ function Operaciones() {
         onChange={(e) => setBusqueda(e.target.value.toLowerCase())}
         className="form-control mb-3"
       />
+      */}
       {renderCardsEmergencias()}
     </Container>
   );
