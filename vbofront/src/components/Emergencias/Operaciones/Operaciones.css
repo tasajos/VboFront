@@ -102,3 +102,25 @@ input[type="text"] {
         background-color: darkgreen;
         color: rgb(47, 179, 86);
       }
+
+      .card-deck .card {
+        margin-right: 15px;
+        margin-left: 15px;
+      }
+      .container {
+        margin: auto;
+        padding: 0 15px; /* Ajuste de padding si es necesario */
+      }
+      
+      .row {
+        margin-right: -15px;
+        margin-left: -15px;
+      }
+      
+      .row > [class^='col-'] {
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+      .text-dark {
+        color: #000; /* o cualquier otro color oscuro que prefieras */
+      }
