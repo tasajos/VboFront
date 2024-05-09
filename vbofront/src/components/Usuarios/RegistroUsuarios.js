@@ -123,9 +123,10 @@ const RegistroUsuario = () => {
             <select className="form-control" id="rol" value={rol} onChange={(e) => setRol(e.target.value)} required>
               <option value="">Seleccione un rol</option>
               <option value="Administrador">Administrador</option>
-              <option value="Coordinador">Coordinador</option>
+              <option value="Fundacion">Fundacion</option>
               <option value="Voluntario">Voluntario</option>
-              <option value="Tecnico">Técnico</option>
+              <option value="Bombero">Bombero</option>
+              <option value="Seguridad">Seguridad</option>
             </select>
           </div>
           <button type="submit" className="btn btn-primary w-100 mt-4">
