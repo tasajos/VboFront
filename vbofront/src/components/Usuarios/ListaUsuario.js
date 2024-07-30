@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, off, update } from 'firebase/database';
+import { getDatabase, ref, onValue, off, update, remove } from 'firebase/database';
+import { getAuth, deleteUser } from 'firebase/auth';
 import { Modal, Button } from 'react-bootstrap';
 import './ListaUsuario.css'; 
 import NavBar from '../NavBar/navbar';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 function ListaUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [busqueda, setBusqueda] = useState('');
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [usuarioEditando, setUsuarioEditando] = useState(null);
   const [formData, setFormData] = useState({
     nombre: '',
@@ -46,7 +48,12 @@ function ListaUsuarios() {
       rol: usuario.rol || ''
     });
     setIsSaved(false);
-    setModalIsOpen(true);
+    setEditModalIsOpen(true);
+  };
+
+  const handleDeleteClick = (usuario) => {
+    setUsuarioEditando(usuario);
+    setDeleteModalIsOpen(true);
   };
 
   const handleInputChange = (e) => {
@@ -65,8 +72,38 @@ function ListaUsuarios() {
     });
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
+  const handleDeleteUser = () => {
+    const db = getDatabase();
+    const auth = getAuth();
+    const usuarioRef = ref(db, `UsuariosVbo/${usuarioEditando.id}`);
+    remove(usuarioRef)
+      .then(() => {
+        const user = auth.currentUser;
+        if (user) {
+          deleteUser(user)
+            .then(() => {
+              alert("Usuario eliminado exitosamente.");
+            })
+            .catch((error) => {
+              console.error("Error al eliminar el usuario:", error);
+              alert("Error al eliminar el usuario.");
+            });
+        }
+        setDeleteModalIsOpen(false);
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el usuario de la base de datos:", error);
+        alert("Error al eliminar el usuario de la base de datos.");
+      });
+  };
+
+  const closeEditModal = () => {
+    setEditModalIsOpen(false);
+    setUsuarioEditando(null);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalIsOpen(false);
     setUsuarioEditando(null);
   };
 
@@ -113,7 +150,11 @@ function ListaUsuarios() {
               <td>
                 <FaEdit 
                   onClick={() => handleEditClick(usuario)} 
-                  style={{ cursor: 'pointer', color: 'blue' }} 
+                  style={{ cursor: 'pointer', color: 'blue', marginRight: '10px' }} 
+                />
+                <FaTrash 
+                  onClick={() => handleDeleteClick(usuario)} 
+                  style={{ cursor: 'pointer', color: 'red' }} 
                 />
               </td>
             </tr>
@@ -121,7 +162,7 @@ function ListaUsuarios() {
         </tbody>
       </table>
 
-      <Modal show={modalIsOpen} onHide={closeModal}>
+      <Modal show={editModalIsOpen} onHide={closeEditModal}>
         <Modal.Header closeButton>
           <Modal.Title>{isSaved ? 'Usuario Modificado' : 'Editar Usuario'}</Modal.Title>
         </Modal.Header>
@@ -191,12 +232,25 @@ function ListaUsuarios() {
         <Modal.Footer>
           {!isSaved ? (
             <>
-              <Button variant="secondary" onClick={closeModal}>Cancelar</Button>
+              <Button variant="secondary" onClick={closeEditModal}>Cancelar</Button>
               <Button variant="primary" onClick={handleSaveChanges}>Guardar</Button>
             </>
           ) : (
-            <Button variant="primary" onClick={closeModal}>Cerrar</Button>
+            <Button variant="primary" onClick={closeEditModal}>Cerrar</Button>
           )}
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={deleteModalIsOpen} onHide={closeDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Eliminar Usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>¿Estás seguro de que deseas eliminar a este usuario?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeDeleteModal}>Cancelar</Button>
+          <Button variant="danger" onClick={handleDeleteUser}>Eliminar</Button>
         </Modal.Footer>
       </Modal>
     </div>
