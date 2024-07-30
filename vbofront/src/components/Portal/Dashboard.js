@@ -54,7 +54,7 @@ const Dashboard = () => {
     <div>
       <NavBar handleSignOut={handleSignOut} />
       <h1>Bienvenido al Portal de Administración</h1>
-      <h3>Voluntarios de Bolivia</h3>
+      <h3>Emergencias de Bolivia</h3>
 
       {/* Mostrar Totales por Tipo */}
       <div className="totals-container">
