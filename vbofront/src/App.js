@@ -21,6 +21,8 @@ import ListaOportunidades from './components/Voluntarios/ListaOportunidades';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
