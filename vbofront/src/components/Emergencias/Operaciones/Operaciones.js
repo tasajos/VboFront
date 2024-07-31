@@ -8,12 +8,25 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './Operaciones.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebase';
 
 function Operaciones() {
   const navigate = useNavigate();
   const [emergencias, setEmergencias] = useState([]);
   const [busqueda, setBusqueda] = useState('');
   const [mensaje, setMensaje] = useState('');
+  
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+      console.log('Sesión cerrada');
+    } catch (error) {
+      console.error('Error al cerrar sesión', error);
+    }
+  };
 
   useEffect(() => {
     const db = getDatabase();
@@ -111,7 +124,7 @@ function Operaciones() {
 
   return (
     <Container style={{ maxWidth: '90%' }} className="mt-5">
-      <NavBar />
+          <NavBar handleSignOut={handleSignOut} />
       {mensaje && <div className="alert alert-info">{mensaje}</div>}
       {/* Buscador de emergencias */}
 

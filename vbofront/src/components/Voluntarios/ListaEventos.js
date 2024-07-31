@@ -2,12 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue, off, update } from 'firebase/database';
 import './ListaEventos.css';
 import NavBar from '../NavBar/navbar';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
+import { auth } from '../../firebase';
+
 
 function ListaEventos() {
     const [eventos, setEventos] = useState([]);
     const [busqueda, setBusqueda] = useState(''); // Estado para almacenar el término de búsqueda
     const [mensaje, setMensaje] = useState('');
+    const navigate = useNavigate(); // Utiliza useNavigate
 
+    const handleSignOut = async () => {
+        try {
+          await signOut(auth);
+          navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+          console.log('Sesión cerrada');
+        } catch (error) {
+          console.error('Error al cerrar sesión', error);
+        }
+      };
+    
     useEffect(() => {
         const db = getDatabase();
         const eventosRef = ref(db, 'eventos');
@@ -52,7 +67,7 @@ function ListaEventos() {
 
     return (
         <div>
-            <NavBar />
+          <NavBar handleSignOut={handleSignOut} />
             <div className="tabla-eventos-container">
                 {mensaje && <div className="alert">{mensaje}</div>}
                 <input

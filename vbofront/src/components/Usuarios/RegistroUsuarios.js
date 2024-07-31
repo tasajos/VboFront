@@ -7,6 +7,9 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import NavBar from '../NavBar/navbar';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
+
 
 const RegistroUsuario = () => {
     const [nombre, setNombre] = useState('');
@@ -23,7 +26,19 @@ const RegistroUsuario = () => {
     const [modalTitle, setModalTitle] = useState('');
     const [modalBody, setModalBody] = useState('');
     const [loading, setLoading] = useState(false);
-  
+    const navigate = useNavigate(); // Utiliza useNavigate
+
+    const handleSignOut = async () => {
+      try {
+        await signOut(auth);
+        navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+        console.log('Sesión cerrada');
+      } catch (error) {
+        console.error('Error al cerrar sesión', error);
+      }
+    };
+
+
     const clearFields = () => {
       setNombre('');
       setApellidoPaterno('');
@@ -78,7 +93,7 @@ const RegistroUsuario = () => {
   
     return (
       <div>
-        <NavBar />
+        <NavBar handleSignOut={handleSignOut} />
         <div className="container mt-5">
           <h2>Registro de Usuario</h2>
           <form onSubmit={handleSubmit}>

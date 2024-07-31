@@ -7,6 +7,10 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import NavBar from '../NavBar/navbar';
 import './EventosV0.css'; // Asegúrate de que el archivo CSS esté importado correctamente
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
+import { auth } from '../../firebase';
+
 
 function EventosV0() {
     const [nombre, setNombre] = useState('');
@@ -19,6 +23,9 @@ function EventosV0() {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState({ title: '', body: '' });
     const [imagenCargada, setImagenCargada] = useState(false);
+    const navigate = useNavigate(); // Utiliza useNavigate
+
+
 
     const handleFileChange = async (event) => {
         setImagen(event.target.files[0]);
@@ -43,6 +50,17 @@ function EventosV0() {
             setShowModal(true);
         }
     };
+
+    const handleSignOut = async () => {
+        try {
+          await signOut(auth);
+          navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+          console.log('Sesión cerrada');
+        } catch (error) {
+          console.error('Error al cerrar sesión', error);
+        }
+      };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -85,7 +103,7 @@ function EventosV0() {
 
     return (
         <div>
-            <NavBar />
+        <NavBar handleSignOut={handleSignOut} />
             <div className="background">
                 <div className="form-container">
                     <form onSubmit={handleSubmit}>

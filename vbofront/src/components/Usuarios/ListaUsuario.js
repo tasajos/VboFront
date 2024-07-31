@@ -5,6 +5,10 @@ import { Modal, Button } from 'react-bootstrap';
 import './ListaUsuario.css'; 
 import NavBar from '../NavBar/navbar';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
+import { auth } from '../../firebase';
+
 
 function ListaUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -12,6 +16,8 @@ function ListaUsuarios() {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [usuarioEditando, setUsuarioEditando] = useState(null);
+  const navigate = useNavigate(); // Utiliza useNavigate
+
   const [formData, setFormData] = useState({
     nombre: '',
     apellidoPaterno: '',
@@ -20,6 +26,17 @@ function ListaUsuarios() {
     rol: ''
   });
   const [isSaved, setIsSaved] = useState(false);
+
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+      console.log('Sesión cerrada');
+    } catch (error) {
+      console.error('Error al cerrar sesión', error);
+    }
+  };
 
   useEffect(() => {
     const db = getDatabase();
@@ -116,7 +133,7 @@ function ListaUsuarios() {
 
   return (
     <div className="tabla-container">
-      <NavBar />
+      <NavBar handleSignOut={handleSignOut} />
       <input
         type="text"
         placeholder="Buscar usuarios..."

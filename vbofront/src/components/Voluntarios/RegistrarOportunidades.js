@@ -7,6 +7,12 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import NavBar from '../NavBar/navbar';
 import './EventosV0.css'; // Asegúrate de que el archivo CSS esté importado correctamente
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
+import { auth } from '../../firebase';
+
+
+
 
 function RegistrarOportunidades() {
 
@@ -20,6 +26,7 @@ function RegistrarOportunidades() {
     const [modalContent, setModalContent] = useState({ title: '', body: '' });
     const [imagenCargada, setImagenCargada] = useState(false);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // Utiliza useNavigate
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
         <input
@@ -30,6 +37,16 @@ function RegistrarOportunidades() {
             ref={ref}
         />
     ));
+
+    const handleSignOut = async () => {
+        try {
+          await signOut(auth);
+          navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+          console.log('Sesión cerrada');
+        } catch (error) {
+          console.error('Error al cerrar sesión', error);
+        }
+      };
 
     function formatDate(date) {
         const d = new Date(date);
@@ -117,7 +134,7 @@ function RegistrarOportunidades() {
     
     return (
         <div>
-            <NavBar />
+           <NavBar handleSignOut={handleSignOut} />
             <div className="background">
                 <div className="form-container">
                     <form onSubmit={handleSubmit}>

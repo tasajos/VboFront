@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { auth } from './firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';  // Asegúrate de que la ruta es correcta
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import SignUp from './components/Auth/SignUp';
@@ -18,10 +18,7 @@ import Eventos from './components/Voluntarios/EventosV0';
 import RegistrarOportunidades from './components/Voluntarios/RegistrarOportunidades';
 import ListaEventos from './components/Voluntarios/ListaEventos';
 import ListaOportunidades from './components/Voluntarios/ListaOportunidades';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import NavBar from './components/NavBar/navbar';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -30,14 +27,21 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setCurrentUser(user);
     });
-
-  
     return () => unsubscribe();
   }, []);
+
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      setCurrentUser(null);
+    }).catch((error) => {
+      console.error("Error al cerrar sesión:", error);
+    });
+  };
 
   return (
     <Router>
       <div className="App">
+       {/*} <NavBar handleSignOut={handleSignOut} /> {/* Pasar handleSignOut como prop */}
         <Routes>
           <Route
             path="/"
@@ -62,4 +66,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;
