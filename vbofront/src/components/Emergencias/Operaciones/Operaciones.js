@@ -14,14 +14,12 @@ import { auth } from '../../../firebase';
 function Operaciones() {
   const navigate = useNavigate();
   const [emergencias, setEmergencias] = useState([]);
-  const [busqueda, setBusqueda] = useState('');
   const [mensaje, setMensaje] = useState('');
-  
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+      navigate('/signin');
       console.log('Sesión cerrada');
     } catch (error) {
       console.error('Error al cerrar sesión', error);
@@ -81,7 +79,7 @@ function Operaciones() {
         } else if (emergencia.fecha) {
           fechaUltimaActualizacion = new Date(emergencia.fecha).toLocaleString();
         }
-  
+
         return (
           <Col md={4} className="mb-4" key={emergencia.id}>
             <Card className="shadow-sm h-100">
@@ -91,6 +89,24 @@ function Operaciones() {
                   {emergencia.ciudad || 'No especificado'}
                 </Card.Subtitle>
                 <Card.Text>{emergencia.descripcion || 'No especificado'}</Card.Text>
+                {emergencia.fechaSCI && (
+                  <div>
+                    <strong>Comandante Incidente:</strong> <span style={{ fontSize: '14px' }}>{emergencia.comandanteIncidente || 'No especificado'}</span><br />
+                    <strong>Acciones Tomadas:</strong> <span style={{ fontSize: '14px' }}>{emergencia.accionesTomadas || 'No especificado'}</span><br />
+                    <strong>PC Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.pcLocation || 'No especificado'}</span><br />
+                    <strong>ACV Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.acvLocation || 'No especificado'}</span><br />
+                    <strong>Base Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.baseLocation || 'No especificado'}</span><br />
+                    <strong>Campamento Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.campamentoLocation || 'No especificado'}</span><br />
+                    <strong>Helipuerto:</strong> <span style={{ fontSize: '14px' }}>{emergencia.helipuertoLocation || 'No especificado'}</span><br />
+                    <strong>Helipuerto 1:</strong> <span style={{ fontSize: '14px' }}>{emergencia.helipuerto1Location || 'No especificado'}</span><br />
+                    <strong>Descripción Incidente:</strong> <span style={{ fontSize: '14px' }}>{emergencia.descripcionIncidente || 'No especificado'}</span><br />
+                    <strong>Fecha SCI:</strong> <span style={{ fontSize: '14px' }}>{new Date(emergencia.fechaSCI).toLocaleString() || 'No especificado'}</span><br />
+                    <strong>Objetivos Incidente:</strong> <span style={{ fontSize: '14px' }}>{emergencia.ObjetivosIncidente || 'No especificado'}</span><br />
+                    
+                    <strong>Recursos Asignados:</strong> <span style={{ fontSize: '14px' }}>{emergencia.recursosAsignados || 'No especificado'}</span><br />
+                    <strong>Unidad Comando SCI:</strong> <span style={{ fontSize: '14px' }}>{emergencia.unidadComandoSCI || 'No especificado'}</span>
+                  </div>
+                )}
               </Card.Body>
               <ListGroup variant="flush">
                 {emergencia.historial?.map((itemHistorial) => (
@@ -98,11 +114,11 @@ function Operaciones() {
                     key={itemHistorial.id}
                     className={`d-flex justify-content-between align-items-center ${itemHistorial.subestado === 'Completado' ? 'list-group-item-success text-dark' : 'text-dark'}`}
                   >
-                    Hist. Estado: {itemHistorial.subestado}<br/>
-                    Teléfono Responsable: {itemHistorial.telefonoResponsable || 'No especificado'}<br/>
-                    Unidad: {itemHistorial.unidad || 'No especificado'}<br/>
-                    Necesita Ayuda: {itemHistorial.necesitaAyuda || 'No especificado'}<br/>
-                    Notas: {itemHistorial.notas || 'No especificado'}<br/>
+                    Hist. Estado: {itemHistorial.subestado}<br />
+                    Teléfono Responsable: {itemHistorial.telefonoResponsable || 'No especificado'}<br />
+                    Unidad: {itemHistorial.unidad || 'No especificado'}<br />
+                    Necesita Ayuda: {itemHistorial.necesitaAyuda || 'No especificado'}<br />
+                    Notas: {itemHistorial.notas || 'No especificado'}<br />
 
                     <span className="badge badge-secondary badge-pill text-dark">
                       {new Date(itemHistorial.timestamp).toLocaleString()}
@@ -124,19 +140,8 @@ function Operaciones() {
 
   return (
     <Container style={{ maxWidth: '90%' }} className="mt-5">
-          <NavBar handleSignOut={handleSignOut} />
+      <NavBar handleSignOut={handleSignOut} />
       {mensaje && <div className="alert alert-info">{mensaje}</div>}
-      {/* Buscador de emergencias */}
-
-      {/*
-      <input
-        type="text"
-        placeholder="Buscar emergencias..."
-        value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value.toLowerCase())}
-        className="form-control mb-3"
-      />
-      */}
       {renderCardsEmergencias()}
     </Container>
   );
