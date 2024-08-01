@@ -69,6 +69,20 @@ function Operaciones() {
       });
   };
 
+  const renderLinkToMap = (label, location) => {
+    if (!location) return 'No especificado';
+
+    // Assumed location is in "lat,lon" format. Adjust as needed.
+    const [lat, lon] = location.split(',');
+    const url = `https://www.google.com/maps?q=${lat},${lon}`;
+    
+    return (
+      <a href={url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px' }}>
+        {label}
+      </a>
+    );
+  };
+
   const renderCardsEmergencias = () => (
     <Row>
       {emergencias.map((emergencia) => {
@@ -93,15 +107,15 @@ function Operaciones() {
                   <div>
                     <strong>Comandante Incidente:</strong> <span style={{ fontSize: '14px' }}>{emergencia.comandanteIncidente || 'No especificado'}</span><br />
                     <strong>Acciones Tomadas:</strong> <span style={{ fontSize: '14px' }}>{emergencia.accionesTomadas || 'No especificado'}</span><br />
-                    <strong>PC Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.pcLocation || 'No especificado'}</span><br />
-                    <strong>ACV Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.acvLocation || 'No especificado'}</span><br />
-                    <strong>Base Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.baseLocation || 'No especificado'}</span><br />
-                    <strong>Campamento Ubicacion:</strong> <span style={{ fontSize: '14px' }}>{emergencia.campamentoLocation || 'No especificado'}</span><br />
-                    <strong>Helipuerto:</strong> <span style={{ fontSize: '14px' }}>{emergencia.helipuertoLocation || 'No especificado'}</span><br />
-                    <strong>Helipuerto 1:</strong> <span style={{ fontSize: '14px' }}>{emergencia.helipuerto1Location || 'No especificado'}</span><br />
+                    <strong>PC Ubicacion:</strong> {renderLinkToMap('Ver en Google Maps', emergencia.pcLocation)}<br />
+                    <strong>ACV Ubicacion:</strong> {renderLinkToMap('Ver en Google Maps', emergencia.acvLocation)}<br />
+                    <strong>Base Ubicacion:</strong> {renderLinkToMap('Ver en Google Maps', emergencia.baseLocation)}<br />
+                    <strong>Campamento Ubicacion:</strong> {renderLinkToMap('Ver en Google Maps', emergencia.campamentoLocation)}<br />
+                    <strong>Helipuerto:</strong> {renderLinkToMap('Ver en Google Maps', emergencia.helipuertoLocation)}<br />
+                    <strong>Helipuerto 1:</strong> {renderLinkToMap('Ver en Google Maps', emergencia.helipuerto1Location)}<br />
                     <strong>Descripción Incidente:</strong> <span style={{ fontSize: '14px' }}>{emergencia.descripcionIncidente || 'No especificado'}</span><br />
                     <strong>Fecha SCI:</strong> <span style={{ fontSize: '14px' }}>{new Date(emergencia.fechaSCI).toLocaleString() || 'No especificado'}</span><br />
-                    <strong>Objetivos Incidente:</strong> <span style={{ fontSize: '14px' }}>{emergencia.ObjetivosIncidente || 'No especificado'}</span><br />
+                    <strong>Objetivos Incidente:</strong> <span style={{ fontSize: '14px' }}>{emergencia.objetivosIncidente || 'No especificado'}</span><br />
                     
                     <strong>Recursos Asignados:</strong> <span style={{ fontSize: '14px' }}>{emergencia.recursosAsignados || 'No especificado'}</span><br />
                     <strong>Unidad Comando SCI:</strong> <span style={{ fontSize: '14px' }}>{emergencia.unidadComandoSCI || 'No especificado'}</span>
