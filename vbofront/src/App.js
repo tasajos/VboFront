@@ -18,6 +18,7 @@ import Eventos from './components/Voluntarios/EventosV0';
 import RegistrarOportunidades from './components/Voluntarios/RegistrarOportunidades';
 import ListaEventos from './components/Voluntarios/ListaEventos';
 import ListaOportunidades from './components/Voluntarios/ListaOportunidades';
+import Validacion from './components/Login/validacion';
 import NavBar from './components/NavBar/navbar';
 
 function App() {
@@ -43,10 +44,8 @@ function App() {
       <div className="App">
        {/*} <NavBar handleSignOut={handleSignOut} /> {/* Pasar handleSignOut como prop */}
         <Routes>
-          <Route
-            path="/"
-            element={currentUser ? <Dashboard /> : <Navigate replace to="/signin" />}
-          />
+          {/*<Route path="/" element={currentUser ? <Dashboard /> : <Navigate replace to="/signin" />} />*/}
+          <Route path="/" element={currentUser ? <Dashboard /> : <Navigate replace to="/signin" />} />*/}
           <Route path="/signup" element={!currentUser ? <SignUp /> : <Navigate replace to="/" />} />
           <Route path="/signin" element={!currentUser ? <SignIn /> : <Navigate replace to="/" />} />
           <Route path="/situacion-actual" element={<SituacionActual />} />
@@ -61,6 +60,8 @@ function App() {
           <Route path="/ListEvent" element={<ListaEventos />} />
           <Route path="/ListOport" element={<ListaOportunidades />} />
           <Route path="/ListOperaciones" element={<Operaciones />} />
+          <Route path="/validacion" element={<Validacion />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>

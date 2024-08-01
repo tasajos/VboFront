@@ -235,9 +235,10 @@ function ListaUsuarios() {
                   className="form-control"
                 >
                   <option value="Administrador">Administrador</option>
-                  <option value="Coordinador">Coordinador</option>
+                  <option value="Fundacion">Fundacion</option>
                   <option value="Voluntario">Voluntario</option>
                   <option value="Seguridad">Seguridad</option>
+                  <option value="Bombero">Bombero</option>
                   {/* Añade más roles según sea necesario */}
                 </select>
               </div>

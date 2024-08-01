@@ -9,7 +9,6 @@ import './Dashboard.css';
 
 const Dashboard = () => {
   const [totalsByType, setTotalsByType] = useState({});
-  const [mensaje, setMensaje] = useState('');
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
@@ -21,7 +20,18 @@ const Dashboard = () => {
       const totals = {};
 
       for (const key in emergenciasRaw) {
-        const tipo = emergenciasRaw[key].tipo;
+        let tipo = emergenciasRaw[key].tipo;
+
+        // Asignar "Sin atención" a valores undefined
+        if (tipo === undefined) {
+          tipo = 'Sin atención';
+        }
+
+        // Ignorar valores vacíos
+        if (tipo.trim() === '') {
+          continue;
+        }
+
         if (tipo in totals) {
           totals[tipo]++;
         } else {
