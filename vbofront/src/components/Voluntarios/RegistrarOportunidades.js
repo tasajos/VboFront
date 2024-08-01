@@ -1,4 +1,4 @@
-import React,  { useState,forwardRef  } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { getDatabase, ref, push } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import DatePicker from 'react-datepicker';
@@ -11,11 +11,7 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
 import { auth } from '../../firebase';
 
-
-
-
 function RegistrarOportunidades() {
-
     const [cuerpo, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [fecha, setFecha] = useState(new Date());
@@ -26,6 +22,7 @@ function RegistrarOportunidades() {
     const [modalContent, setModalContent] = useState({ title: '', body: '' });
     const [imagenCargada, setImagenCargada] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [estado, setEstado] = useState('Activo'); // Nuevo estado para la selección
     const navigate = useNavigate(); // Utiliza useNavigate
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -40,13 +37,13 @@ function RegistrarOportunidades() {
 
     const handleSignOut = async () => {
         try {
-          await signOut(auth);
-          navigate('/signin'); // Redirigir al usuario después de cerrar sesión
-          console.log('Sesión cerrada');
+            await signOut(auth);
+            navigate('/signin'); // Redirigir al usuario después de cerrar sesión
+            console.log('Sesión cerrada');
         } catch (error) {
-          console.error('Error al cerrar sesión', error);
+            console.error('Error al cerrar sesión', error);
         }
-      };
+    };
 
     function formatDate(date) {
         const d = new Date(date);
@@ -54,9 +51,7 @@ function RegistrarOportunidades() {
         const month = `${d.getMonth() + 1}`.padStart(2, '0');
         const year = d.getFullYear();
         return `${day}/${month}/${year}`;
-      }
-
-
+    }
 
     const handleFileChange = async (event) => {
         setImagen(event.target.files[0]);
@@ -105,7 +100,8 @@ function RegistrarOportunidades() {
                 fecha: formattedDate,
                 imagen: imageUrl,
                 titulo,
-                link
+                link,
+                estado // Agregar estado al objeto que se sube a la base de datos
             });
             // Limpia los campos del formulario después de enviar los datos
             setNombre('');
@@ -114,6 +110,7 @@ function RegistrarOportunidades() {
             setImagen(null);
             setTitulo('');
             setLink('');
+            setEstado('Activo'); // Reinicia el estado al valor predeterminado
             setImagenCargada(false); // Opcional: reinicia el estado de carga de la imagen
     
             setLoading(false);
@@ -174,13 +171,23 @@ function RegistrarOportunidades() {
                         <small id="fileHelp" className="form-text text-muted">Formatos permitidos: jpg, png, gif</small>
                         </div>
                         
-                        
                         <div className="form-group">
-                            <label>Link:</label    ><input type="text" value={link} onChange={(e) => setLink(e.target.value)} className="form-control" />
+                            <label>Estado:</label>
+                            <select value={estado} onChange={(e) => setEstado(e.target.value)} className="form-control">
+                                <option value="Activo">Activo</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Vencido">Vencido</option>
+                            </select>
                         </div>
+
+                        <div className="form-group">
+                            <label>Link:</label>
+                            <input type="text" value={link} onChange={(e) => setLink(e.target.value)} className="form-control" />
+                        </div>
+
                         <button type="submit" className="button" disabled={loading}>
-    {loading ? 'Procesando...' : 'Crear Oportunidades'}
-</button>
+                            {loading ? 'Procesando...' : 'Crear Oportunidades'}
+                        </button>
                     </form>
                     <Modal show={showModal} onHide={() => setShowModal(false)}>
                         <Modal.Header closeButton>
