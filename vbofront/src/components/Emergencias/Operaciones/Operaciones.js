@@ -112,7 +112,7 @@ function Operaciones() {
       return oldValue !== newValue;
     });
 
-    // Comparar historial
+    // Compare historial
     if (JSON.stringify(oldEmergencia?.historial) !== JSON.stringify(newEmergencia.historial)) {
       changedFields.push('historial');
     }
@@ -147,6 +147,19 @@ function Operaciones() {
         {label}
       </a>
     );
+  };
+
+  const getEmergencyMapUrl = (emergencia) => {
+    const locations = [];
+    if (emergencia.pcLocation) locations.push(`&markers=${emergencia.pcLocation}`);
+    if (emergencia.acvLocation) locations.push(`&markers=${emergencia.acvLocation}`);
+    if (emergencia.baseLocation) locations.push(`&markers=${emergencia.baseLocation}`);
+    if (emergencia.campamentoLocation) locations.push(`&markers=${emergencia.campamentoLocation}`);
+    if (emergencia.helipuertoLocation) locations.push(`&markers=${emergencia.helipuertoLocation}`);
+    if (emergencia.helipuerto1Location) locations.push(`&markers=${emergencia.helipuerto1Location}`);
+
+    const mapUrl = `https://www.google.com/maps?${locations.join('')}`;
+    return mapUrl;
   };
 
   const renderCardsEmergencias = () => (
@@ -234,6 +247,9 @@ function Operaciones() {
               <Card.Footer>
                 <small className="text-muted">Última actualización: {fechaUltimaActualizacion}</small>
               </Card.Footer>
+              <Button variant="primary" href={getEmergencyMapUrl(emergencia)} target="_blank" className="m-2">
+                Ver Mapa Actual
+              </Button>
             </Card>
           </Col>
         );
@@ -260,7 +276,6 @@ function Operaciones() {
               <strong>Descripción:</strong> {changedEmergencia.descripcion || 'No especificado'}
               <br />
               <strong>Ciudad:</strong> {changedEmergencia.ciudad || 'No especificado'}
-             
               <br />
               <strong>Fecha:</strong> {new Date(changedEmergencia.fecha).toLocaleString() || 'No especificado'}
               <br />

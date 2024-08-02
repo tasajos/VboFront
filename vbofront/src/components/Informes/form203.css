@@ -1,0 +1,53 @@
+.incident-report-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .form-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .form-subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-section {
+    margin-bottom: 20px;
+  }
+  
+  .form-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 4px 4px 0 0;
+  }
+  
+  .form-group {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: calc(50% - 10px);
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  

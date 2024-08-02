@@ -29,18 +29,72 @@ function NavBar({ handleSignOut }) {
               <NavDropdown.Divider />
               <NavDropdown.Item href="/ListOperaciones">Operaciones</NavDropdown.Item>
               <NavDropdown title="SCI" id="navbarScrollingDropdownSCI">
-                <NavDropdown.Item href="/comandante-incidente">
-                  Formulario Comandante de Incidente <i className="bi bi-star-fill" style={{ color: 'blue' }} />
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/oficial-enlaces">
-                  Formulario Oficial de Enlaces <i className="bi bi-star-fill" style={{ color: 'blue' }} />
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/oficial-informacion-publica">
-                  Formulario Oficial de Información Pública <i className="bi bi-star-fill" style={{ color: 'blue' }} />
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/oficial-seguridad">
-                  Formulario Oficial de Seguridad <i className="bi bi-star-fill" style={{ color: 'blue' }} />
-                </NavDropdown.Item>
+                
+              <NavDropdown title="Formulario Comandante de Incidente" id="navbarScrollingDropdownComandante" >
+               
+              <NavDropdown.Item href="/forminci201">
+                    1.- FORM 201
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/forminci202">
+                  2.- FORM 202
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/forminci203">
+                  3.- FORM 203
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item href="/forminci221">
+                  12.- FORM 221 - Desmovilización
+                  </NavDropdown.Item>
+                </NavDropdown>
+                
+                <NavDropdown title="Formulario Oficial Seguridad" id="navbarScrollingDropdownComandante" >
+               
+               <NavDropdown.Item href="/forminci204">
+                     4.- FORM 204
+                   </NavDropdown.Item>
+                 
+                 </NavDropdown>
+
+
+                 <NavDropdown title="Formulario Oficial Enlace" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/forminci205">
+                     5.- FORM 205
+                   </NavDropdown.Item>
+                 </NavDropdown>
+
+                 <NavDropdown title="Formulario Oficial Informacion Publica" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/forminci205b">
+                     6.- FORM 205-B
+                   </NavDropdown.Item>
+                 </NavDropdown>
+
+                 <NavDropdown title="Formulario Jefe de Operaciones" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/forminci206">
+                     7.- FORM 206 - Plan Medico
+                   </NavDropdown.Item>
+                   <NavDropdown.Item href="/forminci207">
+                     8.- FORM 207 - Registro de Victimas
+                   </NavDropdown.Item>
+                   <NavDropdown.Item href="/forminci211">
+                     9.- FORM 211 - Registro Personal
+                   </NavDropdown.Item>
+                 </NavDropdown>
+              
+                 <NavDropdown title="Formulario Jefe de Logistica" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/forminci215">
+                     10.- FORM 215 - Registro Logistica
+                   </NavDropdown.Item>
+                   
+                 </NavDropdown>
+
+                 <NavDropdown title="Formulario Jefe de Planificacion" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/forminci214">
+                     11.- FORM 214 - Registro Actividades
+                   </NavDropdown.Item>
+                   
+                 </NavDropdown>
+
+
               </NavDropdown>
             </NavDropdown>
             <NavDropdown title="Usuarios" id="navbarScrollingDropdownUsuarios">

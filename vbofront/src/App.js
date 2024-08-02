@@ -19,6 +19,20 @@ import RegistrarOportunidades from './components/Voluntarios/RegistrarOportunida
 import ListaEventos from './components/Voluntarios/ListaEventos';
 import ListaOportunidades from './components/Voluntarios/ListaOportunidades';
 import Validacion from './components/Login/validacion';
+import Formul201 from './components/Informes/form201';
+import Formul202 from './components/Informes/form202';
+import Formul203 from './components/Informes/form203';
+import Formul204 from './components/Informes/form204';
+import Formul205 from './components/Informes/form205';
+import Formul205b from './components/Informes/form205b';
+import Formul206 from './components/Informes/form206';
+import Formul207 from './components/Informes/form207';
+import Formul211 from './components/Informes/form211';
+import Formul214 from './components/Informes/form214';
+import Formul215 from './components/Informes/form215';
+import Formul221 from './components/Informes/form221';
+
+
 import NavBar from './components/NavBar/navbar';
 
 function App() {
@@ -62,6 +76,19 @@ function App() {
           <Route path="/ListOperaciones" element={<Operaciones />} />
           <Route path="/validacion" element={<Validacion />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/forminci201" element={<Formul201 />} />
+          <Route path="/forminci202" element={<Formul202 />} />
+          <Route path="/forminci203" element={<Formul203 />} />
+          <Route path="/forminci204" element={<Formul204 />} />
+          <Route path="/forminci205" element={<Formul205 />} />
+          <Route path="/forminci205b" element={<Formul205b />} />
+          <Route path="/forminci207" element={<Formul207 />} />
+          <Route path="/forminci206" element={<Formul206 />} />
+          <Route path="/forminci211" element={<Formul211 />} />
+          <Route path="/forminci214" element={<Formul214 />} />
+          <Route path="/forminci215" element={<Formul215 />} />
+          <Route path="/forminci221" element={<Formul221 />} />
+          
         </Routes>
       </div>
     </Router>
