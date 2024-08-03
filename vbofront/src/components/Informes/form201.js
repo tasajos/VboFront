@@ -37,7 +37,7 @@ const Form201 = () => {
     e.preventDefault();
     setLoading(true);
     const db = getDatabase();
-    const formRef = ref(db, 'formulariosci');
+    const formRef = ref(db, 'formulariosci/201');
     
     const formData = {
       incidentName,

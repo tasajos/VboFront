@@ -97,11 +97,82 @@ function NavBar({ handleSignOut }) {
 
               </NavDropdown>
             </NavDropdown>
+
+            <NavDropdown.Divider />
+            
+              <NavDropdown title="Reportes SCI" id="navbarScrollingDropdownSCI">
+                
+              <NavDropdown title="Comandante de Incidente" id="navbarScrollingDropdownComandante" >
+               
+              <NavDropdown.Item href="/formpreview">
+                    1.- FORM 201
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/formpreview2">
+                  2.- FORM 202
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/formpreview3">
+                  3.- FORM 203
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item href="/forminci221">
+                  12.- FORM 221 - Desmovilización
+                  </NavDropdown.Item>
+                </NavDropdown>
+               
+                <NavDropdown title=" Oficial de Seguridad" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/formpreview204">
+                     4.- FORM 204
+                   </NavDropdown.Item>
+                 </NavDropdown>
+               
+                <NavDropdown title=" Oficial de Enlace" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/formpreview205">
+                     5.- FORM 205
+                   </NavDropdown.Item>
+                 </NavDropdown>
+
+                 <NavDropdown title=" Oficial de Informacion Publica" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/formpreview205b">
+                     6.- FORM 205B
+                   </NavDropdown.Item>
+                 </NavDropdown>
+
+                 <NavDropdown title="Jefe de Operaciones" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/formpreview206">
+                     7.- FORM 206 - Plan Medico
+                   </NavDropdown.Item>
+                   <NavDropdown.Item href="/formpreview207">
+                     8.- FORM 207 - Registro de Victimas
+                   </NavDropdown.Item>
+                   <NavDropdown.Item href="/formpreview211">
+                     9.- FORM 211 - Registro Personal
+                   </NavDropdown.Item>
+                 </NavDropdown>
+
+                 <NavDropdown title="Jefe de Logistica" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/formpreview215">
+                     10.- FORM 215 - Registro Logistica
+                   </NavDropdown.Item>
+                   
+                 </NavDropdown>
+
+                 <NavDropdown title="Jefe de Planificacion" id="navbarScrollingDropdownComandante" >  
+               <NavDropdown.Item href="/formpreview214">
+                     11.- FORM 214 - Registro Actividades
+                   </NavDropdown.Item>
+                   
+                 </NavDropdown>
+
+
+                </NavDropdown>
+              
+
+
             <NavDropdown title="Usuarios" id="navbarScrollingDropdownUsuarios">
               <NavDropdown.Item href="/RegistroUsuario">Registro Usuarios</NavDropdown.Item>
               <NavDropdown.Item href="/ListaUsuario">Usuarios</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action6">Reporte</NavDropdown.Item>
+              <NavDropdown.Item href="/formpreview">Reporte</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
               <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>

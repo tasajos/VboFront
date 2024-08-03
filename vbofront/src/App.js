@@ -31,7 +31,17 @@ import Formul211 from './components/Informes/form211';
 import Formul214 from './components/Informes/form214';
 import Formul215 from './components/Informes/form215';
 import Formul221 from './components/Informes/form221';
-
+import Formulpreviw from './components/Informes/preview';
+import Formulpreviw202 from './components/Informes/preview202';
+import Formulpreviw203 from './components/Informes/preview203';
+import Formulpreviw205 from './components/Informes/preview205';
+import Formulpreviw204 from './components/Informes/preview204';
+import Formulpreviw205b from './components/Informes/preview205b';
+import Formulpreviw206 from './components/Informes/preview206';
+import Formulpreviw207 from './components/Informes/preview207';
+import Formulpreviw211 from './components/Informes/preview211';
+import Formulpreviw215 from './components/Informes/preview215';
+import Formulpreviw214 from './components/Informes/preview214';
 
 import NavBar from './components/NavBar/navbar';
 
@@ -88,7 +98,16 @@ function App() {
           <Route path="/forminci214" element={<Formul214 />} />
           <Route path="/forminci215" element={<Formul215 />} />
           <Route path="/forminci221" element={<Formul221 />} />
-          
+          <Route path="/formpreview" element={<Formulpreviw />} />
+          <Route path="/formpreview2" element={<Formulpreviw202 />} />
+          <Route path="/formpreview3" element={<Formulpreviw203 />} />
+          <Route path="/formpreview205" element={<Formulpreviw205 />} />
+          <Route path="/formpreview204" element={<Formulpreviw204 />} />
+          <Route path="/formpreview205b" element={<Formulpreviw205b />} />
+          <Route path="/formpreview206" element={<Formulpreviw206 />} />
+          <Route path="/formpreview207" element={<Formulpreviw207 />} />
+          <Route path="/formpreview211" element={<Formulpreviw211 />} />
+          <Route path="/formpreview214" element={<Formulpreviw214 />} />
         </Routes>
       </div>
     </Router>
