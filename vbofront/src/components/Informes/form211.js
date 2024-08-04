@@ -7,7 +7,7 @@ import NavBar from '../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
-import './form205.css'; // Use this for custom styling
+import './form211.css'; // Use this for custom styling
 
 const Form211 = () => {
   const [nombreIncidente, setNombreIncidente] = useState('');
@@ -74,7 +74,7 @@ const Form211 = () => {
   return (
     <div>
       <NavBar handleSignOut={handleSignOut} />
-      <div className="container mt-5">
+      <div className="container mt-5 incident-report-container">
         <h2 className="form-title">SCI 211 - Registro de Entrada y Salida de Personal</h2>
         <p className="form-subtitle">
           - Se utiliza para mantener un registro de todas las personas que entran y salen del área del incidente.
@@ -111,42 +111,57 @@ const Form211 = () => {
             <div className="form-header">SEGUNDA PARTE</div>
             <div className="form-group">
               <label>Registro de Personal:</label>
-              {registroPersonal.map((entry, index) => (
-                <div key={index} className="entry-row">
-                  <input
-                    type="text"
-                    placeholder="Nombre"
-                    className="form-control"
-                    value={entry.nombre}
-                    onChange={(e) => handleChange(index, 'nombre', e.target.value)}
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Institución"
-                    className="form-control"
-                    value={entry.institucion}
-                    onChange={(e) => handleChange(index, 'institucion', e.target.value)}
-                    required
-                  />
-                  <input
-                    type="time"
-                    placeholder="Hora de Entrada"
-                    className="form-control"
-                    value={entry.horaEntrada}
-                    onChange={(e) => handleChange(index, 'horaEntrada', e.target.value)}
-                    required
-                  />
-                  <input
-                    type="time"
-                    placeholder="Hora de Salida"
-                    className="form-control"
-                    value={entry.horaSalida}
-                    onChange={(e) => handleChange(index, 'horaSalida', e.target.value)}
-                    required
-                  />
-                </div>
-              ))}
+              <div className="entries-container">
+                {registroPersonal.map((entry, index) => (
+                  <div key={index} className="entry-group mb-4">
+                    <div className="form-group">
+                      <label htmlFor={`nombre-${index}`}>Nombre:</label>
+                      <input
+                        type="text"
+                        id={`nombre-${index}`}
+                        className="form-control"
+                        value={entry.nombre}
+                        onChange={(e) => handleChange(index, 'nombre', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor={`institucion-${index}`}>Institución:</label>
+                      <input
+                        type="text"
+                        id={`institucion-${index}`}
+                        className="form-control"
+                        value={entry.institucion}
+                        onChange={(e) => handleChange(index, 'institucion', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor={`horaEntrada-${index}`}>Hora de Entrada:</label>
+                      <input
+                        type="time"
+                        id={`horaEntrada-${index}`}
+                        className="form-control"
+                        value={entry.horaEntrada}
+                        onChange={(e) => handleChange(index, 'horaEntrada', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor={`horaSalida-${index}`}>Hora de Salida:</label>
+                      <input
+                        type="time"
+                        id={`horaSalida-${index}`}
+                        className="form-control"
+                        value={entry.horaSalida}
+                        onChange={(e) => handleChange(index, 'horaSalida', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <hr />
+                  </div>
+                ))}
+              </div>
               <button type="button" className="btn btn-secondary mt-2" onClick={addNewEntry}>
                 Añadir Entrada
               </button>
