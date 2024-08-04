@@ -105,11 +105,11 @@ function Preview() {
               <tbody>
                 <tr>
                   <td>Nombre del Incidente:</td>
-                  <td>{form.incidentName || 'No especificado'}</td>
+                  <td>{form.nombreIncidente || 'No especificado'}</td>
                 </tr>
                 <tr>
                   <td>Fecha y Hora:</td>
-                  <td>{form.dateTime || 'No especificado'}</td>
+                  <td>{form.fechaHora || 'No especificado'}</td>
                 </tr>
                 <tr>
                   <td>Ubicación:</td>

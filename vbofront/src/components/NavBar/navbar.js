@@ -165,7 +165,7 @@ function NavBar({ handleSignOut }) {
                    </NavDropdown.Item>
                    
                  </NavDropdown>
-
+                 <NavDropdown.Item href="/reportegral">Reporte General</NavDropdown.Item>
 
                 </NavDropdown>
               

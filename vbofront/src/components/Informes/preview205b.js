@@ -96,6 +96,10 @@ function Preview205b() {
             </div>
             <table className="form-table">
               <tbody>
+              <tr>
+                  <td>Nombre Incidente:</td>
+                  <td>{form.nombreIncidente || 'No especificado'}</td>
+                </tr>
                 <tr>
                   <td>Registro de Medios:</td>
                   <td>{form.registroMedios || 'No especificado'}</td>

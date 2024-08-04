@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import './form205.css'; // Assuming this is where the styling is coming from
 
 const Form205b = () => {
+  const [nombreIncidente, setnombreIncidente] = useState('');
   const [registroMedios, setRegistroMedios] = useState('');
   const [logComunicaciones, setLogComunicaciones] = useState('');
   const [faqs, setFaqs] = useState('');
@@ -35,6 +36,7 @@ const Form205b = () => {
     const formRef = ref(db, 'formulariosci/205b');
 
     const formData = {
+      nombreIncidente,
       registroMedios,
       logComunicaciones,
       faqs,
@@ -53,6 +55,7 @@ const Form205b = () => {
   };
 
   const clearFields = () => {
+    setnombreIncidente('');
     setRegistroMedios('');
     setLogComunicaciones('');
     setFaqs('');
@@ -70,6 +73,17 @@ const Form205b = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-section">
             <div className="form-header">PRIMERA PARTE</div>
+            <div className="form-group">
+              <label htmlFor="nombreIncidente">Nombre del Incidente:</label>
+              <input
+                type="text"
+                id="nombreIncidente"
+                className="form-control"
+                value={nombreIncidente}
+                onChange={(e) => setnombreIncidente(e.target.value)}
+                required
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="fechaHora">Fecha y Hora:</label>
               <input

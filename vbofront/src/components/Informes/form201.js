@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import './form201.css';
 
 const Form201 = () => {
-  const [incidentName, setIncidentName] = useState('');
-  const [dateTime, setDateTime] = useState('');
+  const [nombreIncidente, setnombreIncidente] = useState('');
+  const [fechaHora, setfechaHora] = useState('');
   const [location, setLocation] = useState('');
   const [commandUnit, setCommandUnit] = useState('');
   const [incidentDescription, setIncidentDescription] = useState('');
@@ -40,8 +40,8 @@ const Form201 = () => {
     const formRef = ref(db, 'formulariosci/201');
     
     const formData = {
-      incidentName,
-      dateTime,
+      nombreIncidente,
+      fechaHora,
       location,
       commandUnit,
       incidentDescription,
@@ -63,8 +63,8 @@ const Form201 = () => {
   };
 
   const clearFields = () => {
-    setIncidentName('');
-    setDateTime('');
+    setnombreIncidente('');
+    setfechaHora('');
     setLocation('');
     setCommandUnit('');
     setIncidentDescription('');
@@ -88,12 +88,12 @@ const Form201 = () => {
           <div className="form-section">
             <div className="form-header">PRIMERA PARTE</div>
             <div className="form-group">
-              <label htmlFor="incidentName">Nombre del Incidente:</label>
-              <input type="text" id="incidentName" className="form-control" value={incidentName} onChange={(e) => setIncidentName(e.target.value)} required />
+              <label htmlFor="nombreIncidente">Nombre del Incidente:</label>
+              <input type="text" id="nombreIncidente" className="form-control" value={nombreIncidente} onChange={(e) => setnombreIncidente(e.target.value)} required />
             </div>
             <div className="form-group">
-              <label htmlFor="dateTime">Fecha y Hora:</label>
-              <input type="datetime-local" id="dateTime" className="form-control" value={dateTime} onChange={(e) => setDateTime(e.target.value)} required />
+              <label htmlFor="fechaHora">Fecha y Hora:</label>
+              <input type="datetime-local" id="fechaHora" className="form-control" value={fechaHora} onChange={(e) => setfechaHora(e.target.value)} required />
             </div>
             <div className="form-group">
               <label htmlFor="location">Ubicación:</label>
