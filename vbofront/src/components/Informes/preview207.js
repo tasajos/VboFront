@@ -96,6 +96,10 @@ function Preview207() {
             </div>
             <table className="form-table">
               <tbody>
+              <tr>
+                  <td>Nombre del Incidente:</td>
+                  <td>{form.nombreIncidente || 'No especificado'}</td>
+                </tr>
                 <tr>
                   <td>Nombre de la Víctima:</td>
                   <td>{form.nombreVictima || 'No especificado'}</td>
@@ -119,6 +123,10 @@ function Preview207() {
                 <tr>
                   <td>Observaciones:</td>
                   <td>{form.observaciones || 'No especificado'}</td>
+                </tr>
+                <tr>
+                  <td>Fecha:</td>
+                  <td>{form.fechaHora || 'No especificado'}</td>
                 </tr>
               </tbody>
             </table>

@@ -13,6 +13,7 @@ const Form205b = () => {
   const [registroMedios, setRegistroMedios] = useState('');
   const [logComunicaciones, setLogComunicaciones] = useState('');
   const [faqs, setFaqs] = useState('');
+  const [fechaHora, setFechaHora] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const Form205b = () => {
       registroMedios,
       logComunicaciones,
       faqs,
+      fechaHora,
     };
 
     try {
@@ -54,6 +56,7 @@ const Form205b = () => {
     setRegistroMedios('');
     setLogComunicaciones('');
     setFaqs('');
+    setFechaHora('');
   };
 
   return (
@@ -67,6 +70,17 @@ const Form205b = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-section">
             <div className="form-header">PRIMERA PARTE</div>
+            <div className="form-group">
+              <label htmlFor="fechaHora">Fecha y Hora:</label>
+              <input
+                type="datetime-local"
+                id="fechaHora"
+                className="form-control"
+                value={fechaHora}
+                onChange={(e) => setFechaHora(e.target.value)}
+                required
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="registroMedios">Registro de Medios:</label>
               <textarea

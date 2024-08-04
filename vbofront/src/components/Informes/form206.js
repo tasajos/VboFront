@@ -11,6 +11,7 @@ import './form205.css'; // Use this for custom styling
 
 const Form206 = () => {
   const [nombreIncidente, setNombreIncidente] = useState('');
+  const [fechaHora, setFechaHora] = useState('');
   const [recursosMedicos, setRecursosMedicos] = useState('');
   const [puntoAtencion, setPuntoAtencion] = useState('');
   const [procedimientosMedicos, setProcedimientosMedicos] = useState('');
@@ -37,6 +38,7 @@ const Form206 = () => {
 
     const formData = {
       nombreIncidente,
+      fechaHora,
       recursosMedicos,
       puntoAtencion,
       procedimientosMedicos,
@@ -56,6 +58,7 @@ const Form206 = () => {
 
   const clearFields = () => {
     setNombreIncidente('');
+    setFechaHora('');
     setRecursosMedicos('');
     setPuntoAtencion('');
     setProcedimientosMedicos('');
@@ -78,6 +81,17 @@ const Form206 = () => {
                 className="form-control"
                 value={nombreIncidente}
                 onChange={(e) => setNombreIncidente(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="fechaHora">Fecha y Hora:</label>
+              <input
+                type="datetime-local"
+                id="fechaHora"
+                className="form-control"
+                value={fechaHora}
+                onChange={(e) => setFechaHora(e.target.value)}
                 required
               />
             </div>

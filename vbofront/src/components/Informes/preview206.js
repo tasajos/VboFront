@@ -121,6 +121,10 @@ function Preview206() {
                   <td>Contactos Médicos:</td>
                   <td>{form.contactosMedicos || 'No especificado'}</td>
                 </tr>
+                <tr>
+                  <td>Fecha:</td>
+                  <td>{form.fechaHora || 'No especificado'}</td>
+                </tr>
               </tbody>
             </table>
           </div>

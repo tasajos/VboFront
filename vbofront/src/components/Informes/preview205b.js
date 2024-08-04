@@ -108,6 +108,10 @@ function Preview205b() {
                   <td>Preguntas Frecuentes (FAQs):</td>
                   <td>{form.faqs || 'No especificado'}</td>
                 </tr>
+                <tr>
+                  <td>Fecha:</td>
+                  <td>{form.fechaHora || 'No especificado'}</td>
+                </tr>
               </tbody>
             </table>
           </div>

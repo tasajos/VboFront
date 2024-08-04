@@ -10,12 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import './form205.css'; // Use this for custom styling
 
 const Form207 = () => {
+  const [nombreIncidente, setNombreIncidente] = useState('');
   const [nombreVictima, setNombreVictima] = useState('');
   const [edadVictima, setEdadVictima] = useState('');
   const [generoVictima, setGeneroVictima] = useState('');
   const [contactoEmergencia, setContactoEmergencia] = useState('');
   const [estadoVictima, setEstadoVictima] = useState('');
   const [observaciones, setObservaciones] = useState('');
+  const [fechaHora, setFechaHora] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,12 +39,14 @@ const Form207 = () => {
     const formRef = ref(db, 'formulariosci/207');
 
     const formData = {
+      nombreIncidente,
       nombreVictima,
       edadVictima,
       generoVictima,
       contactoEmergencia,
       estadoVictima,
       observaciones,
+      fechaHora,
     };
 
     try {
@@ -57,12 +61,14 @@ const Form207 = () => {
   };
 
   const clearFields = () => {
+    setNombreIncidente('');
     setNombreVictima('');
     setEdadVictima('');
     setGeneroVictima('');
     setContactoEmergencia('');
     setEstadoVictima('');
     setObservaciones('');
+    setFechaHora('');
   };
 
   return (
@@ -73,11 +79,22 @@ const Form207 = () => {
         <p className="form-subtitle">
           - Detalla información sobre las víctimas del incidente.
           <br />
-          - Incluye detalles como nombre, edad, género, contacto de emergencia, estado y observaciones.
+          - Incluye detalles como nombre del incidente, nombre, edad, género, contacto de emergencia, estado y observaciones.
         </p>
         <form onSubmit={handleSubmit}>
           <div className="form-section">
             <div className="form-header">Información de la Víctima</div>
+            <div className="form-group">
+              <label htmlFor="nombreIncidente">Nombre del Incidente:</label>
+              <input
+                type="text"
+                id="nombreIncidente"
+                className="form-control"
+                value={nombreIncidente}
+                onChange={(e) => setNombreIncidente(e.target.value)}
+                required
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="nombreVictima">Nombre de la Víctima:</label>
               <input
@@ -152,6 +169,17 @@ const Form207 = () => {
                 onChange={(e) => setObservaciones(e.target.value)}
               ></textarea>
             </div>
+            <div className="form-group">
+              <label htmlFor="fechaHora">Fecha y Hora:</label>
+              <input
+                type="datetime-local"
+                id="fechaHora"
+                className="form-control"
+                value={fechaHora}
+                onChange={(e) => setFechaHora(e.target.value)}
+                required
+              />
+            </div>
           </div>
           <button type="submit" className="btn btn-primary w-100 mt-4">
             {loading ? (
@@ -178,3 +206,4 @@ const Form207 = () => {
 };
 
 export default Form207;
+

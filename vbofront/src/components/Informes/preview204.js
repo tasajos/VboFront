@@ -122,6 +122,10 @@ function Preview204() {
                   <td>Instrucciones Especiales:</td>
                   <td>{form.instruccionesEspeciales || 'No especificado'}</td>
                 </tr>
+                <tr>
+                  <td>Fecha:</td>
+                  <td>{form.fechaHora || 'No especificado'}</td>
+                </tr>
               </tbody>
             </table>
           </div>

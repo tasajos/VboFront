@@ -11,6 +11,7 @@ import './form205.css';
 
 const Form205 = () => {
   const [nombreIncidente, setNombreIncidente] = useState('');
+  const [fechaHora, setFechaHora] = useState('');
   const [frecuenciasRadio, setFrecuenciasRadio] = useState('');
   const [canalesComunicacion, setCanalesComunicacion] = useState('');
   const [puntoContacto, setPuntoContacto] = useState('');
@@ -37,6 +38,7 @@ const Form205 = () => {
 
     const formData = {
       nombreIncidente,
+      fechaHora,
       frecuenciasRadio,
       canalesComunicacion,
       puntoContacto,
@@ -56,6 +58,7 @@ const Form205 = () => {
 
   const clearFields = () => {
     setNombreIncidente('');
+    setFechaHora('');
     setFrecuenciasRadio('');
     setCanalesComunicacion('');
     setPuntoContacto('');
@@ -81,6 +84,17 @@ const Form205 = () => {
                 className="form-control"
                 value={nombreIncidente}
                 onChange={(e) => setNombreIncidente(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="fechaHora">Fecha y Hora:</label>
+              <input
+                type="datetime-local"
+                id="fechaHora"
+                className="form-control"
+                value={fechaHora}
+                onChange={(e) => setFechaHora(e.target.value)}
                 required
               />
             </div>

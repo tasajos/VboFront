@@ -119,6 +119,10 @@ function Preview205() {
                   <td>{form.puntoContacto || 'No especificado'}</td>
                 </tr>
                 <tr>
+                  <td>Fecha:</td>
+                  <td>{form.fechaHora || 'No especificado'}</td>
+                </tr>
+                <tr>
                   <td>Notas Adicionales:</td>
                   <td>{form.notasAdicionales || 'No especificado'}</td>
                 </tr>

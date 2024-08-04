@@ -11,6 +11,7 @@ import './form204.css';
 
 const Form204 = () => {
   const [nombreIncidente, setNombreIncidente] = useState('');
+  const [fechaHora, setFechaHora] = useState('');
   const [divisionGrupo, setDivisionGrupo] = useState('');
   const [recursosAsignados, setRecursosAsignados] = useState('');
   const [tareas, setTareas] = useState('');
@@ -37,6 +38,7 @@ const Form204 = () => {
 
     const formData = {
       nombreIncidente,
+      fechaHora,
       divisionGrupo,
       recursosAsignados,
       tareas,
@@ -56,6 +58,7 @@ const Form204 = () => {
 
   const clearFields = () => {
     setNombreIncidente('');
+    setFechaHora('');
     setDivisionGrupo('');
     setRecursosAsignados('');
     setTareas('');
@@ -81,6 +84,17 @@ const Form204 = () => {
                 className="form-control"
                 value={nombreIncidente}
                 onChange={(e) => setNombreIncidente(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="fechaHora">Fecha y Hora:</label>
+              <input
+                type="datetime-local"
+                id="fechaHora"
+                className="form-control"
+                value={fechaHora}
+                onChange={(e) => setFechaHora(e.target.value)}
                 required
               />
             </div>
