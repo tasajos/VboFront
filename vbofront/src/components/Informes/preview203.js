@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import html2pdf from 'html2pdf.js';
 import './preview.css';
 import NavBar from '../NavBar/navbar';
 import { signOut } from 'firebase/auth';
@@ -47,6 +48,18 @@ function Preview203() {
     setCurrentForm((prev) => (prev - 1 + formularios.length) % formularios.length);
   };
 
+  const exportToPDF = () => {
+    const element = document.getElementById('form-content-203');
+    const opt = {
+      margin: 1,
+      filename: `Formulario_SCI_203_${form.nombreIncidente || 'Desconocido'}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
+  };
+
   if (formularios.length === 0) {
     return <div>Cargando formularios...</div>;
   }
@@ -57,63 +70,66 @@ function Preview203() {
     <div>
       <NavBar handleSignOut={handleSignOut} />
       <div className="form-preview-container">
-        <div className="form-preview-header">
-          <h2>SCI 203 - Organización del Incidente</h2>
-          <p>- Detalla la estructura organizativa del incidente.</p>
-          <p>- Incluye información sobre el Comandante del Incidente, el personal clave y sus roles.</p>
-        </div>
-        <table className="form-table">
-          <thead>
-            <tr>
-              <th colSpan="2">PRIMERA PARTE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Nombre del Incidente:</td>
-              <td>{form.nombreIncidente || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Fecha y Hora:</td>
-              <td>{form.fechaHora || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Comandante del Incidente:</td>
-              <td>{form.comandanteIncidente || 'No especificado'}</td>
-            </tr>
-          </tbody>
-          <thead>
-            <tr>
-              <th colSpan="3">SEGUNDA PARTE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colSpan="3">Personal Clave y Roles:</td>
-            </tr>
-            <tr>
-              <th>Rol</th>
-              <th>Nombre</th>
-              <th>Contacto</th>
-            </tr>
-            {form.roles ? (
-              Object.entries(form.roles).map(([rol, detalle], index) => (
-                <tr key={index}>
-                  <td>{rol}</td>
-                  <td>{detalle.nombre || 'No especificado'}</td>
-                  <td>{detalle.contacto || 'No especificado'}</td>
-                </tr>
-              ))
-            ) : (
+        <div id="form-content-203">
+          <div className="form-preview-header">
+            <h2>SCI 203 - Organización del Incidente</h2>
+            <p>- Detalla la estructura organizativa del incidente.</p>
+            <p>- Incluye información sobre el Comandante del Incidente, el personal clave y sus roles.</p>
+          </div>
+          <table className="form-table">
+            <thead>
               <tr>
-                <td colSpan="3">No hay roles especificados</td>
+                <th colSpan="2">PRIMERA PARTE</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nombre del Incidente:</td>
+                <td>{form.nombreIncidente || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Fecha y Hora:</td>
+                <td>{form.fechaHora || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Comandante del Incidente:</td>
+                <td>{form.comandanteIncidente || 'No especificado'}</td>
+              </tr>
+            </tbody>
+            <thead>
+              <tr>
+                <th colSpan="3">SEGUNDA PARTE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colSpan="3">Personal Clave y Roles:</td>
+              </tr>
+              <tr>
+                <th>Rol</th>
+                <th>Nombre</th>
+                <th>Contacto</th>
+              </tr>
+              {form.roles ? (
+                Object.entries(form.roles).map(([rol, detalle], index) => (
+                  <tr key={index}>
+                    <td>{rol}</td>
+                    <td>{detalle.nombre || 'No especificado'}</td>
+                    <td>{detalle.contacto || 'No especificado'}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">No hay roles especificados</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         <div className="form-preview-footer">
           <button onClick={handlePrevious} disabled={formularios.length <= 1}>Anterior</button>
           <button onClick={handleNext} disabled={formularios.length <= 1}>Siguiente</button>
+          <button onClick={exportToPDF}>Exportar a PDF</button>
         </div>
       </div>
     </div>

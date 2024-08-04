@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import html2pdf from 'html2pdf.js';
 import './preview.css';
 import NavBar from '../NavBar/navbar';
 import { signOut } from 'firebase/auth';
@@ -47,6 +48,18 @@ function Preview205b() {
     setCurrentForm((prev) => (prev - 1 + formularios.length) % formularios.length);
   };
 
+  const exportToPDF = () => {
+    const element = document.getElementById('form-content-205b');
+    const opt = {
+      margin: 1,
+      filename: `Formulario_SCI_205b_${form.nombreIncidente || 'Desconocido'}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
+  };
+
   if (formularios.length === 0) {
     return <div>Cargando formularios...</div>;
   }
@@ -57,28 +70,31 @@ function Preview205b() {
     <div>
       <NavBar handleSignOut={handleSignOut} />
       <div className="form-preview-container">
-        <div className="form-preview-header">
-          <h2>SCI 205b - Registro de Medios y Comunicación</h2>
+        <div id="form-content-205b">
+          <div className="form-preview-header">
+            <h2>SCI 205b - Registro de Medios y Comunicación</h2>
+          </div>
+          <table className="form-table">
+            <tbody>
+              <tr>
+                <td>Registro de Medios:</td>
+                <td>{form.registroMedios || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Log de Comunicaciones:</td>
+                <td>{form.logComunicaciones || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Preguntas Frecuentes (FAQs):</td>
+                <td>{form.faqs || 'No especificado'}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table className="form-table">
-          <tbody>
-            <tr>
-              <td>Registro de Medios:</td>
-              <td>{form.registroMedios || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Log de Comunicaciones:</td>
-              <td>{form.logComunicaciones || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Preguntas Frecuentes (FAQs):</td>
-              <td>{form.faqs || 'No especificado'}</td>
-            </tr>
-          </tbody>
-        </table>
         <div className="form-preview-footer">
           <button onClick={handlePrevious} disabled={formularios.length <= 1}>Anterior</button>
           <button onClick={handleNext} disabled={formularios.length <= 1}>Siguiente</button>
+          <button onClick={exportToPDF}>Exportar a PDF</button>
         </div>
       </div>
     </div>

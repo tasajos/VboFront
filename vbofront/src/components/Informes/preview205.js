@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import html2pdf from 'html2pdf.js';
 import './preview.css';
 import NavBar from '../NavBar/navbar';
 import { signOut } from 'firebase/auth';
@@ -47,6 +48,18 @@ function Preview205() {
     setCurrentForm((prev) => (prev - 1 + formularios.length) % formularios.length);
   };
 
+  const exportToPDF = () => {
+    const element = document.getElementById('form-content-205');
+    const opt = {
+      margin: 1,
+      filename: `Formulario_SCI_205_${form.nombreIncidente || 'Desconocido'}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
+  };
+
   if (formularios.length === 0) {
     return <div>Cargando formularios...</div>;
   }
@@ -57,42 +70,45 @@ function Preview205() {
     <div>
       <NavBar handleSignOut={handleSignOut} />
       <div className="form-preview-container">
-        <div className="form-preview-header">
-          <h2>SCI 205 - Plan de Comunicaciones</h2>
-          <p>- Incluye información sobre las frecuencias de radio, canales de comunicación y puntos de contacto.</p>
+        <div id="form-content-205">
+          <div className="form-preview-header">
+            <h2>SCI 205 - Plan de Comunicaciones</h2>
+            <p>- Incluye información sobre las frecuencias de radio, canales de comunicación y puntos de contacto.</p>
+          </div>
+          <table className="form-table">
+            <thead>
+              <tr>
+                <th colSpan="2">PRIMERA PARTE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nombre del Incidente:</td>
+                <td>{form.nombreIncidente || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Frecuencias de Radio:</td>
+                <td>{form.frecuenciasRadio || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Canales de Comunicación:</td>
+                <td>{form.canalesComunicación || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Punto de Contacto:</td>
+                <td>{form.puntoContacto || 'No especificado'}</td>
+              </tr>
+              <tr>
+                <td>Notas Adicionales:</td>
+                <td>{form.notasAdicionales || 'No especificado'}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table className="form-table">
-          <thead>
-            <tr>
-              <th colSpan="2">PRIMERA PARTE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Nombre del Incidente:</td>
-              <td>{form.nombreIncidente || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Frecuencias de Radio:</td>
-              <td>{form.frecuenciasRadio || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Canales de Comunicación:</td>
-              <td>{form.canalesComunicación || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Punto de Contacto:</td>
-              <td>{form.puntoContacto || 'No especificado'}</td>
-            </tr>
-            <tr>
-              <td>Notas Adicionales:</td>
-              <td>{form.notasAdicionales || 'No especificado'}</td>
-            </tr>
-          </tbody>
-        </table>
         <div className="form-preview-footer">
           <button onClick={handlePrevious} disabled={formularios.length <= 1}>Anterior</button>
           <button onClick={handleNext} disabled={formularios.length <= 1}>Siguiente</button>
+          <button onClick={exportToPDF}>Exportar a PDF</button>
         </div>
       </div>
     </div>
