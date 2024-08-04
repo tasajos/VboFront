@@ -42,6 +42,10 @@ const Form211 = () => {
     ]);
   };
 
+  const removeEntry = (index) => {
+    setRegistroPersonal(registroPersonal.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -158,6 +162,9 @@ const Form211 = () => {
                         required
                       />
                     </div>
+                    <button type="button" className="btn btn-danger mt-2" onClick={() => removeEntry(index)}>
+                      Eliminar Entrada
+                    </button>
                     <hr />
                   </div>
                 ))}
