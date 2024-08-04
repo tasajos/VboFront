@@ -42,6 +42,7 @@ import Formulpreviw207 from './components/Informes/preview207';
 import Formulpreviw211 from './components/Informes/preview211';
 import Formulpreviw215 from './components/Informes/preview215';
 import Formulpreviw214 from './components/Informes/preview214';
+import Formulpreviw221 from './components/Informes/preview221';
 
 import NavBar from './components/NavBar/navbar';
 
@@ -108,6 +109,8 @@ function App() {
           <Route path="/formpreview207" element={<Formulpreviw207 />} />
           <Route path="/formpreview211" element={<Formulpreviw211 />} />
           <Route path="/formpreview214" element={<Formulpreviw214 />} />
+          <Route path="/formpreview215" element={<Formulpreviw215 />} />
+          <Route path="/formpreview221" element={<Formulpreviw221 />} />
         </Routes>
       </div>
     </Router>
