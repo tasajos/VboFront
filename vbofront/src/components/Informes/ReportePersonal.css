@@ -1,0 +1,45 @@
+.event-personnel-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .date-section {
+    margin-bottom: 40px;
+  }
+  
+  .event-section {
+    margin-bottom: 20px;
+  }
+  
+  .total-card,
+  .institution-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 8px;
+  }
+  
+  .total-card .card-header,
+  .institution-card .card-header {
+    color: black;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+    background-color: #007bff; /* Use distinct color for total card */
+    color: black;
+  }
+  
+  .institution-card .card-header {
+    background-color: inherit; /* Use the card's background color */
+  }
+  
+  .institution-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .institution-list li {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  

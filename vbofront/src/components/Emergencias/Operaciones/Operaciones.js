@@ -247,9 +247,7 @@ function Operaciones() {
               <Card.Footer>
                 <small className="text-muted">Última actualización: {fechaUltimaActualizacion}</small>
               </Card.Footer>
-              <Button variant="primary" href={getEmergencyMapUrl(emergencia)} target="_blank" className="m-2">
-                Ver Mapa Actual
-              </Button>
+              
             </Card>
           </Col>
         );

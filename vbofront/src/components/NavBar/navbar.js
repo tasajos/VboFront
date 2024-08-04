@@ -147,6 +147,9 @@ function NavBar({ handleSignOut }) {
                    <NavDropdown.Item href="/formpreview211">
                      9.- FORM 211 - Registro Personal
                    </NavDropdown.Item>
+                   <NavDropdown.Item href="/reportepersonal">
+                     10.- Reporte Personal
+                   </NavDropdown.Item>
                  </NavDropdown>
 
                  <NavDropdown title="Jefe de Logistica" id="navbarScrollingDropdownComandante" >  
@@ -172,7 +175,7 @@ function NavBar({ handleSignOut }) {
               <NavDropdown.Item href="/RegistroUsuario">Registro Usuarios</NavDropdown.Item>
               <NavDropdown.Item href="/ListaUsuario">Usuarios</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/formpreview">Reporte</NavDropdown.Item>
+              <NavDropdown.Item href="#action">Reporte</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
               <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>
