@@ -1,0 +1,65 @@
+.tabla-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .search-input,
+  .date-input {
+    width: calc(33.3% - 10px);
+    padding: 8px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    display: inline-block;
+  }
+  
+  .clear-filter-button,
+  .export-xls-button {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    color: white;
+  }
+  
+  .clear-filter-button {
+    background-color: orange;
+  }
+  
+  .clear-filter-button:hover {
+    background-color: darkorange;
+  }
+  
+  .export-xls-button {
+    background-color: #007bff;
+  }
+  
+  .export-xls-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .usuarios-table th,
+  .usuarios-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .usuarios-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .usuarios-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  

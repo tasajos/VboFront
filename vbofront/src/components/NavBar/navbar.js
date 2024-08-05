@@ -166,7 +166,7 @@ function NavBar({ handleSignOut }) {
                    
                  </NavDropdown>
                  <NavDropdown.Item href="/reportegral">Reporte General</NavDropdown.Item>
-
+                 <NavDropdown.Item href="/reportegralpersonal">Reporte General Personal</NavDropdown.Item>
                 </NavDropdown>
               
 
@@ -180,9 +180,11 @@ function NavBar({ handleSignOut }) {
             <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
               <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>
               <NavDropdown.Item href="/RegOp">Registrar Oportunidades</NavDropdown.Item>
+              <NavDropdown.Item href="/registrarU">Registrar Unidad</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/ListEvent">Listar Eventos</NavDropdown.Item>
               <NavDropdown.Item href="/ListOport">Listar Oportunidades</NavDropdown.Item>
+              <NavDropdown.Item href="/listarUn">Listar Unidades</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Button variant="outline-danger" onClick={handleSignOut}>Cerrar Sesión</Button>

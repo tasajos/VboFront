@@ -45,6 +45,9 @@ import Formulpreviw214 from './components/Informes/preview214';
 import Formulpreviw221 from './components/Informes/preview221';
 import ReportePersonalSc from './components/Informes/Reportepersonal';
 import Reportesc from './components/Informes/ReporteSCI';
+import Reportescp from './components/Informes/ReportePersonalTabla';
+import RegistrarU from './components/Voluntarios/RegistrarUnidad';
+import ListarUnidades from './components/Voluntarios/ListarUnidades';
 
 import NavBar from './components/NavBar/navbar';
 
@@ -115,6 +118,9 @@ function App() {
           <Route path="/formpreview221" element={<Formulpreviw221 />} />
           <Route path="/reportepersonal" element={<ReportePersonalSc />} />
           <Route path="/reportegral" element={<Reportesc />} />
+          <Route path="/reportegralpersonal" element={<Reportescp />} />
+          <Route path="/registrarU" element={<RegistrarU />} />
+          <Route path="/listarUn" element={<ListarUnidades />} />
         </Routes>
       </div>
     </Router>

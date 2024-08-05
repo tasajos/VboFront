@@ -132,8 +132,11 @@ function ListaUsuarios() {
   );
 
   return (
+    <div>
+       <NavBar handleSignOut={handleSignOut} />
+       <br></br>
     <div className="tabla-container">
-      <NavBar handleSignOut={handleSignOut} />
+     
       <input
         type="text"
         placeholder="Buscar usuarios..."
@@ -271,6 +274,7 @@ function ListaUsuarios() {
           <Button variant="danger" onClick={handleDeleteUser}>Eliminar</Button>
         </Modal.Footer>
       </Modal>
+    </div>
     </div>
   );
 }
