@@ -3,7 +3,8 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import Pagination from 'react-bootstrap/Pagination';
-import Button from 'react-bootstrap/Button'; // Ensure Button is imported
+import Button from 'react-bootstrap/Button';
+import * as XLSX from 'xlsx';
 import './ReporteSCI.css';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
@@ -89,6 +90,42 @@ const ReporteSCI = () => {
     }
   };
 
+  const downloadExcel = (entry) => {
+    const rows = [];
+
+    if (entry.registroPersonal) {
+      Object.values(entry.registroPersonal).forEach((personal, index) => {
+        rows.push({
+          Formulario: entry.formKey,
+          Incidente: entry.nombreIncidente,
+          'Fecha y Hora': new Date(entry.fechaHora).toLocaleString(),
+          Registro: index + 1,
+          Nombre: personal.nombre || '',
+          Institución: personal.institucion || '',
+          'Hora de Entrada': personal.horaEntrada || '',
+          'Hora de Salida': personal.horaSalida || '',
+        });
+      });
+    } else {
+      rows.push({
+        Formulario: entry.formKey,
+        Incidente: entry.nombreIncidente,
+        'Fecha y Hora': new Date(entry.fechaHora).toLocaleString(),
+        Registro: '',
+        Nombre: '',
+        Institución: '',
+        'Hora de Entrada': '',
+        'Hora de Salida': '',
+      });
+    }
+
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+
+    XLSX.writeFile(wb, `Reporte_${entry.formKey}_${entry.nombreIncidente}.xlsx`);
+  };
+
   // Pagination
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -150,7 +187,11 @@ const ReporteSCI = () => {
                 <td>{entry.formKey}</td>
                 <td>{entry.nombreIncidente}</td>
                 <td>{new Date(entry.fechaHora).toLocaleString()}</td>
-                <td>Ver detalles</td>
+                <td>
+                  <Button variant="success" onClick={() => downloadExcel(entry)}>
+                    Descargar XLS
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
