@@ -26,6 +26,7 @@ function NavBar({ handleSignOut }) {
             <NavDropdown title="Emergencias" id="navbarScrollingDropdownEmergencias">
               <NavDropdown.Item href="/solicitudes">Solicitudes</NavDropdown.Item>
               <NavDropdown.Item href="/AtencionesEmergencias">Atenciones</NavDropdown.Item>
+              <NavDropdown.Item href="/listarreporteE">Reporte Emergencias</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/ListOperaciones">Operaciones</NavDropdown.Item>
               <NavDropdown title="SCI" id="navbarScrollingDropdownSCI">

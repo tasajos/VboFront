@@ -48,7 +48,7 @@ import Reportesc from './components/Informes/ReporteSCI';
 import Reportescp from './components/Informes/ReportePersonalTabla';
 import RegistrarU from './components/Voluntarios/RegistrarUnidad';
 import ListarUnidades from './components/Voluntarios/ListarUnidades';
-
+import ReporteEmergencias from './components/Emergencias/ReporteEmergencia/ReporteEmergencia';
 import NavBar from './components/NavBar/navbar';
 
 function App() {
@@ -121,6 +121,9 @@ function App() {
           <Route path="/reportegralpersonal" element={<Reportescp />} />
           <Route path="/registrarU" element={<RegistrarU />} />
           <Route path="/listarUn" element={<ListarUnidades />} />
+          <Route path="/listarreporteE" element={<ReporteEmergencias />} />
+
+          
         </Routes>
       </div>
     </Router>

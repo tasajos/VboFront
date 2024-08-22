@@ -1,0 +1,50 @@
+.reporte-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .reporte-search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .reporte-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+  }
+  
+  .reporte-table th, .reporte-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .reporte-table th {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .reporte-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .reporte-alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #ffdddd;
+    color: #a94442;
+    border-radius: 5px;
+  }
+  
