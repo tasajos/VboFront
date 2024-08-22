@@ -1,0 +1,230 @@
+[debug] [2024-08-11T18:59:33.990Z] ----------------------------------------------------------------------
+[debug] [2024-08-11T18:59:33.992Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\tasaj\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2024-08-11T18:59:33.992Z] CLI Version:   13.15.1
+[debug] [2024-08-11T18:59:33.993Z] Platform:      win32
+[debug] [2024-08-11T18:59:33.993Z] Node Version:  v18.18.2
+[debug] [2024-08-11T18:59:33.993Z] Time:          Sun Aug 11 2024 14:59:33 GMT-0400 (hora de Bolivia)
+[debug] [2024-08-11T18:59:33.993Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-08-11T18:59:34.044Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-08-11T18:59:34.044Z] > authorizing via signed-in user (cazcarraga@chakuy.com)
+[debug] [2024-08-11T18:59:34.044Z] [iam] checking project fir-login2-c7a59 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-08-11T18:59:34.046Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fir-login2-c7a59:testIamPermissions [none]
+[debug] [2024-08-11T18:59:34.046Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fir-login2-c7a59:testIamPermissions x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:34.047Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fir-login2-c7a59:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-08-11T18:59:35.164Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fir-login2-c7a59:testIamPermissions 200
+[debug] [2024-08-11T18:59:35.164Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fir-login2-c7a59:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-08-11T18:59:35.165Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/fir-login2-c7a59/serviceAccounts/fir-login2-c7a59@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-08-11T18:59:35.165Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/fir-login2-c7a59/serviceAccounts/fir-login2-c7a59@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-08-11T18:59:36.248Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/fir-login2-c7a59/serviceAccounts/fir-login2-c7a59@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2024-08-11T18:59:36.249Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/fir-login2-c7a59/serviceAccounts/fir-login2-c7a59@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'fir-login2-c7a59'...
+[info] 
+[info] i  deploying functions 
+[info] +  functions: Finished running predeploy script. 
+[debug] [2024-08-11T18:59:36.255Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59 [none]
+[debug] [2024-08-11T18:59:36.979Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59 200
+[debug] [2024-08-11T18:59:36.979Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59 {"projectId":"fir-login2-c7a59","projectNumber":"306570664024","displayName":"firebaselogin2","name":"projects/fir-login2-c7a59","resources":{"hostingSite":"fir-login2-c7a59","realtimeDatabaseInstance":"fir-login2-c7a59-default-rtdb","storageBucket":"fir-login2-c7a59.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_30a164aa-3689-431e-ad99-e9c8348432cb"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2024-08-11T18:59:36.984Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudfunctions.googleapis.com [none]
+[debug] [2024-08-11T18:59:36.984Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:36.985Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/runtimeconfig.googleapis.com [none]
+[debug] [2024-08-11T18:59:36.986Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:36.987Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com [none]
+[debug] [2024-08-11T18:59:36.987Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:36.987Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com [none]
+[debug] [2024-08-11T18:59:36.987Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:38.369Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com 200
+[debug] [2024-08-11T18:59:38.369Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com [omitted]
+[warn] !  functions: missing required API cloudbuild.googleapis.com. Enabling now... 
+[debug] [2024-08-11T18:59:38.370Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com:enable [none]
+[debug] [2024-08-11T18:59:38.370Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com:enable x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:38.373Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/runtimeconfig.googleapis.com 200
+[debug] [2024-08-11T18:59:38.373Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2024-08-11T18:59:38.377Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudfunctions.googleapis.com 200
+[debug] [2024-08-11T18:59:38.377Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2024-08-11T18:59:38.384Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com 200
+[debug] [2024-08-11T18:59:38.384Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com [omitted]
+[warn] !  artifactregistry: missing required API artifactregistry.googleapis.com. Enabling now... 
+[debug] [2024-08-11T18:59:38.385Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com:enable [none]
+[debug] [2024-08-11T18:59:38.385Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com:enable x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:40.072Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com:enable 200
+[debug] [2024-08-11T18:59:40.073Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com:enable [omitted]
+[debug] [2024-08-11T18:59:40.117Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com:enable 200
+[debug] [2024-08-11T18:59:40.117Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com:enable [omitted]
+[debug] [2024-08-11T18:59:50.084Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com [none]
+[debug] [2024-08-11T18:59:50.085Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:50.130Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com [none]
+[debug] [2024-08-11T18:59:50.131Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com x-goog-quota-user=projects/fir-login2-c7a59
+[debug] [2024-08-11T18:59:51.378Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com 200
+[debug] [2024-08-11T18:59:51.378Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2024-08-11T18:59:51.401Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com 200
+[debug] [2024-08-11T18:59:51.401Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/fir-login2-c7a59/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2024-08-11T18:59:51.404Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59/adminSdkConfig [none]
+[debug] [2024-08-11T18:59:52.184Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59/adminSdkConfig 200
+[debug] [2024-08-11T18:59:52.184Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59/adminSdkConfig {"projectId":"fir-login2-c7a59","databaseURL":"https://fir-login2-c7a59-default-rtdb.firebaseio.com","storageBucket":"fir-login2-c7a59.appspot.com","locationId":"us-central"}
+[debug] [2024-08-11T18:59:52.185Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/fir-login2-c7a59/configs [none]
+[debug] [2024-08-11T18:59:53.088Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/fir-login2-c7a59/configs 200
+[debug] [2024-08-11T18:59:53.088Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/fir-login2-c7a59/configs {}
+[debug] [2024-08-11T18:59:53.090Z] Validating nodejs source
+[debug] [2024-08-11T18:59:54.453Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2024-08-11T18:59:54.454Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2024-08-11T18:59:54.455Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-08-11T18:59:54.461Z] Found firebase-functions binary at 'C:\VboFront\VboFront\vbofront\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8634
+
+[debug] [2024-08-11T18:59:54.872Z] Got response from /__/functions.yaml {"endpoints":{"enviarNotificacion":{"platform":"gcfv1","labels":{},"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"callableTrigger":{},"entryPoint":"enviarNotificacion"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\VboFront\VboFront\vbofront\functions (70.03 KB) for uploading 
+[debug] [2024-08-11T18:59:54.947Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/-/functions [none]
+[debug] [2024-08-11T18:59:56.344Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/-/functions 200
+[debug] [2024-08-11T18:59:56.344Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/-/functions {}
+[debug] [2024-08-11T18:59:56.345Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/fir-login2-c7a59/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2024-08-11T18:59:57.955Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/fir-login2-c7a59/locations/-/functions 200
+[debug] [2024-08-11T18:59:57.955Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/fir-login2-c7a59/locations/-/functions {}
+[debug] [2024-08-11T18:59:57.958Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59 [none]
+[debug] [2024-08-11T18:59:58.607Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59 200
+[debug] [2024-08-11T18:59:58.607Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fir-login2-c7a59 {"projectId":"fir-login2-c7a59","projectNumber":"306570664024","displayName":"firebaselogin2","name":"projects/fir-login2-c7a59","resources":{"hostingSite":"fir-login2-c7a59","realtimeDatabaseInstance":"fir-login2-c7a59-default-rtdb","storageBucket":"fir-login2-c7a59.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_30a164aa-3689-431e-ad99-e9c8348432cb"}
+[debug] [2024-08-11T18:59:58.608Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2024-08-11T18:59:58.608Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions:generateUploadUrl {}
+[debug] [2024-08-11T19:00:09.491Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2024-08-11T19:00:09.491Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/uploads-508807872630.us-central1.cloudfunctions.appspot.com/c80cc52c-c7f5-4a44-af35-7b183d800266.zip?GoogleAccessId=service-306570664024@gcf-admin-robot.iam.gserviceaccount.com&Expires=1723404609&Signature=EH9lw43YDhF7gnrtSWMqsOXOTde%2FlUzgkcqPCUnCGZgunOUKVSSFAO6LUkDeC%2FfBihHVr0plhuF1WY9bbFyfK%2Bg%2F%2FIp%2BI5pIKJTHBnaRGn7BRUTXbV8un4yHDQlgviBEwM7wUotq5FgWH8okkCzfkUANf9xRR581%2FOtcaDHAl%2BGVYos47BA1DgHkpFF%2FKVswR54hJHNgUk5fhk01%2BQ9bqTsToiNJwAk9%2BQW%2FyEmprqrIRcAeq%2FN3CdIm%2F4kaBY6ArWKA4r8%2Bo3yNrRZbs0Ez%2FLhcjEL79wlo4zkc%2Bd%2B84UZbymK2egWZClzbyhWWKLnkSNH1fn9u3%2FfB7y75UtwkEQ%3D%3D"}
+[debug] [2024-08-11T19:00:09.492Z] >>> [apiv2][query] PUT https://storage.googleapis.com/uploads-508807872630.us-central1.cloudfunctions.appspot.com/c80cc52c-c7f5-4a44-af35-7b183d800266.zip GoogleAccessId=service-306570664024%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1723404609&Signature=EH9lw43YDhF7gnrtSWMqsOXOTde%2FlUzgkcqPCUnCGZgunOUKVSSFAO6LUkDeC%2FfBihHVr0plhuF1WY9bbFyfK%2Bg%2F%2FIp%2BI5pIKJTHBnaRGn7BRUTXbV8un4yHDQlgviBEwM7wUotq5FgWH8okkCzfkUANf9xRR581%2FOtcaDHAl%2BGVYos47BA1DgHkpFF%2FKVswR54hJHNgUk5fhk01%2BQ9bqTsToiNJwAk9%2BQW%2FyEmprqrIRcAeq%2FN3CdIm%2F4kaBY6ArWKA4r8%2Bo3yNrRZbs0Ez%2FLhcjEL79wlo4zkc%2Bd%2B84UZbymK2egWZClzbyhWWKLnkSNH1fn9u3%2FfB7y75UtwkEQ%3D%3D
+[debug] [2024-08-11T19:00:09.492Z] >>> [apiv2][body] PUT https://storage.googleapis.com/uploads-508807872630.us-central1.cloudfunctions.appspot.com/c80cc52c-c7f5-4a44-af35-7b183d800266.zip [stream]
+[debug] [2024-08-11T19:00:10.702Z] <<< [apiv2][status] PUT https://storage.googleapis.com/uploads-508807872630.us-central1.cloudfunctions.appspot.com/c80cc52c-c7f5-4a44-af35-7b183d800266.zip 200
+[debug] [2024-08-11T19:00:10.702Z] <<< [apiv2][body] PUT https://storage.googleapis.com/uploads-508807872630.us-central1.cloudfunctions.appspot.com/c80cc52c-c7f5-4a44-af35-7b183d800266.zip [omitted]
+[info] +  functions: functions folder uploaded successfully 
+[info] i  functions: creating Node.js 18 (1st Gen) function enviarNotificacion(us-central1)... 
+[debug] [2024-08-11T19:00:10.705Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions [none]
+[debug] [2024-08-11T19:00:10.705Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions {"name":"projects/fir-login2-c7a59/locations/us-central1/functions/enviarNotificacion","sourceUploadUrl":"https://storage.googleapis.com/uploads-508807872630.us-central1.cloudfunctions.appspot.com/c80cc52c-c7f5-4a44-af35-7b183d800266.zip?GoogleAccessId=service-306570664024@gcf-admin-robot.iam.gserviceaccount.com&Expires=1723404609&Signature=EH9lw43YDhF7gnrtSWMqsOXOTde%2FlUzgkcqPCUnCGZgunOUKVSSFAO6LUkDeC%2FfBihHVr0plhuF1WY9bbFyfK%2Bg%2F%2FIp%2BI5pIKJTHBnaRGn7BRUTXbV8un4yHDQlgviBEwM7wUotq5FgWH8okkCzfkUANf9xRR581%2FOtcaDHAl%2BGVYos47BA1DgHkpFF%2FKVswR54hJHNgUk5fhk01%2BQ9bqTsToiNJwAk9%2BQW%2FyEmprqrIRcAeq%2FN3CdIm%2F4kaBY6ArWKA4r8%2Bo3yNrRZbs0Ez%2FLhcjEL79wlo4zkc%2Bd%2B84UZbymK2egWZClzbyhWWKLnkSNH1fn9u3%2FfB7y75UtwkEQ%3D%3D","entryPoint":"enviarNotificacion","runtime":"nodejs18","dockerRegistry":"ARTIFACT_REGISTRY","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"2108e1cd46387b036122e9e50a11827f3d6c6ffe"},"httpsTrigger":{"securityLevel":"SECURE_ALWAYS"},"minInstances":null,"maxInstances":null,"ingressSettings":null,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"fir-login2-c7a59\",\"databaseURL\":\"https://fir-login2-c7a59-default-rtdb.firebaseio.com\",\"storageBucket\":\"fir-login2-c7a59.appspot.com\",\"locationId\":\"us-central\"}","GCLOUD_PROJECT":"fir-login2-c7a59","EVENTARC_CLOUD_EVENT_SOURCE":"projects/fir-login2-c7a59/locations/us-central1/functions/enviarNotificacion"},"serviceAccountEmail":null,"availableMemoryMb":null,"timeout":null,"vpcConnector":null,"vpcConnectorEgressSettings":null,"buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}}
+[debug] [2024-08-11T19:00:11.757Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions 403
+[debug] [2024-08-11T19:00:11.757Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/fir-login2-c7a59/locations/us-central1/functions {"error":{"code":403,"message":"Unable to retrieve the repository metadata for projects/fir-login2-c7a59/locations/us-central1/repositories/gcf-artifacts. Ensure that the Cloud Functions service account has 'artifactregistry.repositories.list' and 'artifactregistry.repositories.get' permissions. You can add the permissions by granting the role 'roles/artifactregistry.reader'.","status":"PERMISSION_DENIED"}}
+[warn] !  functions: failed to create function projects/fir-login2-c7a59/locations/us-central1/functions/enviarNotificacion 
+[error] Failed to create function projects/fir-login2-c7a59/locations/us-central1/functions/enviarNotificacion
+[debug] [2024-08-11T19:00:11.764Z] Total Function Deployment time: 1055
+[debug] [2024-08-11T19:00:11.764Z] 1 Functions Deployed
+[debug] [2024-08-11T19:00:11.764Z] 1 Functions Errored
+[debug] [2024-08-11T19:00:11.764Z] 0 Function Deployments Aborted
+[debug] [2024-08-11T19:00:11.764Z] Average Function Deployment time: 1054
+[info] 
+[info] Functions deploy had errors with the following functions:
+	enviarNotificacion(us-central1)
+[info] i  functions: cleaning up build files... 
+[debug] [2024-08-11T19:00:12.241Z] >>> [apiv2][query] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/fir-login2-c7a59/locations/us-central1/repositories/gcf-artifacts/packages/enviar_notificacion [none]
+[debug] [2024-08-11T19:00:12.242Z] >>> [apiv2][query] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list [none]
+[debug] [2024-08-11T19:00:13.151Z] <<< [apiv2][status] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list 404
+[debug] [2024-08-11T19:00:13.151Z] <<< [apiv2][body] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list {"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}]}
+[debug] [2024-08-11T19:00:13.151Z] Failed docker command with error  HTTP Error: 404, Not Found {"name":"FirebaseError","children":[],"context":{"body":{"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}],"error":{"message":"Not Found"}},"response":{"statusCode":404}},"exit":1,"message":"HTTP Error: 404, Not Found","status":404}
+[debug] [2024-08-11T19:00:13.168Z] >>> [apiv2][query] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list [none]
+[debug] [2024-08-11T19:00:13.594Z] <<< [apiv2][status] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/fir-login2-c7a59/locations/us-central1/repositories/gcf-artifacts/packages/enviar_notificacion 404
+[debug] [2024-08-11T19:00:13.594Z] <<< [apiv2][body] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/fir-login2-c7a59/locations/us-central1/repositories/gcf-artifacts/packages/enviar_notificacion {"error":{"code":404,"message":"Package \"projects/fir-login2-c7a59/locations/us-central1/repositories/gcf-artifacts/packages/enviar_notificacion\" was not found.","status":"NOT_FOUND"}}
+[debug] [2024-08-11T19:00:13.691Z] <<< [apiv2][status] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list 404
+[debug] [2024-08-11T19:00:13.691Z] <<< [apiv2][body] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list {"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}]}
+[debug] [2024-08-11T19:00:13.692Z] Failed docker command with error  HTTP Error: 404, Not Found {"name":"FirebaseError","children":[],"context":{"body":{"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}],"error":{"message":"Not Found"}},"response":{"statusCode":404}},"exit":1,"message":"HTTP Error: 404, Not Found","status":404}
+[debug] [2024-08-11T19:00:13.803Z] >>> [apiv2][query] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list [none]
+[debug] [2024-08-11T19:00:15.008Z] <<< [apiv2][status] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list 404
+[debug] [2024-08-11T19:00:15.008Z] <<< [apiv2][body] GET https://us.gcr.io/v2/fir-login2-c7a59/gcf/us-central1/tags/list {"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}]}
+[debug] [2024-08-11T19:00:15.008Z] Failed docker command with error  HTTP Error: 404, Not Found {"name":"FirebaseError","children":[],"context":{"body":{"errors":[{"code":"NAME_UNKNOWN","message":"Repository \"us.gcr.io\" not found"}],"error":{"message":"Not Found"}},"response":{"statusCode":404}},"exit":1,"message":"HTTP Error: 404, Not Found","status":404}
+[warn] !  functions: Unhandled error cleaning up build images. This could result in a small monthly bill if not corrected. You can attempt to delete these images by redeploying or you can delete them manually at https://console.cloud.google.com/gcr/images/fir-login2-c7a59/us/gcf 
+[debug] [2024-08-11T19:00:15.010Z] Functions deploy failed.
+[debug] [2024-08-11T19:00:15.010Z] {
+  "endpoint": {
+    "id": "enviarNotificacion",
+    "project": "fir-login2-c7a59",
+    "region": "us-central1",
+    "entryPoint": "enviarNotificacion",
+    "platform": "gcfv1",
+    "runtime": "nodejs18",
+    "callableTrigger": {},
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "serviceAccount": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "vpc": null,
+    "environmentVariables": {
+      "FIREBASE_CONFIG": "{\"projectId\":\"fir-login2-c7a59\",\"databaseURL\":\"https://fir-login2-c7a59-default-rtdb.firebaseio.com\",\"storageBucket\":\"fir-login2-c7a59.appspot.com\",\"locationId\":\"us-central\"}",
+      "GCLOUD_PROJECT": "fir-login2-c7a59",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/fir-login2-c7a59/locations/us-central1/functions/enviarNotificacion"
+    },
+    "codebase": "default",
+    "targetedByOnly": false,
+    "hash": "2108e1cd46387b036122e9e50a11827f3d6c6ffe"
+  },
+  "op": "create",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "context": {
+      "function": "projects/fir-login2-c7a59/locations/us-central1/functions/enviarNotificacion"
+    },
+    "exit": 1,
+    "message": "Failed to create function projects/fir-login2-c7a59/locations/us-central1/functions/enviarNotificacion",
+    "original": {
+      "name": "FirebaseError",
+      "children": [],
+      "context": {
+        "body": {
+          "error": {
+            "code": 403,
+            "message": "Unable to retrieve the repository metadata for projects/fir-login2-c7a59/locations/us-central1/repositories/gcf-artifacts. Ensure that the Cloud Functions service account has 'artifactregistry.repositories.list' and 'artifactregistry.repositories.get' permissions. You can add the permissions by granting the role 'roles/artifactregistry.reader'.",
+            "status": "PERMISSION_DENIED"
+          }
+        },
+        "response": {
+          "statusCode": 403
+        }
+      },
+      "exit": 1,
+      "message": "HTTP Error: 403, Unable to retrieve the repository metadata for projects/fir-login2-c7a59/locations/us-central1/repositories/gcf-artifacts. Ensure that the Cloud Functions service account has 'artifactregistry.repositories.list' and 'artifactregistry.repositories.get' permissions. You can add the permissions by granting the role 'roles/artifactregistry.reader'.",
+      "status": 403
+    },
+    "status": 403,
+    "code": 403
+  }
+}
+[debug] [2024-08-11T19:00:15.502Z] Error: Failed to create function enviarNotificacion in region us-central1
+    at C:\Users\tasaj\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:52:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Fabricator.createV1Function (C:\Users\tasaj\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:182:32)
+    at async Fabricator.createEndpoint (C:\Users\tasaj\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:134:13)
+    at async handle (C:\Users\tasaj\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:89:17)
+[error] 
+[error] Error: There was an error deploying functions
