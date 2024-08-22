@@ -200,7 +200,7 @@ function NavBar({ handleSignOut }) {
             )}
             {userRole === 'Administrador_epr' && (
               <>
-                <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
+                <NavDropdown title="Administrador Voluntarios" id="navbarScrollingDropdownVoluntarios">
                   <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>
                   <NavDropdown.Item href="/RegOp">Registrar Oportunidades</NavDropdown.Item>
                   <NavDropdown.Item href="/registrarU">Registrar Unidad</NavDropdown.Item>
