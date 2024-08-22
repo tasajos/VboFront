@@ -9,38 +9,65 @@
     color: #333;
   }
   
-  .reporte-search-input {
-    width: 100%;
-    padding: 10px;
+  .search-export-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 80%;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 16px;
   }
   
-  .reporte-table {
+  .exportar-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .exportar-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .exportar-btn svg {
+    margin-right: 5px;
+  }
+  
+  .emergencias-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 40px;
   }
   
-  .reporte-table th, .reporte-table td {
+  .emergencias-table th,
+  .emergencias-table td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
   
-  .reporte-table th {
+  .emergencias-table th {
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #416cee;
     color: white;
   }
   
-  .reporte-table tr:hover {
+  .emergencias-table tr:hover {
     background-color: #f1f1f1;
   }
   
-  .reporte-alert {
+  .alert {
     padding: 10px;
     margin-bottom: 20px;
     background-color: #ffdddd;
