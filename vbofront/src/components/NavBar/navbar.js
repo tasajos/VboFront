@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -8,21 +8,30 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import './navbar.css';
 
 function NavBar({ handleSignOut }) {
+  const [userRole, setUserRole] = useState('');
+
+  useEffect(() => {
+    const role = localStorage.getItem('userRole');
+    setUserRole(role);
+  }, []);
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <img
-          src={process.env.PUBLIC_URL + '/img/chlogotrans.png'} // Ruta de la imagen
-          width="30"   // Ajusta el tamaño como sea necesario
-          height="30"  // Ajusta el tamaño como sea necesario
-          className="d-inline-block align-top" // Para alinear verticalmente con el texto
+          src={process.env.PUBLIC_URL + '/img/chlogotrans.png'}
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
           alt="Logo"
         />
         <Navbar.Brand href="/inicio">Inicio</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-            <Nav.Link as={Link} to="/situacion-actual">Situacion Actual</Nav.Link>
+            {userRole === 'Administrador' && (
+              <>
+                <Nav.Link as={Link} to="/situacion-actual">Situacion Actual</Nav.Link>
             <NavDropdown title="Emergencias" id="navbarScrollingDropdownEmergencias">
               <NavDropdown.Item href="/solicitudes">Solicitudes</NavDropdown.Item>
               <NavDropdown.Item href="/AtencionesEmergencias">Atenciones</NavDropdown.Item>
@@ -187,6 +196,21 @@ function NavBar({ handleSignOut }) {
               <NavDropdown.Item href="/ListOport">Listar Oportunidades</NavDropdown.Item>
               <NavDropdown.Item href="/listarUn">Listar Unidades</NavDropdown.Item>
             </NavDropdown>
+              </>
+            )}
+            {userRole === 'Administrador_epr' && (
+              <>
+                <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
+                  <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>
+                  <NavDropdown.Item href="/RegOp">Registrar Oportunidades</NavDropdown.Item>
+                  <NavDropdown.Item href="/registrarU">Registrar Unidad</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/ListEvent">Listar Eventos</NavDropdown.Item>
+                  <NavDropdown.Item href="/ListOport">Listar Oportunidades</NavDropdown.Item>
+                  <NavDropdown.Item href="/listarUn">Listar Unidades</NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
           </Nav>
           <Button variant="outline-danger" onClick={handleSignOut}>Cerrar Sesión</Button>
         </Navbar.Collapse>

@@ -1,0 +1,33 @@
+.admin-epr-dashboard-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .admin-epr-dashboard-container h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+  }
+  
+  .admin-epr-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .admin-epr-option {
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s;
+  }
+  
+  .admin-epr-option:hover {
+    background-color: #0056b3;
+  }
+  

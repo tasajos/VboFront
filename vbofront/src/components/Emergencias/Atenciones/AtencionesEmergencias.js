@@ -78,8 +78,11 @@ function TablaEmergencias() {
   };
 
   return (
+    <div>
+       <NavBar handleSignOut={handleSignOut} />
+    <br></br>
     <div className="tabla-container">
-      <NavBar handleSignOut={handleSignOut} />
+     
       {mensaje && <div className="alert">{mensaje}</div>}
       <input
         type="text"
@@ -170,6 +173,7 @@ function TablaEmergencias() {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 }

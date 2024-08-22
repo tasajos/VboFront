@@ -50,6 +50,8 @@ import RegistrarU from './components/Voluntarios/RegistrarUnidad';
 import ListarUnidades from './components/Voluntarios/ListarUnidades';
 import ReporteEmergencias from './components/Emergencias/ReporteEmergencia/ReporteEmergencia';
 import NavBar from './components/NavBar/navbar';
+import AdminEprDashboard from './components/Epr/AdminEprDashboard'; // Nueva página para Administrador EPR
+
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -122,6 +124,7 @@ function App() {
           <Route path="/registrarU" element={<RegistrarU />} />
           <Route path="/listarUn" element={<ListarUnidades />} />
           <Route path="/listarreporteE" element={<ReporteEmergencias />} />
+          <Route path="/admin-epr-dashboard" element={<AdminEprDashboard />} />
 
           
         </Routes>

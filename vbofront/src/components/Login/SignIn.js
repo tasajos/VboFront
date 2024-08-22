@@ -32,10 +32,18 @@ function SignIn() {
       const userRef = ref(database, `UsuariosVbo/${userId}`);
       const userSnapshot = await get(userRef);
       const userData = userSnapshot.val();
-      
-      if (userData.rol !== 'Administrador') {
-        setAccessDenied(true); // Mostrar mensaje si el rol no es Administrador
-        await signOut(auth); // Cerrar sesión si el usuario no es Administrador
+
+      if (userData.rol === 'Administrador_epr') {
+        console.log('Administrador EPR: Acceso permitido');
+        localStorage.setItem('userRole', 'Administrador_epr');
+        navigate('/admin-epr-dashboard'); // Redirige a una página específica para Administrador EPR
+      } else if (userData.rol === 'Administrador') {
+        console.log('Inicio de sesión exitoso');
+        localStorage.setItem('userRole', 'Administrador');
+        navigate('/dashboard'); // Redirigir al usuario al Dashboard estándar
+      } else {
+        setAccessDenied(true); // Mostrar mensaje si el rol no es adecuado
+        await signOut(auth); // Cerrar sesión si el usuario no tiene el rol adecuado
 
         // Guardar mensaje en localStorage
         localStorage.setItem('accessDenied', 'No tienes el rol necesario para iniciar sesión.');
@@ -45,9 +53,6 @@ function SignIn() {
           setAccessDenied(false);
           navigate('/signin');
         }, 10000);
-      } else {
-        console.log('Inicio de sesión exitoso');
-        navigate('/dashboard'); // Redirigir al usuario al Dashboard después de un inicio de sesión exitoso
       }
     } catch (error) {
       console.error('Error en el inicio de sesión', error);
@@ -69,14 +74,6 @@ function SignIn() {
       alert('Por favor ingresa tu correo electrónico.');
     }
   };
-
-  if (initialLoad && accessDenied) {
-    // Muestra mensaje de acceso denegado durante 10 segundos
-    setTimeout(() => {
-      setAccessDenied(false);
-      setInitialLoad(false); // Asegura que el mensaje no se muestre nuevamente al recargar
-    }, 10);
-  }
 
   return (
     <div className="signin-container">
