@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, onValue,set } from 'firebase/database';
 import { auth } from '../../firebase';
 import './RegistroUsuario.css';
 import Modal from 'react-bootstrap/Modal';
@@ -8,95 +8,110 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import NavBar from '../NavBar/navbar';
 import { signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
-
+import { useNavigate } from 'react-router-dom';
 
 const RegistroUsuario = () => {
-    const [nombre, setNombre] = useState('');
-    const [apellidoPaterno, setApellidoPaterno] = useState('');
-    const [apellidoMaterno, setApellidoMaterno] = useState('');
-    const [carnetIdentidad, setCarnetIdentidad] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [contrasena, setContrasena] = useState('');
-    const [repetirContrasena, setRepetirContrasena] = useState('');
-    const [unidad, setUnidad] = useState('');
-    const [rol, setRol] = useState('');
-    const [showModal, setShowModal] = useState(false);
-    const [modalTitle, setModalTitle] = useState('');
-    const [modalBody, setModalBody] = useState('');
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate(); // Utiliza useNavigate
+  const [nombre, setNombre] = useState('');
+  const [apellidoPaterno, setApellidoPaterno] = useState('');
+  const [apellidoMaterno, setApellidoMaterno] = useState('');
+  const [carnetIdentidad, setCarnetIdentidad] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contrasena, setContrasena] = useState('');
+  const [repetirContrasena, setRepetirContrasena] = useState('');
+  const [unidad, setUnidad] = useState('');
+  const [unidades, setUnidades] = useState([]); // Nuevo estado para almacenar las unidades
+  const [rol, setRol] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalBody, setModalBody] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const handleSignOut = async () => {
-      try {
-        await signOut(auth);
-        navigate('/signin'); // Redirigir al usuario después de cerrar sesión
-        console.log('Sesión cerrada');
-      } catch (error) {
-        console.error('Error al cerrar sesión', error);
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate('/signin');
+      console.log('Sesión cerrada');
+    } catch (error) {
+      console.error('Error al cerrar sesión', error);
+    }
+  };
+
+  useEffect(() => {
+    const db = getDatabase();
+    const unidadesRef = ref(db, '/epr');
+
+    onValue(unidadesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const unidadesArray = Object.keys(data).map((key) => ({
+          id: key,
+          nombre: data[key].nombre,
+        }));
+        setUnidades(unidadesArray);
       }
-    };
+    });
+  }, []);
 
+  const clearFields = () => {
+    setNombre('');
+    setApellidoPaterno('');
+    setApellidoMaterno('');
+    setCarnetIdentidad('');
+    setTelefono('');
+    setCorreo('');
+    setContrasena('');
+    setRepetirContrasena('');
+    setUnidad('');
+    setRol('');
+  };
 
-    const clearFields = () => {
-      setNombre('');
-      setApellidoPaterno('');
-      setApellidoMaterno('');
-      setCarnetIdentidad('');
-      setTelefono('');
-      setCorreo('');
-      setContrasena('');
-      setRepetirContrasena('');
-      setUnidad('');
-      setRol('');
-    };
-  
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (contrasena !== repetirContrasena) {
-          setModalTitle('Error de Registro');
-          setModalBody('Las contraseñas no coinciden. Por favor, verifica e intenta de nuevo.');
-          setShowModal(true);
-          return;
-        }
-        setLoading(true);
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, correo, contrasena);
-          const db = getDatabase();
-          await set(ref(db, 'UsuariosVbo/' + userCredential.user.uid), {
-            nombre,
-            apellidoPaterno,
-            apellidoMaterno,
-            carnetIdentidad,
-            telefono,
-            correo,
-            unidad,
-            rol
-          });
-          setModalTitle('Registro Exitoso');
-          setModalBody('¡Felicidades! Has sido registrado exitosamente.');
-          clearFields();
-          setShowModal(true);
-        } catch (error) {
-          let errorMessage = 'Se ha producido un error inesperado. Por favor, intenta de nuevo más tarde.';
-          if (error.code === 'auth/email-already-in-use') {
-            errorMessage = 'El correo electrónico ya está en uso. Por favor, utiliza otro correo o recupera tu contraseña si olvidaste la anterior.';
-          }
-          setModalTitle('Error de Registro');
-          setModalBody(errorMessage);
-          setShowModal(true);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-    return (
-      <div>
-        <NavBar handleSignOut={handleSignOut} />
-        <div className="container mt-5">
-          <h2>Registro de Usuario</h2>
-          <form onSubmit={handleSubmit}>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (contrasena !== repetirContrasena) {
+      setModalTitle('Error de Registro');
+      setModalBody('Las contraseñas no coinciden. Por favor, verifica e intenta de nuevo.');
+      setShowModal(true);
+      return;
+    }
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, correo, contrasena);
+      const db = getDatabase();
+      await set(ref(db, 'UsuariosVbo/' + userCredential.user.uid), {
+        nombre,
+        apellidoPaterno,
+        apellidoMaterno,
+        carnetIdentidad,
+        telefono,
+        correo,
+        unidad,
+        rol
+      });
+      setModalTitle('Registro Exitoso');
+      setModalBody('¡Felicidades! Has sido registrado exitosamente.');
+      clearFields();
+      setShowModal(true);
+    } catch (error) {
+      let errorMessage = 'Se ha producido un error inesperado. Por favor, intenta de nuevo más tarde.';
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'El correo electrónico ya está en uso. Por favor, utiliza otro correo o recupera tu contraseña si olvidaste la anterior.';
+      }
+      setModalTitle('Error de Registro');
+      setModalBody(errorMessage);
+      setShowModal(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <NavBar handleSignOut={handleSignOut} />
+      <div className="container mt-5">
+        <h2>Registro de Usuario</h2>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nombre" className="form-label">Nombre:</label>
             <input type="text" className="form-control" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
@@ -131,7 +146,12 @@ const RegistroUsuario = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="unidad" className="form-label">Unidad a la que pertenece:</label>
-            <input type="text" className="form-control" id="unidad" value={unidad} onChange={(e) => setUnidad(e.target.value)} required />
+            <select className="form-control" id="unidad" value={unidad} onChange={(e) => setUnidad(e.target.value)} required>
+              <option value="">Seleccione una unidad</option>
+              {unidades.map((unidad) => (
+                <option key={unidad.id} value={unidad.nombre}>{unidad.nombre}</option>
+              ))}
+            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="rol" className="form-label">Rol:</label>
@@ -142,12 +162,13 @@ const RegistroUsuario = () => {
               <option value="Voluntario">Voluntario</option>
               <option value="Bombero">Bombero</option>
               <option value="Seguridad">Seguridad</option>
+              <option value="Administrador_epr">Administrador EPR</option>
             </select>
           </div>
           <button type="submit" className="btn btn-primary w-100 mt-4">
             {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Registrarse"}
           </button>
-          </form>
+        </form>
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title>{modalTitle}</Modal.Title>
