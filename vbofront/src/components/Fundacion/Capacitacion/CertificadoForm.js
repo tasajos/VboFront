@@ -200,7 +200,7 @@ function CertificadoForm() {
       <NavBar handleSignOut={handleSignOut} />
       <br />
       <div className="certificado-form-container">
-        <h2 className="text-center">Generar Certificado de Participación</h2>
+        <h2 className="text-center">Generar Certificado </h2>
 
         <Button variant="warning" className="mb-4" onClick={generateTemplate}>
           Descargar Template
