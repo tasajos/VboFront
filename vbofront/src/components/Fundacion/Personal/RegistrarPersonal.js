@@ -183,12 +183,13 @@ function RegistrarPersonal() {
                 <option value="AB-">AB-</option>
                 <option value="O+">O+</option>
                 <option value="O-">O-</option>
+                <option value="NO SABE">NO SABE</option>
               </select>
             </div>
 
             <div className="form-group">
               <label>Correo Electrónico:</label>
-              <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} className="form-control" required />
+              <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} className="form-control" required/>
             </div>
 
             <div className="form-group">
@@ -227,6 +228,7 @@ function RegistrarPersonal() {
                 <option value="Profesor">Profesor</option>
                 <option value="Enfermero">Enfermero</option>
                 <option value="Arquitecto">Arquitecto</option>
+                <option value="Estudiante">Estudiante</option>
               </select>
             </div>
 
@@ -236,10 +238,13 @@ function RegistrarPersonal() {
                 <option value="">Seleccione</option>
                 <option value="Medicina">Medicina</option>
                 <option value="Ingeniería Civil">Ingeniería Civil</option>
+                <option value="Ingeniería Sistemas">Ingeniería Sistema</option>
+                <option value="Ingeniería Comercial">Ingeniería Comercial</option>
                 <option value="Derecho">Derecho</option>
                 <option value="Educación">Educación</option>
                 <option value="Enfermería">Enfermería</option>
                 <option value="Arquitectura">Arquitectura</option>
+                <option value="Otros">Otros</option>
               </select>
             </div>
 
