@@ -1,0 +1,48 @@
+.certificado-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .certificado-form-container h2 {
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+  
+  .certificado-form-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .certificado-form-container .form-control {
+    border-radius: 4px;
+  }
+  
+  .certificado-form-container .btn-primary {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .certificado-form-container .modal-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .certificado-form-container .modal-body {
+    text-align: center;
+  }
+  
+  .certificado-form-container .modal-body p {
+    margin-bottom: 20px;
+  }
+  
+  .certificado-form-container .modal-body .btn-success {
+    width: 100%;
+  }
+  
+  .certificado-form-container .modal-footer {
+    justify-content: center;
+  }
+  

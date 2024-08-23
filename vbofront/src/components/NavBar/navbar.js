@@ -162,6 +162,7 @@ function NavBar({ handleSignOut }) {
                   {/* Menú Capacitación */}
                   <NavDropdown title="Capacitación" id="navbarScrollingDropdownCapacitacion">
                     <NavDropdown.Item href="/capacitacion/cursos">Cursos</NavDropdown.Item>
+                    <NavDropdown.Item href="certgene">Generar Certificados</NavDropdown.Item>
                     <NavDropdown.Item href="/capacitacion/reportes">Reportes de Capacitación</NavDropdown.Item>
                     <NavDropdown.Item href="/capacitacion/planes">Planes de Capacitación</NavDropdown.Item>
                     <NavDropdown.Item href="/capacitacion/evaluacion">Evaluación de Capacitación</NavDropdown.Item>
@@ -224,6 +225,7 @@ function NavBar({ handleSignOut }) {
 
                   <NavDropdown title="Capacitación" id="navbarScrollingDropdownCapacitacion">
                     <NavDropdown.Item href="/capacitacion/cursos">Cursos</NavDropdown.Item>
+                    <NavDropdown.Item href="certgene">Generar Certificados</NavDropdown.Item>
                     <NavDropdown.Item href="/capacitacion/reportes">Reportes de Capacitación</NavDropdown.Item>
                     <NavDropdown.Item href="/capacitacion/planes">Planes de Capacitación</NavDropdown.Item>
                     <NavDropdown.Item href="/capacitacion/evaluacion">Evaluación de Capacitación</NavDropdown.Item>

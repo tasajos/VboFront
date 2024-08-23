@@ -56,6 +56,7 @@ import AdminEprDashboard from './components/Epr/AdminEprDashboard'; // Nueva pá
 //Fundacion
 import RegistrarPersonal from './components/Fundacion/Personal/RegistrarPersonal';
 import ListarPersonal from './components/Fundacion/Personal/ListarPersonal'; 
+import CertCapac from './components/Fundacion/Capacitacion/CertificadoForm'; 
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -134,6 +135,7 @@ function App() {
 
           <Route path="/regpersoF" element={<RegistrarPersonal />} />
           <Route path="/listpersoF" element={<ListarPersonal />} />
+          <Route path="/certgene" element={<CertCapac />} />
           
         </Routes>
       </div>
