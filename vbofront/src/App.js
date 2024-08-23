@@ -54,7 +54,8 @@ import AdminEprDashboard from './components/Epr/AdminEprDashboard'; // Nueva pá
 
 
 //Fundacion
-import RegistrarPersonal from './components/Fundacion/Personal/RegistrarPersonal'; 
+import RegistrarPersonal from './components/Fundacion/Personal/RegistrarPersonal';
+import ListarPersonal from './components/Fundacion/Personal/ListarPersonal'; 
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -132,6 +133,7 @@ function App() {
           {/* Fundacion */}
 
           <Route path="/regpersoF" element={<RegistrarPersonal />} />
+          <Route path="/listpersoF" element={<ListarPersonal />} />
           
         </Routes>
       </div>
