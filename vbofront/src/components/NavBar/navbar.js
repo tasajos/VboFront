@@ -12,9 +12,7 @@ function NavBar({ handleSignOut }) {
   const [userRole, setUserRole] = useState('');
   const [userUnit, setUserUnit] = useState('');
 
-
-
- useEffect(() => {
+  useEffect(() => {
     const name = localStorage.getItem('userName');
     const role = localStorage.getItem('userRole');
     const unidad = localStorage.getItem('userUnit');
@@ -22,7 +20,6 @@ function NavBar({ handleSignOut }) {
     setUserName(name);
     setUserRole(role);
     setUserUnit(unidad);
-
   }, []);
 
   return (
@@ -42,170 +39,134 @@ function NavBar({ handleSignOut }) {
             {userRole === 'Administrador' && (
               <>
                 <Nav.Link as={Link} to="/situacion-actual">Situacion Actual</Nav.Link>
-            <NavDropdown title="Emergencias" id="navbarScrollingDropdownEmergencias">
-              <NavDropdown.Item href="/solicitudes">Solicitudes</NavDropdown.Item>
-              <NavDropdown.Item href="/AtencionesEmergencias">Atenciones</NavDropdown.Item>
-              <NavDropdown.Item href="/listarreporteE">Reporte Emergencias</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/ListOperaciones">Operaciones</NavDropdown.Item>
-              <NavDropdown title="SCI" id="navbarScrollingDropdownSCI">
-                
-              <NavDropdown title="Formulario Comandante de Incidente" id="navbarScrollingDropdownComandante" >
-               
-              <NavDropdown.Item href="/forminci201">
-                    1.- FORM 201
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/forminci202">
-                  2.- FORM 202
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/forminci203">
-                  3.- FORM 203
-                  </NavDropdown.Item>
-
-                  <NavDropdown.Item href="/forminci221">
-                  12.- FORM 221 - Desmovilización
-                  </NavDropdown.Item>
+                <NavDropdown title="Emergencias" id="navbarScrollingDropdownEmergencias">
+                  <NavDropdown.Item href="/solicitudes">Solicitudes</NavDropdown.Item>
+                  <NavDropdown.Item href="/AtencionesEmergencias">Atenciones</NavDropdown.Item>
+                  <NavDropdown.Item href="/listarreporteE">Reporte Emergencias</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/ListOperaciones">Operaciones</NavDropdown.Item>
+                  <NavDropdown title="SCI" id="navbarScrollingDropdownSCI">
+                    <NavDropdown title="Formulario Comandante de Incidente" id="navbarScrollingDropdownComandante">
+                      <NavDropdown.Item href="/forminci201">1.- FORM 201</NavDropdown.Item>
+                      <NavDropdown.Item href="/forminci202">2.- FORM 202</NavDropdown.Item>
+                      <NavDropdown.Item href="/forminci203">3.- FORM 203</NavDropdown.Item>
+                      <NavDropdown.Item href="/forminci221">12.- FORM 221 - Desmovilización</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown title="Formulario Oficial Seguridad" id="navbarScrollingDropdownComandante">
+                      <NavDropdown.Item href="/forminci204">4.- FORM 204</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown title="Formulario Oficial Enlace" id="navbarScrollingDropdownComandante">
+                      <NavDropdown.Item href="/forminci205">5.- FORM 205</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown title="Formulario Oficial Informacion Publica" id="navbarScrollingDropdownComandante">
+                      <NavDropdown.Item href="/forminci205b">6.- FORM 205-B</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown title="Formulario Jefe de Operaciones" id="navbarScrollingDropdownComandante">
+                      <NavDropdown.Item href="/forminci206">7.- FORM 206 - Plan Medico</NavDropdown.Item>
+                      <NavDropdown.Item href="/forminci207">8.- FORM 207 - Registro de Victimas</NavDropdown.Item>
+                      <NavDropdown.Item href="/forminci211">9.- FORM 211 - Registro Personal</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown title="Formulario Jefe de Logistica" id="navbarScrollingDropdownComandante">
+                      <NavDropdown.Item href="/forminci215">10.- FORM 215 - Registro Logistica</NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown title="Formulario Jefe de Planificacion" id="navbarScrollingDropdownComandante">
+                      <NavDropdown.Item href="/forminci214">11.- FORM 214 - Registro Actividades</NavDropdown.Item>
+                    </NavDropdown>
+                  </NavDropdown>
                 </NavDropdown>
-                
-                <NavDropdown title="Formulario Oficial Seguridad" id="navbarScrollingDropdownComandante" >
-               
-               <NavDropdown.Item href="/forminci204">
-                     4.- FORM 204
-                   </NavDropdown.Item>
-                 
-                 </NavDropdown>
 
+                <NavDropdown.Divider />
 
-                 <NavDropdown title="Formulario Oficial Enlace" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/forminci205">
-                     5.- FORM 205
-                   </NavDropdown.Item>
-                 </NavDropdown>
-
-                 <NavDropdown title="Formulario Oficial Informacion Publica" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/forminci205b">
-                     6.- FORM 205-B
-                   </NavDropdown.Item>
-                 </NavDropdown>
-
-                 <NavDropdown title="Formulario Jefe de Operaciones" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/forminci206">
-                     7.- FORM 206 - Plan Medico
-                   </NavDropdown.Item>
-                   <NavDropdown.Item href="/forminci207">
-                     8.- FORM 207 - Registro de Victimas
-                   </NavDropdown.Item>
-                   <NavDropdown.Item href="/forminci211">
-                     9.- FORM 211 - Registro Personal
-                   </NavDropdown.Item>
-                 </NavDropdown>
-              
-                 <NavDropdown title="Formulario Jefe de Logistica" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/forminci215">
-                     10.- FORM 215 - Registro Logistica
-                   </NavDropdown.Item>
-                   
-                 </NavDropdown>
-
-                 <NavDropdown title="Formulario Jefe de Planificacion" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/forminci214">
-                     11.- FORM 214 - Registro Actividades
-                   </NavDropdown.Item>
-                   
-                 </NavDropdown>
-
-
-              </NavDropdown>
-            </NavDropdown>
-
-            <NavDropdown.Divider />
-            
-              <NavDropdown title="Reportes SCI" id="navbarScrollingDropdownSCI">
-                
-              <NavDropdown title="Comandante de Incidente" id="navbarScrollingDropdownComandante" >
-               
-              <NavDropdown.Item href="/formpreview">
-                    1.- FORM 201
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/formpreview2">
-                  2.- FORM 202
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/formpreview3">
-                  3.- FORM 203
-                  </NavDropdown.Item>
-
-                  <NavDropdown.Item href="/formpreview221">
-                  12.- FORM 221 - Desmovilización
-                  </NavDropdown.Item>
+                <NavDropdown title="Reportes SCI" id="navbarScrollingDropdownSCI">
+                  <NavDropdown title="Comandante de Incidente" id="navbarScrollingDropdownComandante">
+                    <NavDropdown.Item href="/formpreview">1.- FORM 201</NavDropdown.Item>
+                    <NavDropdown.Item href="/formpreview2">2.- FORM 202</NavDropdown.Item>
+                    <NavDropdown.Item href="/formpreview3">3.- FORM 203</NavDropdown.Item>
+                    <NavDropdown.Item href="/formpreview221">12.- FORM 221 - Desmovilización</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="Oficial de Seguridad" id="navbarScrollingDropdownComandante">
+                    <NavDropdown.Item href="/formpreview204">4.- FORM 204</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="Oficial de Enlace" id="navbarScrollingDropdownComandante">
+                    <NavDropdown.Item href="/formpreview205">5.- FORM 205</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="Oficial de Informacion Publica" id="navbarScrollingDropdownComandante">
+                    <NavDropdown.Item href="/formpreview205b">6.- FORM 205B</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="Jefe de Operaciones" id="navbarScrollingDropdownComandante">
+                    <NavDropdown.Item href="/formpreview206">7.- FORM 206 - Plan Medico</NavDropdown.Item>
+                    <NavDropdown.Item href="/formpreview207">8.- FORM 207 - Registro de Victimas</NavDropdown.Item>
+                    <NavDropdown.Item href="/formpreview211">9.- FORM 211 - Registro Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="/reportepersonal">10.- Reporte Personal</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="Jefe de Logistica" id="navbarScrollingDropdownComandante">
+                    <NavDropdown.Item href="/formpreview215">10.- FORM 215 - Registro Logistica</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="Jefe de Planificacion" id="navbarScrollingDropdownComandante">
+                    <NavDropdown.Item href="/formpreview214">11.- FORM 214 - Registro Actividades</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown.Item href="/reportegral">Reporte General</NavDropdown.Item>
+                  <NavDropdown.Item href="/reportegralpersonal">Reporte General Personal</NavDropdown.Item>
                 </NavDropdown>
-               
-                <NavDropdown title=" Oficial de Seguridad" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/formpreview204">
-                     4.- FORM 204
-                   </NavDropdown.Item>
-                 </NavDropdown>
-               
-                <NavDropdown title=" Oficial de Enlace" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/formpreview205">
-                     5.- FORM 205
-                   </NavDropdown.Item>
-                 </NavDropdown>
 
-                 <NavDropdown title=" Oficial de Informacion Publica" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/formpreview205b">
-                     6.- FORM 205B
-                   </NavDropdown.Item>
-                 </NavDropdown>
-
-                 <NavDropdown title="Jefe de Operaciones" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/formpreview206">
-                     7.- FORM 206 - Plan Medico
-                   </NavDropdown.Item>
-                   <NavDropdown.Item href="/formpreview207">
-                     8.- FORM 207 - Registro de Victimas
-                   </NavDropdown.Item>
-                   <NavDropdown.Item href="/formpreview211">
-                     9.- FORM 211 - Registro Personal
-                   </NavDropdown.Item>
-                   <NavDropdown.Item href="/reportepersonal">
-                     10.- Reporte Personal
-                   </NavDropdown.Item>
-                 </NavDropdown>
-
-                 <NavDropdown title="Jefe de Logistica" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/formpreview215">
-                     10.- FORM 215 - Registro Logistica
-                   </NavDropdown.Item>
-                   
-                 </NavDropdown>
-
-                 <NavDropdown title="Jefe de Planificacion" id="navbarScrollingDropdownComandante" >  
-               <NavDropdown.Item href="/formpreview214">
-                     11.- FORM 214 - Registro Actividades
-                   </NavDropdown.Item>
-                   
-                 </NavDropdown>
-                 <NavDropdown.Item href="/reportegral">Reporte General</NavDropdown.Item>
-                 <NavDropdown.Item href="/reportegralpersonal">Reporte General Personal</NavDropdown.Item>
+                <NavDropdown title="Usuarios" id="navbarScrollingDropdownUsuarios">
+                  <NavDropdown.Item href="/RegistroUsuario">Registro Usuarios</NavDropdown.Item>
+                  <NavDropdown.Item href="/ListaUsuario">Usuarios</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action">Reporte</NavDropdown.Item>
                 </NavDropdown>
-              
+                <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
+                  <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>
+                  <NavDropdown.Item href="/RegOp">Registrar Oportunidades</NavDropdown.Item>
+                  <NavDropdown.Item href="/registrarU">Registrar Unidad</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/ListEvent">Listar Eventos</NavDropdown.Item>
+                  <NavDropdown.Item href="/ListOport">Listar Oportunidades</NavDropdown.Item>
+                  <NavDropdown.Item href="/listarUn">Listar Unidades</NavDropdown.Item>
+                </NavDropdown>
 
+                {/* Menú Fundación */}
+                <NavDropdown title="Fundación" id="navbarScrollingDropdownFundacion">
+                  {/* Menú Personal */}
+                  <NavDropdown title="Personal" id="navbarScrollingDropdownPersonal">
+                    <NavDropdown.Item href="/personal/registro">Registro de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="/personal/reportes">Reportes de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="/personal/seguimiento">Seguimiento de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>
+                  </NavDropdown>
 
-            <NavDropdown title="Usuarios" id="navbarScrollingDropdownUsuarios">
-              <NavDropdown.Item href="/RegistroUsuario">Registro Usuarios</NavDropdown.Item>
-              <NavDropdown.Item href="/ListaUsuario">Usuarios</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action">Reporte</NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
-              <NavDropdown.Item href="/Eventos">Registrar Eventos</NavDropdown.Item>
-              <NavDropdown.Item href="/RegOp">Registrar Oportunidades</NavDropdown.Item>
-              <NavDropdown.Item href="/registrarU">Registrar Unidad</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/ListEvent">Listar Eventos</NavDropdown.Item>
-              <NavDropdown.Item href="/ListOport">Listar Oportunidades</NavDropdown.Item>
-              <NavDropdown.Item href="/listarUn">Listar Unidades</NavDropdown.Item>
-            </NavDropdown>
+                  {/* Menú Logística */}
+                  <NavDropdown title="Logística" id="navbarScrollingDropdownLogistica">
+                    <NavDropdown.Item href="/logistica/inventario">Inventario</NavDropdown.Item>
+                    <NavDropdown.Item href="/logistica/proveedores">Proveedores</NavDropdown.Item>
+                    <NavDropdown.Item href="/logistica/transporte">Transporte y Almacenamiento</NavDropdown.Item>
+                    <NavDropdown.Item href="/logistica/mantenimiento">Mantenimiento Logístico</NavDropdown.Item>
+                  </NavDropdown>
+
+                  {/* Menú Finanzas */}
+                  <NavDropdown title="Finanzas" id="navbarScrollingDropdownFinanzas">
+                    <NavDropdown.Item href="/finanzas/pagos">Pagos y Cobros</NavDropdown.Item>
+                    <NavDropdown.Item href="/finanzas/reportes">Reportes Financieros</NavDropdown.Item>
+                    <NavDropdown.Item href="/finanzas/presupuesto">Presupuesto</NavDropdown.Item>
+                    <NavDropdown.Item href="/finanzas/inversiones">Inversiones</NavDropdown.Item>
+                  </NavDropdown>
+
+                  {/* Menú Operaciones */}
+                  <NavDropdown title="Operaciones" id="navbarScrollingDropdownOperaciones">
+                    <NavDropdown.Item href="/operaciones/registro">Registro de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="/operaciones/reportes">Reportes de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>
+                  </NavDropdown>
+
+                  {/* Menú Capacitación */}
+                  <NavDropdown title="Capacitación" id="navbarScrollingDropdownCapacitacion">
+                    <NavDropdown.Item href="/capacitacion/cursos">Cursos</NavDropdown.Item>
+                    <NavDropdown.Item href="/capacitacion/reportes">Reportes de Capacitación</NavDropdown.Item>
+                    <NavDropdown.Item href="/capacitacion/planes">Planes de Capacitación</NavDropdown.Item>
+                    <NavDropdown.Item href="/capacitacion/evaluacion">Evaluación de Capacitación</NavDropdown.Item>
+                  </NavDropdown>
+                </NavDropdown>
               </>
             )}
             {userRole === 'Administrador_epr' && (
@@ -218,6 +179,54 @@ function NavBar({ handleSignOut }) {
                   <NavDropdown.Item href="/ListEvent">Listar Eventos</NavDropdown.Item>
                   <NavDropdown.Item href="/ListOport">Listar Oportunidades</NavDropdown.Item>
                   <NavDropdown.Item href="/listarUn">Listar Unidades</NavDropdown.Item>
+                </NavDropdown>
+                {/* Menú Fundación */}
+                  <NavDropdown title="Fundación" id="navbarScrollingDropdownFundacion">
+
+                  {/* Menú Personal */}
+
+                  <NavDropdown title="Personal" id="navbarScrollingDropdownPersonal">
+                    <NavDropdown.Item href="/personal/registro">Registro de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="/personal/reportes">Reportes de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="/personal/seguimiento">Seguimiento de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>
+                  </NavDropdown>
+
+                  {/* Menú Logística */}
+
+                  <NavDropdown title="Logística" id="navbarScrollingDropdownLogistica">
+                    <NavDropdown.Item href="/logistica/inventario">Inventario</NavDropdown.Item>
+                    <NavDropdown.Item href="/logistica/proveedores">Proveedores</NavDropdown.Item>
+                    <NavDropdown.Item href="/logistica/transporte">Transporte y Almacenamiento</NavDropdown.Item>
+                    <NavDropdown.Item href="/logistica/mantenimiento">Mantenimiento Logístico</NavDropdown.Item>
+                  </NavDropdown>
+
+                  {/* Menú Finanzas */}
+
+                  <NavDropdown title="Finanzas" id="navbarScrollingDropdownFinanzas">
+                    <NavDropdown.Item href="/finanzas/pagos">Pagos y Cobros</NavDropdown.Item>
+                    <NavDropdown.Item href="/finanzas/reportes">Reportes Financieros</NavDropdown.Item>
+                    <NavDropdown.Item href="/finanzas/presupuesto">Presupuesto</NavDropdown.Item>
+                    <NavDropdown.Item href="/finanzas/inversiones">Inversiones</NavDropdown.Item>
+                  </NavDropdown>
+
+                  {/* Menú Operaciones */}
+
+                  <NavDropdown title="Operaciones" id="navbarScrollingDropdownOperaciones">
+                    <NavDropdown.Item href="/operaciones/registro">Registro de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="/operaciones/reportes">Reportes de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>
+                  </NavDropdown>
+
+                  {/* Menú Capacitación */}
+
+                  <NavDropdown title="Capacitación" id="navbarScrollingDropdownCapacitacion">
+                    <NavDropdown.Item href="/capacitacion/cursos">Cursos</NavDropdown.Item>
+                    <NavDropdown.Item href="/capacitacion/reportes">Reportes de Capacitación</NavDropdown.Item>
+                    <NavDropdown.Item href="/capacitacion/planes">Planes de Capacitación</NavDropdown.Item>
+                    <NavDropdown.Item href="/capacitacion/evaluacion">Evaluación de Capacitación</NavDropdown.Item>
+                  </NavDropdown>
                 </NavDropdown>
               </>
             )}
