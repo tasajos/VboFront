@@ -141,6 +141,7 @@ function CertificadoForm() {
   return (
     <div>
       <NavBar handleSignOut={handleSignOut} />
+      <br></br>
       <div className="certificado-form-container">
         <h2 className="text-center">Generar Certificado de Participación</h2>
         <Form>
