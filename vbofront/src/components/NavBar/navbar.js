@@ -8,11 +8,21 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import './navbar.css';
 
 function NavBar({ handleSignOut }) {
+  const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
+  const [userUnit, setUserUnit] = useState('');
 
-  useEffect(() => {
+
+
+ useEffect(() => {
+    const name = localStorage.getItem('userName');
     const role = localStorage.getItem('userRole');
+    const unidad = localStorage.getItem('userUnit');
+
+    setUserName(name);
     setUserRole(role);
+    setUserUnit(unidad);
+
   }, []);
 
   return (
@@ -212,7 +222,10 @@ function NavBar({ handleSignOut }) {
               </>
             )}
           </Nav>
-          <Button variant="outline-danger" onClick={handleSignOut}>Cerrar Sesión</Button>
+          <Nav>
+            {userName && <Nav.Link disabled>Bienvenido, {userName} ({userRole}) ({userUnit})</Nav.Link>}
+            <Button variant="outline-danger" onClick={handleSignOut}>Cerrar Sesión</Button>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

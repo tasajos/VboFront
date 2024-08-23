@@ -58,3 +58,27 @@
     color: #f44336;
     margin-bottom: 10px;
   }
+  .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    z-index: 1000; /* Asegúrate de que el modal esté en un nivel superior */
+  }
+  
+  .modal-content h2 {
+    margin-top: 0;
+  }
+  
+  .modal-content p {
+    margin: 10px 0;
+  }

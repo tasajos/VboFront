@@ -11,7 +11,6 @@ function SignIn() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [accessDenied, setAccessDenied] = useState(false);
-  const [initialLoad, setInitialLoad] = useState(true);
 
   const navigate = useNavigate();
 
@@ -25,40 +24,41 @@ function SignIn() {
 
   const handleSignIn = async () => {
     setLoading(true);
-    setError(''); // Limpiar errores previos
+    setError(''); 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const userId = userCredential.user.uid;
       const userRef = ref(database, `UsuariosVbo/${userId}`);
       const userSnapshot = await get(userRef);
       const userData = userSnapshot.val();
+      if (userData) {
+        console.log("Datos del usuario:", userData);
+        
+        // Almacena el nombre, rol y unidad en localStorage
+        localStorage.setItem('userName', userData.nombre || '');
+        localStorage.setItem('userRole', userData.rol || '');
+        localStorage.setItem('userUnit', userData.unidad || '');
 
-      if (userData.rol === 'Administrador_epr') {
-        console.log('Administrador EPR: Acceso permitido');
-        localStorage.setItem('userRole', 'Administrador_epr');
-        navigate('/admin-epr-dashboard'); // Redirige a una página específica para Administrador EPR
-      } else if (userData.rol === 'Administrador') {
-        console.log('Inicio de sesión exitoso');
-        localStorage.setItem('userRole', 'Administrador');
-        navigate('/dashboard'); // Redirigir al usuario al Dashboard estándar
-      } else {
-        setAccessDenied(true); // Mostrar mensaje si el rol no es adecuado
-        await signOut(auth); // Cerrar sesión si el usuario no tiene el rol adecuado
-
-        // Guardar mensaje en localStorage
-        localStorage.setItem('accessDenied', 'No tienes el rol necesario para iniciar sesión.');
-
-        // Esperar 10 segundos antes de redirigir al inicio de sesión
-        setTimeout(() => {
-          setAccessDenied(false);
-          navigate('/signin');
-        }, 10000);
+        if (userData.rol === 'Administrador_epr') {
+          navigate('/admin-epr-dashboard');
+        } else if (userData.rol === 'Administrador') {
+          navigate('/dashboard');
+        } else {
+          setAccessDenied(true);
+          signOut(auth); 
+          localStorage.setItem('accessDenied', 'No tienes el rol necesario para iniciar sesión.');
+          setTimeout(() => {
+            setAccessDenied(false);
+            navigate('/signin');
+          }, 10000);
+        }
       }
     } catch (error) {
       console.error('Error en el inicio de sesión', error);
-      setError('Usuario o contraseña incorrecta.'); // Personaliza tu mensaje de error
+      setError('Usuario o contraseña incorrecta.');
+    } finally {
+      setLoading(false); 
     }
-    setLoading(false);
   };
 
   const handlePasswordReset = async () => {
