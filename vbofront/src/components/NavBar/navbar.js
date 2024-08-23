@@ -186,7 +186,7 @@ function NavBar({ handleSignOut }) {
                   {/* Menú Personal */}
 
                   <NavDropdown title="Personal" id="navbarScrollingDropdownPersonal">
-                    <NavDropdown.Item href="/personal/registro">Registro de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="regpersoF">Registro de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="/personal/reportes">Reportes de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="/personal/seguimiento">Seguimiento de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>

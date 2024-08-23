@@ -53,6 +53,9 @@ import NavBar from './components/NavBar/navbar';
 import AdminEprDashboard from './components/Epr/AdminEprDashboard'; // Nueva página para Administrador EPR
 
 
+//Fundacion
+import RegistrarPersonal from './components/Fundacion/Personal/RegistrarPersonal'; 
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -126,6 +129,9 @@ function App() {
           <Route path="/listarreporteE" element={<ReporteEmergencias />} />
           <Route path="/admin-epr-dashboard" element={<AdminEprDashboard />} />
 
+          {/* Fundacion */}
+
+          <Route path="/regpersoF" element={<RegistrarPersonal />} />
           
         </Routes>
       </div>
