@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Document, Page, Text, Image, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { Document,Font, Page, Text, Image, View, StyleSheet, PDFDownloadLink, pdf } from '@react-pdf/renderer';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import * as XLSX from 'xlsx';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import { auth } from '../../../firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -26,12 +28,27 @@ function CertificadoForm() {
   const [logoRight, setLogoRight] = useState(null);
   const [logoCenter, setLogoCenter] = useState(null);
   const [signature, setSignature] = useState(null);
+  const [processing, setProcessing] = useState(false);
+
   const navigate = useNavigate();
 
   const handleFileChange = (event, setImageFunc) => {
     const file = event.target.files[0];
     setImageFunc(URL.createObjectURL(file));
   };
+
+// Registrar la fuente Roboto desde un archivo local
+Font.register({
+  family: 'Roboto',
+  src: '/fonts/Roboto-BoldItalic.ttf' // Actualiza el path con la ubicación correcta
+});
+
+Font.register({
+  family: 'Montserrat',
+  src: '/fonts/MontserratAlternates-LightItalic.ttf', // Asegúrate de que esta ruta sea correcta desde la carpeta public
+  fontWeight: 300,
+  
+});
 
   const handleGenerateCertificate = () => {
     const certificate = {
@@ -48,16 +65,18 @@ function CertificadoForm() {
     setShowModal(true);
   };
 
-  const handleBulkUpload = (event) => {
+  const handleBulkUpload = async (event) => {
+    setProcessing(true); // Mostrar el modal de procesamiento
+  
     const file = event.target.files[0];
     const reader = new FileReader();
-
-    reader.onload = (e) => {
+  
+    reader.onload = async (e) => {
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, { type: 'array' });
       const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(firstSheet);
-
+  
       const certificates = rows.map(row => ({
         titulo: row.Titulo,
         codigo: row.Codigo,
@@ -68,13 +87,16 @@ function CertificadoForm() {
         instructorPrincipal: row['Instructor Principal'],
         cuerpoCertificado: row['Cuerpo Certificado']
       }));
+  
+      await generateZip(certificates); // Generar y descargar el ZIP
 
-      setBulkCertificates(certificates);
-      setShowModal(true);
+      setProcessing(false); // Ocultar el modal de procesamiento
+      window.location.reload(); // Recargar la página después de la descarga
     };
-
+  
     reader.readAsArrayBuffer(file);
-  };
+};
+
 
   const generateTemplate = () => {
     const wb = XLSX.utils.book_new();
@@ -104,16 +126,20 @@ function CertificadoForm() {
           {logoRight && <Image style={styles.logo} src={logoRight} />}
         </View>
         <Text style={styles.title}>{certificate.titulo}</Text>
-        <Text style={styles.subtitle}>Otorga el siguiente certificado al Sr:</Text>
-        <Text style={styles.participantName}>{certificate.participante}</Text>
-        <Text style={styles.subtitle}>Por aprobar el curso de:</Text>
+        <Text style={styles.subtitle}>OTORGA EL SIGUIENTE CERTIFICADO AL</Text>
+        <Text style={styles.participantName}>Sr: {certificate.participante}</Text>
+        <Text style={styles.subtitle}>POR APROBAR EL CURSO DE:</Text>
+        <br></br>
         <Text style={[styles.title, { fontWeight: 'bold' }]}>{certificate.curso}</Text>
-        <Text style={styles.text}>Modalidad: {certificate.modalidad}</Text>
+        <Text style={styles.text}>MODALIDAD: {certificate.modalidad}</Text>
         <Text style={styles.certificateBody}>{certificate.cuerpoCertificado}</Text>
-        <Text style={styles.text}>Con una carga horaria de {certificate.horasAcademicas} horas académicas</Text>
+        <Text style={styles.text}>CON UNA CARGA HORARIA DE:{certificate.horasAcademicas} HORAS ACADÉMICAS</Text>
         <View style={styles.signature}>
           {signature && <Image style={styles.signatureImage} src={signature} />}
           <Text>{certificate.instructorPrincipal}</Text>
+          <br></br>
+          <br></br>
+          <p></p>
           <Text>Instructor</Text>
         </View>
         <Text style={styles.footer}>Cochabamba, {new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long' })}</Text>
@@ -121,6 +147,18 @@ function CertificadoForm() {
       </Page>
     </Document>
   );
+
+  const generateZip = async (certificates) => {
+    const zip = new JSZip();
+
+    for (const certificate of certificates) {
+        const pdfBlob = await pdf(<CertificateDocument certificate={certificate} />).toBlob();
+        zip.file(`certificado_${certificate.participante}.pdf`, pdfBlob);
+    }
+
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    saveAs(zipBlob, 'certificados.zip');
+};
 
   const handleSignOut = async () => {
     try {
@@ -146,13 +184,15 @@ function CertificadoForm() {
       marginBottom: 20,
     },
     logo: {
-      width: 50,
-      height: 50,
+      width: 60,
+      height: 60,
     },
     title: {
-      fontSize: 18,
+      fontSize: 16,
+      fontFamily: 'Roboto',
       textAlign: 'center',
       margin: 20,
+      fontWeight:'bold'
     },
     code: {
       fontSize: 12,
@@ -162,36 +202,45 @@ function CertificadoForm() {
       right: 30,
     },
     subtitle: {
-      fontSize: 16,
+      fontSize: 15,
       textAlign: 'center',
       marginBottom: 10,
+       fontFamily: 'Montserrat',
+       fontWeight:300
     },
     participantName: {
       fontSize: 16,
       textAlign: 'center',
       marginBottom: 10,
       textTransform: 'uppercase',
+      fontFamily: 'Roboto',
+      
     },
     text: {
       fontSize: 14,
       textAlign: 'center',
       marginBottom: 5,
+       fontFamily: 'Montserrat'
     },
     certificateBody: {
       marginTop: 30,
       fontSize: 14,
       textAlign: 'center',
       marginBottom: 30,
+      fontFamily: 'Roboto'
     },
     signature: {
       fontSize: 14,
       textAlign: 'center',
       marginTop: 30,
+      fontFamily: 'Roboto',
+      textTransform: 'uppercase',
     },
     footer: {
       fontSize: 12,
       textAlign: 'center',
       marginTop: 50,
+       fontFamily: 'Roboto'
     },
   });
 
@@ -200,7 +249,7 @@ function CertificadoForm() {
       <NavBar handleSignOut={handleSignOut} />
       <br />
       <div className="certificado-form-container">
-        <h2 className="text-center">Generar Certificado </h2>
+        <h2 className="text-center">Generar Certificado</h2>
 
         <Button variant="warning" className="mb-4" onClick={generateTemplate}>
           Descargar Template
@@ -343,41 +392,38 @@ function CertificadoForm() {
           </Button>
         </Form>
 
-        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+   {/* Modal de Procesamiento */}
+   <Modal show={processing} centered>
+        <Modal.Header>
+          <Modal.Title>Procesando Archivos</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Por favor, espera mientras procesamos los certificados...</p>
+        </Modal.Body>
+      </Modal>
+
+
+      <Modal show={showModal && bulkCertificates.length === 0} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title>Certificado Generado</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>Haz clic en el siguiente enlace para descargar el certificado:</p>
-            {bulkCertificates.length > 0 ? (
-              bulkCertificates.map((certificate, index) => (
-                <div key={index}>
-                  <PDFDownloadLink
-                    document={<CertificateDocument certificate={certificate} />}
-                    fileName={`certificado_${certificate.participante}.pdf`}
-                  >
-                    <Button variant="success" className="mb-2">
-                      Descargar Certificado de {certificate.participante}
-                    </Button>
-                  </PDFDownloadLink>
-                </div>
-              ))
-            ) : (
-              generatedCertificate && (
-                <PDFDownloadLink
-                  document={<CertificateDocument certificate={generatedCertificate} />}
-                  fileName="certificado.pdf"
-                >
-                  <Button variant="success">Descargar Certificado</Button>
-                </PDFDownloadLink>
-              )
-            )}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Cerrar
-            </Button>
-          </Modal.Footer>
+            {generatedCertificate && (
+      <PDFDownloadLink
+        document={<CertificateDocument certificate={generatedCertificate} />}
+        fileName="certificado.pdf"
+      >
+        <Button variant="success">Descargar Certificado</Button>
+      </PDFDownloadLink>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowModal(false)}>
+      Cerrar
+    </Button>
+  </Modal.Footer>
+           
         </Modal>
       </div>
     </div>
