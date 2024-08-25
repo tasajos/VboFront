@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import './SeguimientoPersonal.css';
 import NavBar from '../../NavBar/navbar';
 import { signOut } from 'firebase/auth';
@@ -20,7 +22,8 @@ function SeguimientoPersonal() {
   const [showDocumentacionModal, setShowDocumentacionModal] = useState(false);
   const [estado, setEstado] = useState('');
   const [permiso, setPermiso] = useState('');
-  const [motivo, setMotivo] = useState(''); // Motivo siempre visible
+  const [motivo, setMotivo] = useState('');
+  const [fechaPermiso, setFechaPermiso] = useState([null, null]);
   const [historial, setHistorial] = useState([]);
   const [documentacion, setDocumentacion] = useState({
     CI: false,
@@ -83,18 +86,19 @@ function SeguimientoPersonal() {
   const handleSaveEstado = () => {
     const db = getDatabase();
     if (personalData && personalData.ci) {
-      // Crear nuevo historial con la fecha, estado, permiso (si aplica), y motivo
+      // Crear nuevo historial con la fecha, estado, permiso, motivo y rango de fechas
       const nuevoHistorial = {
         fecha: new Date().toISOString(),
         estado,
-        permiso: estado === "Permiso" ? permiso : null, // Solo guardar permiso si el estado es "Permiso"
-        motivo,  // Guardar motivo independientemente del estado
+        permiso: estado === 'Permiso' ? permiso : null,
+        fechaPermiso: estado === 'Permiso' ? fechaPermiso : null,
+        motivo,
       };
 
       // Actualizar el historial y el estado en la base de datos
       update(ref(db, `fundacion/personal/${personalData.ci}`), {
         estado,
-        historial: [...historial, nuevoHistorial],  // Agregar el nuevo historial al existente
+        historial: [...historial, nuevoHistorial],
       }).then(() => {
         setPersonalData((prev) => ({ ...prev, estado, historial: [...historial, nuevoHistorial] }));
         setShowEstadoModal(false);
@@ -200,17 +204,31 @@ function SeguimientoPersonal() {
                 </Form.Control>
               </Form.Group>
 
-              {estado === "Permiso" && (
-                <Form.Group controlId="formPermiso" className="mt-3">
-                  <Form.Label>Selecciona el Permiso:</Form.Label>
-                  <Form.Control as="select" value={permiso} onChange={(e) => setPermiso(e.target.value)}>
-                    <option value="">Seleccione...</option>
-                    <option value="Estudio">Estudio</option>
-                    <option value="Trabajo">Trabajo</option>
-                    <option value="Familiar">Familiar</option>
-                    <option value="Otros">Otros</option>
-                  </Form.Control>
-                </Form.Group>
+              {estado === 'Permiso' && (
+                <>
+                  <Form.Group controlId="formPermiso" className="mt-3">
+                    <Form.Label>Selecciona el Permiso:</Form.Label>
+                    <Form.Control as="select" value={permiso} onChange={(e) => setPermiso(e.target.value)}>
+                      <option value="">Seleccione...</option>
+                      <option value="Estudio">Estudio</option>
+                      <option value="Trabajo">Trabajo</option>
+                      <option value="Familiar">Familiar</option>
+                      <option value="Otros">Otros</option>
+                    </Form.Control>
+                  </Form.Group>
+
+                  <Form.Group controlId="formFechaPermiso" className="mt-3">
+                    <Form.Label>Selecciona el Rango de Fechas:</Form.Label>
+                    <DatePicker
+                      selected={fechaPermiso[0]}
+                      onChange={(dates) => setFechaPermiso(dates)}
+                      startDate={fechaPermiso[0]}
+                      endDate={fechaPermiso[1]}
+                      selectsRange
+                      inline
+                    />
+                  </Form.Group>
+                </>
               )}
 
               <Form.Group controlId="formMotivo" className="mt-3">
@@ -219,7 +237,7 @@ function SeguimientoPersonal() {
                   type="text"
                   value={motivo}
                   onChange={(e) => setMotivo(e.target.value)}
-                  placeholder="Especifica el motivo"
+                  placeholder="Describe el motivo"
                 />
               </Form.Group>
             </Modal.Body>
@@ -229,18 +247,32 @@ function SeguimientoPersonal() {
             </Modal.Footer>
           </Modal>
 
-          {/* Modal para Ver Historial */}
-          <Modal show={showHistorialModal} onHide={() => setShowHistorialModal(false)} centered>
+            {/* Modal para Ver Historial */}
+            <Modal show={showHistorialModal} onHide={() => setShowHistorialModal(false)} centered>
             <Modal.Header closeButton>
               <Modal.Title>Historial</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {historial.length > 0 ? (
-                <ul>
+                <div className="historial-cards">
                   {historial.map((entry, index) => (
-                    <li key={index}>{`${entry.fecha}: ${entry.estado || 'Sin estado'} ${entry.permiso ? '- Permiso: ' + entry.permiso : ''} ${entry.motivo ? '- Motivo: ' + entry.motivo : ''}`}</li>
+                    <Card key={index} className="mb-3">
+                      <Card.Body>
+                        <Card.Title>{`${new Date(entry.fecha).toLocaleDateString('es-ES')}`}</Card.Title>
+                        <Card.Text>
+                          <strong>Estado:</strong> {entry.estado} <br />
+                          {entry.permiso && (
+                            <>
+                              <strong>Permiso:</strong> {entry.permiso} <br />
+                              <strong>Fechas del Permiso:</strong> {entry.fechaPermiso ? `${new Date(entry.fechaPermiso[0]).toLocaleDateString('es-ES')} - ${new Date(entry.fechaPermiso[1]).toLocaleDateString('es-ES')}` : 'N/A'} <br />
+                            </>
+                          )}
+                          <strong>Motivo:</strong> {entry.motivo || 'N/A'}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
                   ))}
-                </ul>
+                </div>
               ) : (
                 <p>No tiene historial.</p>
               )}
