@@ -32,6 +32,11 @@ function SeguimientoPersonal() {
     Croquis: false,
     Compromiso: false
   });
+  const [codigo, setCodigo] = useState('');
+  const [codigoAsignado, setCodigoAsignado] = useState(false);
+  const [showCodigoModal, setShowCodigoModal] = useState(false);
+  const [mensajeGuardado, setMensajeGuardado] = useState('');
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,6 +73,8 @@ function SeguimientoPersonal() {
             Croquis: foundPersonal.documentacion?.Croquis || false,
             Compromiso: foundPersonal.documentacion?.Compromiso || false,
           });
+          setCodigo(foundPersonal.codigo || '');
+          setCodigoAsignado(!!foundPersonal.codigo);
           setError('');
         } else {
           setPersonalData(null);
@@ -123,6 +130,25 @@ function SeguimientoPersonal() {
       });
     } else {
       console.error("No se pudo guardar la documentación porque el ID es indefinido.");
+    }
+  };
+
+  const handleSaveCodigo = () => {
+    const db = getDatabase();
+    if (personalData && personalData.ci) {
+      update(ref(db, `fundacion/personal/${personalData.ci}`), {
+        codigo,
+      }).then(() => {
+        setMensajeGuardado('Código guardado exitosamente.');
+        setTimeout(() => {
+          setMensajeGuardado('');
+          setShowCodigoModal(false);
+        }, 2000);
+      }).catch((error) => {
+        console.error("Error updating codigo:", error);
+      });
+    } else {
+      console.error("No se pudo guardar el código porque el ID es indefinido.");
     }
   };
 
@@ -185,33 +211,34 @@ function SeguimientoPersonal() {
                 <Button variant="warning" className="mr-2 mx-3" onClick={() => setShowEstadoModal(true)}>Gestión Estado</Button>
                 <Button variant="info" className="mr-2 mx-3" onClick={toggleHistorial}>Ver Historial</Button>
                 <Button variant="warning" className="mx-3" onClick={() => setShowDocumentacionModal(true)}>Gestión Documentación</Button>
+                <Button variant="warning" className="mx-3" onClick={() => setShowCodigoModal(true)}>Gestión Código</Button>
               </div>
 
               {showHistorial && (
                 <div className="mt-4">
-                  <h4 className="text-center mb-4">Historial</h4>
+                   <h4 className="text-center mb-4">Historial</h4>
                   {historial.length > 0 ? (
                     <div className="historial-cards">
                       {historial.map((entry, index) => (
-  <Card key={index} className="mb-3">
-    <Card.Body>
-      <Card.Title>
-        {format(new Date(entry.fecha), "dd/MM/yyyy HH:mm", { locale: es })}
-      </Card.Title>
-      <Card.Text>
-        <strong>Estado:</strong> {entry.estado} <br />
-        {entry.permiso && (
-          <>
-            <strong>Permiso:</strong> {entry.permiso} <br />
-            <strong>Fechas del Permiso:</strong> 
-            {entry.fechaPermiso ? `${format(new Date(entry.fechaPermiso[0]), "dd/MM/yyyy")} - ${format(new Date(entry.fechaPermiso[1]), "dd/MM/yyyy")}` : 'N/A'} 
-            <br />
-          </>
-        )}
-        <strong>Motivo:</strong> {entry.motivo || 'N/A'}
-      </Card.Text>
-    </Card.Body>
-  </Card>
+                        <Card key={index} className="mb-3">
+                          <Card.Body>
+                            <Card.Title>
+                              {format(new Date(entry.fecha), "dd/MM/yyyy HH:mm", { locale: es })}
+                            </Card.Title>
+                            <Card.Text>
+                              <strong>Estado:</strong> {entry.estado} <br />
+                              {entry.permiso && (
+                                <>
+                                  <strong>Permiso:</strong> {entry.permiso} <br />
+                                  <strong>Fechas del Permiso:</strong> 
+                                  {entry.fechaPermiso ? `${format(new Date(entry.fechaPermiso[0]), "dd/MM/yyyy")} - ${format(new Date(entry.fechaPermiso[1]), "dd/MM/yyyy")}` : 'N/A'} 
+                                  <br />
+                                </>
+                              )}
+                              <strong>Motivo:</strong> {entry.motivo || 'N/A'}
+                            </Card.Text>
+                          </Card.Body>
+                        </Card>
                       ))}
                     </div>
                   ) : (
@@ -219,6 +246,46 @@ function SeguimientoPersonal() {
                   )}
                 </div>
               )}
+
+              {/* Modal para Gestión de Código */}
+              <Modal show={showCodigoModal} onHide={() => setShowCodigoModal(false)} centered>
+                <Modal.Header closeButton>
+                  <Modal.Title>Gestión de Código</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  {codigoAsignado ? (
+                    <>
+                      <p>El código asignado es: <strong>{codigo}</strong></p>
+                      <Form.Group controlId="formCodigo" className="mt-3">
+                        <Form.Label>Editar Código:</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={codigo}
+                          onChange={(e) => setCodigo(e.target.value)}
+                          placeholder="Ingresa un nuevo código"
+                        />
+                      </Form.Group>
+                    </>
+                  ) : (
+                    <div>
+                      <p>¿Deseas asignar un código a este registro?</p>
+                      <Button variant="primary" onClick={() => setCodigoAsignado(true)}>
+                        Asignar Código
+                      </Button>
+                    </div>
+                  )}
+                </Modal.Body>
+                <Modal.Footer>
+                  {codigoAsignado && (
+                    <>
+                      <Button variant="secondary" onClick={() => setShowCodigoModal(false)}>Cancelar</Button>
+                      <Button variant="primary" onClick={handleSaveCodigo}>Guardar</Button>
+                    </>
+                  )}
+                </Modal.Footer>
+              </Modal>
+
+              {mensajeGuardado && <p className="text-center text-success">{mensajeGuardado}</p>}
             </>
           )}
 
