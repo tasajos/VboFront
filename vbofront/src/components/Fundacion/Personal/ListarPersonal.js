@@ -7,12 +7,16 @@ import { auth } from '../../../firebase';
 import './ListarPersonal.css';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
+import Pagination from 'react-bootstrap/Pagination';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function ListarPersonal() {
   const [personalList, setPersonalList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredPersonal, setFilteredPersonal] = useState([]);
   const [unidad, setUnidad] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +59,20 @@ function ListarPersonal() {
     }
   };
 
+  // Calcula los registros para la página actual
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = filteredPersonal.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const totalPages = Math.ceil(filteredPersonal.length / recordsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleRecordsPerPageChange = (numRecords) => {
+    setRecordsPerPage(numRecords);
+    setCurrentPage(1); // Resetea a la primera página
+  };
+
   return (
     <div>
       <NavBar handleSignOut={handleSignOut} />
@@ -67,9 +85,22 @@ function ListarPersonal() {
             className="mb-3"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <Dropdown className="mb-3">
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              Registros por página: {recordsPerPage}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => handleRecordsPerPageChange(10)}>10</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleRecordsPerPageChange(20)}>20</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleRecordsPerPageChange(50)}>50</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleRecordsPerPageChange(100)}>100</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
           <Table striped bordered hover responsive className="text-center">
             <thead>
               <tr>
+                <th>Nro</th>
                 <th>Nombre</th>
                 <th>Apellido Paterno</th>
                 <th>Apellido Materno</th>
@@ -84,8 +115,9 @@ function ListarPersonal() {
               </tr>
             </thead>
             <tbody>
-              {filteredPersonal.map(personal => (
+              {currentRecords.map((personal, index) => (
                 <tr key={personal.id}>
+                  <td>{indexOfFirstRecord + index + 1}</td>
                   <td>{personal.nombre}</td>
                   <td>{personal.apellidoPaterno}</td>
                   <td>{personal.apellidoMaterno}</td>
@@ -101,6 +133,17 @@ function ListarPersonal() {
               ))}
             </tbody>
           </Table>
+          <Pagination className="justify-content-center">
+            {[...Array(totalPages)].map((_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            ))}
+          </Pagination>
         </div>
       </div>
     </div>
