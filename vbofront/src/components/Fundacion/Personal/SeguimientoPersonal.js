@@ -20,6 +20,7 @@ function SeguimientoPersonal() {
   const [showDocumentacionModal, setShowDocumentacionModal] = useState(false);
   const [estado, setEstado] = useState('');
   const [permiso, setPermiso] = useState('');
+  const [motivo, setMotivo] = useState(''); // Motivo siempre visible
   const [historial, setHistorial] = useState([]);
   const [documentacion, setDocumentacion] = useState({
     CI: false,
@@ -82,11 +83,12 @@ function SeguimientoPersonal() {
   const handleSaveEstado = () => {
     const db = getDatabase();
     if (personalData && personalData.ci) {
-      // Crear nuevo historial con la fecha, estado y permiso
+      // Crear nuevo historial con la fecha, estado, permiso (si aplica), y motivo
       const nuevoHistorial = {
         fecha: new Date().toISOString(),
         estado,
-        permiso,
+        permiso: estado === "Permiso" ? permiso : null, // Solo guardar permiso si el estado es "Permiso"
+        motivo,  // Guardar motivo independientemente del estado
       };
 
       // Actualizar el historial y el estado en la base de datos
@@ -197,15 +199,28 @@ function SeguimientoPersonal() {
                   <option value="Permiso">Permiso</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group controlId="formPermiso" className="mt-3">
-                <Form.Label>Selecciona el Permiso:</Form.Label>
-                <Form.Control as="select" value={permiso} onChange={(e) => setPermiso(e.target.value)}>
-                  <option value="">Seleccione...</option>
-                  <option value="Estudio">Estudio</option>
-                  <option value="Trabajo">Trabajo</option>
-                  <option value="Familiar">Familiar</option>
-                  <option value="Otros">Otros</option>
-                </Form.Control>
+
+              {estado === "Permiso" && (
+                <Form.Group controlId="formPermiso" className="mt-3">
+                  <Form.Label>Selecciona el Permiso:</Form.Label>
+                  <Form.Control as="select" value={permiso} onChange={(e) => setPermiso(e.target.value)}>
+                    <option value="">Seleccione...</option>
+                    <option value="Estudio">Estudio</option>
+                    <option value="Trabajo">Trabajo</option>
+                    <option value="Familiar">Familiar</option>
+                    <option value="Otros">Otros</option>
+                  </Form.Control>
+                </Form.Group>
+              )}
+
+              <Form.Group controlId="formMotivo" className="mt-3">
+                <Form.Label>Motivo:</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={motivo}
+                  onChange={(e) => setMotivo(e.target.value)}
+                  placeholder="Especifica el motivo"
+                />
               </Form.Group>
             </Modal.Body>
             <Modal.Footer>
@@ -223,7 +238,7 @@ function SeguimientoPersonal() {
               {historial.length > 0 ? (
                 <ul>
                   {historial.map((entry, index) => (
-                    <li key={index}>{`${entry.fecha}: ${entry.estado || 'Sin estado'} ${entry.permiso ? '- Permiso: ' + entry.permiso : ''}`}</li>
+                    <li key={index}>{`${entry.fecha}: ${entry.estado || 'Sin estado'} ${entry.permiso ? '- Permiso: ' + entry.permiso : ''} ${entry.motivo ? '- Motivo: ' + entry.motivo : ''}`}</li>
                   ))}
                 </ul>
               ) : (
