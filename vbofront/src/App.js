@@ -56,6 +56,7 @@ import AdminEprDashboard from './components/Epr/AdminEprDashboard'; // Nueva pá
 //Fundacion
 import RegistrarPersonal from './components/Fundacion/Personal/RegistrarPersonal';
 import ListarPersonal from './components/Fundacion/Personal/ListarPersonal'; 
+import SeguimientoPersonal from './components/Fundacion/Personal/SeguimientoPersonal'; 
 import CertCapac from './components/Fundacion/Capacitacion/CertificadoForm'; 
 
 function App() {
@@ -82,7 +83,7 @@ function App() {
        {/*} <NavBar handleSignOut={handleSignOut} /> {/* Pasar handleSignOut como prop */}
         <Routes>
           {/*<Route path="/" element={currentUser ? <Dashboard /> : <Navigate replace to="/signin" />} />*/}
-          <Route path="/" element={currentUser ? <Dashboard /> : <Navigate replace to="/signin" />} />*/}
+          <Route path="/" element={currentUser ? <Dashboard /> : <Navigate replace to="/signin" />} />
           <Route path="/signup" element={!currentUser ? <SignUp /> : <Navigate replace to="/" />} />
           <Route path="/signin" element={!currentUser ? <SignIn /> : <Navigate replace to="/" />} />
           <Route path="/situacion-actual" element={<SituacionActual />} />
@@ -135,6 +136,7 @@ function App() {
 
           <Route path="/regpersoF" element={<RegistrarPersonal />} />
           <Route path="/listpersoF" element={<ListarPersonal />} />
+          <Route path="/segpersonal" element={<SeguimientoPersonal />} />
           <Route path="/certgene" element={<CertCapac />} />
           
         </Routes>

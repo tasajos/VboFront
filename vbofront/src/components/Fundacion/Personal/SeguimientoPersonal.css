@@ -1,0 +1,90 @@
+.main-container {
+    background-color: #ffffff;
+    min-height: 100vh;
+    padding: 0;
+  }
+  
+  .seguimiento-personal-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-top: 20px;
+  }
+  
+  .seguimiento-personal-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .search-input {
+    width: 70%;
+    border-radius: 50px 0 0 50px;
+    border-right: none;
+  }
+  
+  .search-button {
+    width: 30%;
+    border-radius: 0 50px 50px 0;
+  }
+  
+  .error-message {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  .personal-card {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-left {
+    text-align: center;
+    padding-right: 20px;
+    border-right: 2px solid #e0e0e0;
+  }
+  
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .name-section {
+    margin-top: 30px;
+  }
+  
+  .name-text {
+    font-size: 14px;
+    font-weight: normal;
+  }
+  
+  .role-text {
+    font-size: 14px;
+    color: #2495f8;
+  }
+  
+  .card-right {
+    flex: 1;
+    padding-left: 20px;
+  }
+  
+  .personal-card .card-right .card-text {
+    font-size: 18px;
+    line-height: 1.2;
+    color: rgb(22, 75, 153);
+    font-weight: normal;
+  }
+  
