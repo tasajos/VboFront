@@ -211,6 +211,8 @@ function SeguimientoPersonal() {
     setShowHistorial(!showHistorial);
   };
 
+  const gradoActual = historial.find(entry => entry.grado)?.grado;
+  
   return (
     <div>
       <NavBar handleSignOut={handleSignOut} />
@@ -244,7 +246,7 @@ function SeguimientoPersonal() {
                     />
                     <div className="name-section">
                       <h4 className="name-text">{personalData.nombre} {personalData.apellidoPaterno} {personalData.apellidoMaterno}</h4>
-                      <h6 className="role-text">Voluntario</h6>
+                      <h6 className="role-text">{gradoActual || 'Voluntario'}</h6>
                     </div>
                   </div>
                   <div className="card-right">
