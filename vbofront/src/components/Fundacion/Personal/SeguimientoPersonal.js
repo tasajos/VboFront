@@ -86,7 +86,7 @@ function SeguimientoPersonal() {
                 <div className="card-right">
                   <Card.Text className="card-text">
                     <strong>CI:</strong> {personalData.ci} <br />
-                    <strong>RH:</strong> {personalData.rh || 'N/A'} <br />
+                    <strong>Tipo de Sangre:</strong> {personalData.tipoSangre || 'N/A'} <br />
                     <strong>E-mail:</strong> {personalData.correo} <br />
                     <strong>Teléfono:</strong> {personalData.telefono} <br />
                     <strong>Dirección:</strong> {personalData.direccion} <br />
