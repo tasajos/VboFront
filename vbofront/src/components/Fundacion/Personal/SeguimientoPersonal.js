@@ -18,7 +18,7 @@ function SeguimientoPersonal() {
   const [error, setError] = useState('');
   const [userUnit, setUserUnit] = useState('');
   const [showEstadoModal, setShowEstadoModal] = useState(false);
-  const [showHistorialModal, setShowHistorialModal] = useState(false);
+  const [showHistorial, setShowHistorial] = useState(false);
   const [showDocumentacionModal, setShowDocumentacionModal] = useState(false);
   const [estado, setEstado] = useState('');
   const [permiso, setPermiso] = useState('');
@@ -86,7 +86,6 @@ function SeguimientoPersonal() {
   const handleSaveEstado = () => {
     const db = getDatabase();
     if (personalData && personalData.ci) {
-      // Crear nuevo historial con la fecha, estado, permiso, motivo y rango de fechas
       const nuevoHistorial = {
         fecha: new Date().toISOString(),
         estado,
@@ -95,7 +94,6 @@ function SeguimientoPersonal() {
         motivo,
       };
 
-      // Actualizar el historial y el estado en la base de datos
       update(ref(db, `fundacion/personal/${personalData.ci}`), {
         estado,
         historial: [...historial, nuevoHistorial],
@@ -124,6 +122,10 @@ function SeguimientoPersonal() {
     } else {
       console.error("No se pudo guardar la documentación porque el ID es indefinido.");
     }
+  };
+
+  const toggleHistorial = () => {
+    setShowHistorial(!showHistorial);
   };
 
   return (
@@ -179,9 +181,38 @@ function SeguimientoPersonal() {
 
               <div className="mt-4 d-flex justify-content-center">
                 <Button variant="warning" className="mr-2 mx-3" onClick={() => setShowEstadoModal(true)}>Gestión Estado</Button>
-                <Button variant="info" className="mr-2 mx-3" onClick={() => setShowHistorialModal(true)}>Ver Historial</Button>
+                <Button variant="info" className="mr-2 mx-3" onClick={toggleHistorial}>Ver Historial</Button>
                 <Button variant="warning" className="mx-3" onClick={() => setShowDocumentacionModal(true)}>Gestión Documentación</Button>
               </div>
+
+              {showHistorial && (
+                <div className="mt-4">
+                  <h4 className="text-center mb-4">Historial</h4>
+                  {historial.length > 0 ? (
+                    <div className="historial-cards">
+                      {historial.map((entry, index) => (
+                        <Card key={index} className="mb-3">
+                          <Card.Body>
+                            <Card.Title>{new Date(entry.fecha).toLocaleDateString('es-ES')}</Card.Title>
+                            <Card.Text>
+                              <strong>Estado:</strong> {entry.estado} <br />
+                              {entry.permiso && (
+                                <>
+                                  <strong>Permiso:</strong> {entry.permiso} <br />
+                                  <strong>Fechas del Permiso:</strong> {entry.fechaPermiso ? `${new Date(entry.fechaPermiso[0]).toLocaleDateString('es-ES')} - ${new Date(entry.fechaPermiso[1]).toLocaleDateString('es-ES')}` : 'N/A'} <br />
+                                </>
+                              )}
+                              <strong>Motivo:</strong> {entry.motivo || 'N/A'}
+                            </Card.Text>
+                          </Card.Body>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <p>No tiene historial.</p>
+                  )}
+                </div>
+              )}
             </>
           )}
 
@@ -244,41 +275,6 @@ function SeguimientoPersonal() {
             <Modal.Footer>
               <Button variant="secondary" onClick={() => setShowEstadoModal(false)}>Cancelar</Button>
               <Button variant="primary" onClick={handleSaveEstado}>Guardar</Button>
-            </Modal.Footer>
-          </Modal>
-
-            {/* Modal para Ver Historial */}
-            <Modal show={showHistorialModal} onHide={() => setShowHistorialModal(false)} centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Historial</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              {historial.length > 0 ? (
-                <div className="historial-cards">
-                  {historial.map((entry, index) => (
-                    <Card key={index} className="mb-3">
-                      <Card.Body>
-                        <Card.Title>{`${new Date(entry.fecha).toLocaleDateString('es-ES')}`}</Card.Title>
-                        <Card.Text>
-                          <strong>Estado:</strong> {entry.estado} <br />
-                          {entry.permiso && (
-                            <>
-                              <strong>Permiso:</strong> {entry.permiso} <br />
-                              <strong>Fechas del Permiso:</strong> {entry.fechaPermiso ? `${new Date(entry.fechaPermiso[0]).toLocaleDateString('es-ES')} - ${new Date(entry.fechaPermiso[1]).toLocaleDateString('es-ES')}` : 'N/A'} <br />
-                            </>
-                          )}
-                          <strong>Motivo:</strong> {entry.motivo || 'N/A'}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <p>No tiene historial.</p>
-              )}
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowHistorialModal(false)}>Cerrar</Button>
             </Modal.Footer>
           </Modal>
 

@@ -84,3 +84,36 @@
     font-weight: normal;
   }
   
+  /* Estilo para el historial */
+.historial-cards {
+    margin-top: 30px;
+}
+
+.historial-cards .card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
+.historial-cards .card-body {
+    padding: 20px;
+}
+
+.historial-cards .card-title {
+    font-size: 16px;
+    color: #343a40;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.historial-cards .card-text {
+    font-size: 14px;
+    color: #040f1b;
+    line-height: 1.5;
+}
+
+.historial-cards .card .card-text strong {
+    color: #007bff;
+    font-weight: 600;
+}
