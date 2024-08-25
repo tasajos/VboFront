@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -13,7 +13,16 @@ function SeguimientoPersonal() {
   const [ci, setCi] = useState('');
   const [personalData, setPersonalData] = useState(null);
   const [error, setError] = useState('');
+  const [userUnit, setUserUnit] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Supongamos que la unidad del usuario autenticado está almacenada en localStorage
+    const unidadAutenticada = localStorage.getItem('userUnit');
+    if (unidadAutenticada) {
+      setUserUnit(unidadAutenticada);
+    }
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -34,8 +43,13 @@ function SeguimientoPersonal() {
       const foundPersonal = personalData ? Object.values(personalData).find(personal => personal.ci === ci) : null;
 
       if (foundPersonal) {
-        setPersonalData(foundPersonal);
-        setError('');
+        if (foundPersonal.unidad === userUnit) {
+          setPersonalData(foundPersonal);
+          setError('');
+        } else {
+          setPersonalData(null);
+          setError('El voluntario no pertenece a tu unidad.');
+        }
       } else {
         setPersonalData(null);
         setError('No se encontró un voluntario con ese carnet de identidad.');
