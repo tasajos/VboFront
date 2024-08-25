@@ -11,6 +11,8 @@ import NavBar from '../../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../firebase';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 function SeguimientoPersonal() {
   const [ci, setCi] = useState('');
@@ -191,21 +193,25 @@ function SeguimientoPersonal() {
                   {historial.length > 0 ? (
                     <div className="historial-cards">
                       {historial.map((entry, index) => (
-                        <Card key={index} className="mb-3">
-                          <Card.Body>
-                            <Card.Title>{new Date(entry.fecha).toLocaleDateString('es-ES')}</Card.Title>
-                            <Card.Text>
-                              <strong>Estado:</strong> {entry.estado} <br />
-                              {entry.permiso && (
-                                <>
-                                  <strong>Permiso:</strong> {entry.permiso} <br />
-                                  <strong>Fechas del Permiso:</strong> {entry.fechaPermiso ? `${new Date(entry.fechaPermiso[0]).toLocaleDateString('es-ES')} - ${new Date(entry.fechaPermiso[1]).toLocaleDateString('es-ES')}` : 'N/A'} <br />
-                                </>
-                              )}
-                              <strong>Motivo:</strong> {entry.motivo || 'N/A'}
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
+  <Card key={index} className="mb-3">
+    <Card.Body>
+      <Card.Title>
+        {format(new Date(entry.fecha), "dd/MM/yyyy HH:mm", { locale: es })}
+      </Card.Title>
+      <Card.Text>
+        <strong>Estado:</strong> {entry.estado} <br />
+        {entry.permiso && (
+          <>
+            <strong>Permiso:</strong> {entry.permiso} <br />
+            <strong>Fechas del Permiso:</strong> 
+            {entry.fechaPermiso ? `${format(new Date(entry.fechaPermiso[0]), "dd/MM/yyyy")} - ${format(new Date(entry.fechaPermiso[1]), "dd/MM/yyyy")}` : 'N/A'} 
+            <br />
+          </>
+        )}
+        <strong>Motivo:</strong> {entry.motivo || 'N/A'}
+      </Card.Text>
+    </Card.Body>
+  </Card>
                       ))}
                     </div>
                   ) : (
