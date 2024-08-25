@@ -1,0 +1,96 @@
+/* RegistroOperaciones.css */
+
+/* Asegúrate de que el fondo sea blanco y no afecte al navbar */
+.registro-operaciones-container {
+    background-color: #ffffff;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.registro-operaciones-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.registro-operaciones-search-form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex; /* Cambia a display flex para alinear el input y el botón */
+}
+
+.registro-operaciones-search-input {
+    width: 70%;
+    border-radius: 50px 0 0 50px;
+    border-right: none;
+    border: 1px solid #ccc;
+}
+.registro-operaciones-search-button {
+    width: 30%;
+    border-radius: 0 50px 50px 0;
+    background-color: #2495f8;
+    color: #ffffff;
+    border: none;
+}
+
+.registro-operaciones-error-message {
+    margin-top: 15px;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+}
+
+.registro-operaciones-card {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.registro-operaciones-card-left {
+    text-align: center;
+    padding-right: 20px;
+    border-right: 2px solid #e0e0e0;
+}
+
+.registro-operaciones-profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #d8d8d8; /* Placeholder background color */
+}
+
+.registro-operaciones-name-section {
+    margin-top: 15px;
+}
+
+.registro-operaciones-name-text {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.registro-operaciones-role-text {
+    font-size: 14px;
+    color: #2495f8;
+    margin-top: 5px;
+}
+
+.registro-operaciones-card-right {
+    flex: 1;
+    padding-left: 40px;
+    color: #2495f8;
+}
+
+.registro-operaciones-card-text {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+    color: rgb(22, 75, 153) !important;
+    font-weight: normal !important;
+}

@@ -58,6 +58,7 @@ import RegistrarPersonal from './components/Fundacion/Personal/RegistrarPersonal
 import ListarPersonal from './components/Fundacion/Personal/ListarPersonal'; 
 import SeguimientoPersonal from './components/Fundacion/Personal/SeguimientoPersonal'; 
 import CertCapac from './components/Fundacion/Capacitacion/CertificadoForm'; 
+import RegOpe from './components/Fundacion/Operaciones/RegistroOperaciones'; 
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -138,6 +139,7 @@ function App() {
           <Route path="/listpersoF" element={<ListarPersonal />} />
           <Route path="/segpersonal" element={<SeguimientoPersonal />} />
           <Route path="/certgene" element={<CertCapac />} />
+          <Route path="/rgope" element={<RegOpe />} />
           
         </Routes>
       </div>
