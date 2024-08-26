@@ -1,0 +1,62 @@
+.registro-asistencia-container {
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+  }
+  
+  .registro-asistencia-wrapper {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .registro-asistencia-text-center {
+    text-align: center;
+    color: #343a40;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .registro-asistencia-mb-4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .registro-asistencia-form {
+    margin-bottom: 20px;
+  }
+  
+  .registro-asistencia-form .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .table {
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .table th {
+    background-color: #6588ac;
+    color: #ffffff;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mt-4 {
+    margin-top: 1.5rem;
+  }
+  

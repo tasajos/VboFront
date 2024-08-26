@@ -230,6 +230,7 @@ function RegistrarPersonal() {
                 <option value="Arquitecto">Arquitecto</option>
                 <option value="Estudiante">Estudiante</option>
                 <option value="Comerciante">Comerciante</option>
+                <option value="Militar">Militar</option>
               </select>
             </div>
 
@@ -246,6 +247,7 @@ function RegistrarPersonal() {
                 <option value="Enfermería">Enfermería</option>
                 <option value="Arquitectura">Arquitectura</option>
                 <option value="Musica">Musica</option>
+                <option value="Militar">Militar</option>
                 <option value="Otros">Otros</option>
               </select>
             </div>
