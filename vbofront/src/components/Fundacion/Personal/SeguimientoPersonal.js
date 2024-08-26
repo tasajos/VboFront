@@ -258,7 +258,8 @@ function SeguimientoPersonal() {
                       <strong>Dirección:</strong> {personalData.direccion} <br />
                       <strong>Ciudad:</strong> {personalData.ciudad} <br />
                       <strong>Unidad:</strong> {personalData.unidad} <br />
-                      <strong>Estado:</strong> {personalData.estado || 'N/A'}
+                      <strong>Estado:</strong> {personalData.estado || 'N/A'}<br />
+                      <strong>Codigo:</strong> {personalData.codigo || 'N/A'}
                     </Card.Text>
                   </div>
                 </Card.Body>
