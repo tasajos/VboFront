@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import { storage } from '../../../firebase'; // Asegúrate de importar correctamente tu configuración de Firebase Storage
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
-import { auth } from '../../../firebase';
 import "react-datepicker/dist/react-datepicker.css";
 import './ReportePersonal.css';
 import NavBar from '../../NavBar/navbar';
+import {auth } from '../../../firebase'; // Asegúrate de que storage está importado
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
 import * as XLSX from 'xlsx';
 
 function ReportePersonal() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [reporteData, setReporteData] = useState([]);
   const [userUnit, setUserUnit] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState(''); // Mensaje del modal
 
   const navigate = useNavigate();
 
@@ -72,20 +77,48 @@ function ReportePersonal() {
     XLSX.writeFile(wb, `Reporte_Asistencia_${selectedDate.toISOString().split('T')[0]}.xlsx`);
   };
 
-  const shareOnSocialMedia = () => {
-    const message = `Reporte de Asistencia para la fecha ${selectedDate.toLocaleDateString()}:\n\n` +
-      reporteData.map(personal => 
-        `${personal.grado || 'N/A'} ${personal.nombre} ${personal.apellidoPaterno} ${personal.apellidoMaterno} - Asistió: ${personal.asistencia[selectedDate.toISOString().split('T')[0]].asistio ? 'Sí' : 'No'}`
-      ).join('\n');
-    
-    if (navigator.share) {
-      navigator.share({
-        title: `Reporte de Asistencia ${selectedDate.toLocaleDateString()}`,
-        text: message,
-        url: window.location.href,
-      }).catch(console.error);
-    } else {
-      alert('Tu navegador no soporta la funcionalidad para compartir.');
+  const shareOnSocialMedia = async () => {
+    if (!selectedDate) return;
+
+    setModalMessage('Procesando...');
+    setShowModal(true);
+
+    try {
+      // Crear el archivo Excel en memoria
+      const ws = XLSX.utils.json_to_sheet(reporteData.map(personal => ({
+        Grado: personal.grado || 'N/A',
+        Nombre: personal.nombre,
+        'Apellido Paterno': personal.apellidoPaterno,
+        'Apellido Materno': personal.apellidoMaterno,
+        Código: personal.codigo || 'N/A',
+        Asistencia: personal.asistencia[selectedDate.toISOString().split('T')[0]].asistio ? 'Sí' : 'No',
+        Fecha: selectedDate.toLocaleDateString()
+      })));
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Asistencia");
+      const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+      // Subir a Firebase Storage
+      const storageReference = storageRef(storage, `Pasistencia/Reporte_Asistencia_${selectedDate.toISOString().split('T')[0]}.xlsx`);
+      const uploadResult = await uploadBytes(storageReference, new Blob([excelBuffer], { type: "application/octet-stream" }));
+
+      // Obtener la URL de descarga
+      const downloadURL = await getDownloadURL(uploadResult.ref);
+
+      // Compartir la URL por redes sociales
+      if (navigator.share) {
+        navigator.share({
+          title: `Reporte de Asistencia ${selectedDate.toLocaleDateString()}`,
+          text: 'Haz clic en el enlace para descargar el reporte de asistencia.',
+          url: downloadURL,
+        }).catch(console.error);
+      } else {
+        alert('Tu navegador no soporta la funcionalidad para compartir.');
+      }
+    } catch (error) {
+      console.error('Error al compartir el archivo:', error);
+    } finally {
+      setShowModal(false); // Cerrar el modal después de procesar
     }
   };
 
@@ -153,6 +186,11 @@ function ReportePersonal() {
           )}
         </div>
       </div>
+
+      {/* Modal de Procesando */}
+      <Modal show={showModal} centered>
+        <Modal.Body>{modalMessage}</Modal.Body>
+      </Modal>
     </div>
   );
 }
