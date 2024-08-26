@@ -190,7 +190,7 @@ function NavBar({ handleSignOut }) {
                     <NavDropdown.Item href="regpersoF">Registro de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="listpersoF">Lista de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="rgasis">Registro Asistencia</NavDropdown.Item>
-                    <NavDropdown.Item href="/personal/reportes">Reportes de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="repper">Reportes de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="segpersonal">Seguimiento de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>
                   </NavDropdown>

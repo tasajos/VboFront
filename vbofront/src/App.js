@@ -59,7 +59,8 @@ import ListarPersonal from './components/Fundacion/Personal/ListarPersonal';
 import SeguimientoPersonal from './components/Fundacion/Personal/SeguimientoPersonal'; 
 import CertCapac from './components/Fundacion/Capacitacion/CertificadoForm'; 
 import RegOpe from './components/Fundacion/Operaciones/RegistroOperaciones'; 
-import RegAsis from './components/Fundacion/Personal/RegistrarAsistencia'; 
+import RegAsis from './components/Fundacion/Personal/RegistrarAsistencia';
+import RepPers from './components/Fundacion/Personal/ReportePersonal'; 
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -142,6 +143,7 @@ function App() {
           <Route path="/certgene" element={<CertCapac />} />
           <Route path="/rgope" element={<RegOpe />} />
           <Route path="/rgasis" element={<RegAsis />} />
+          <Route path="/repper" element={<RepPers />} />
           
         </Routes>
       </div>
