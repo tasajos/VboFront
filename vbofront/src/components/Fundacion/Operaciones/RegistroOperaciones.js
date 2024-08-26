@@ -73,6 +73,7 @@ function RegistroOperaciones() {
       if (foundPersonal) {
         setPersonalData(foundPersonal);
         setHistorial(foundPersonal.historial || []);
+        setGrado(foundPersonal.grado || 'Voluntario');
         setError('');
       } else {
         setPersonalData(null);
@@ -93,17 +94,23 @@ function RegistroOperaciones() {
         fecha: new Date().toISOString(),
         operacion,
         fechaOperacion: fechaOperacion ? fechaOperacion.toISOString() : null,
-        autorizadoPor,
+        autorizadoPor,  // Aquí, guardamos la cadena combinada
         observaciones,
       };
 
-      update(ref(db, `fundacion/personal/${personalData.ci}/operaciones`), {
-        operaciones: [...(personalData.operaciones || []), nuevaOperacion],
+      const operacionesActuales = Array.isArray(personalData.operaciones) ? personalData.operaciones : [];
+
+      // Actualizar solo el array de operaciones
+      update(ref(db, `fundacion/personal/${personalData.ci}`), {
+        operaciones: [...operacionesActuales, nuevaOperacion],
       }).then(() => {
-        setPersonalData((prev) => ({ ...prev, operaciones: [...(prev.operaciones || []), nuevaOperacion] }));
+        setPersonalData((prev) => ({
+          ...prev,
+          operaciones: [...operacionesActuales, nuevaOperacion],
+        }));
         setShowOperationForm(false);
       }).catch((error) => {
-        console.error("Error updating operacion:", error);
+        console.error("Error al actualizar la operación:", error);
       });
     } else {
       console.error("No se pudo guardar la operación porque el ID es indefinido.");
@@ -135,33 +142,33 @@ function RegistroOperaciones() {
 
           {personalData && (
             <>
-            <Card className="registro-operaciones-card mx-auto">
-    <Card.Body className="d-flex align-items-center">
-        <div className="registro-operaciones-card-left">
-            <Card.Img
-                variant="top"
-                src="https://via.placeholder.com/150"
-                className="registro-operaciones-profile-image"
-            />
-            <div className="registro-operaciones-name-section">
-                <h4 className="registro-operaciones-name-text">{personalData.nombre} {personalData.apellidoPaterno} {personalData.apellidoMaterno}</h4>
-                <h6 className="registro-operaciones-role-text">{gradoActual}</h6>
-            </div>
-        </div>
-        <div className="registro-operaciones-card-right">
-        <Card.Text className="registro-operaciones-card-text">
-    <strong>CI:</strong> {personalData.ci} <br />
-    <strong>Tipo de Sangre:</strong> {personalData.tipoSangre || 'N/A'} <br />
-    <strong>E-mail:</strong> {personalData.correo} <br />
-    <strong>Teléfono:</strong> {personalData.telefono} <br />
-    <strong>Dirección:</strong> {personalData.direccion} <br />
-    <strong>Ciudad:</strong> {personalData.ciudad} <br />
-    <strong>Unidad:</strong> {personalData.unidad} <br />
-    <strong>Estado:</strong> {personalData.estado || 'N/A'}
-</Card.Text>
-        </div>
-    </Card.Body>
-</Card>
+              <Card className="registro-operaciones-card mx-auto">
+                <Card.Body className="d-flex align-items-center">
+                  <div className="registro-operaciones-card-left">
+                    <Card.Img
+                      variant="top"
+                      src="https://via.placeholder.com/150"
+                      className="registro-operaciones-profile-image"
+                    />
+                    <div className="registro-operaciones-name-section">
+                      <h4 className="registro-operaciones-name-text">{personalData.nombre} {personalData.apellidoPaterno} {personalData.apellidoMaterno}</h4>
+                      <h6 className="registro-operaciones-role-text">{gradoActual}</h6>
+                    </div>
+                  </div>
+                  <div className="registro-operaciones-card-right">
+                    <Card.Text className="registro-operaciones-card-text">
+                      <strong>CI:</strong> {personalData.ci} <br />
+                      <strong>Tipo de Sangre:</strong> {personalData.tipoSangre || 'N/A'} <br />
+                      <strong>E-mail:</strong> {personalData.correo} <br />
+                      <strong>Teléfono:</strong> {personalData.telefono} <br />
+                      <strong>Dirección:</strong> {personalData.direccion} <br />
+                      <strong>Ciudad:</strong> {personalData.ciudad} <br />
+                      <strong>Unidad:</strong> {personalData.unidad} <br />
+                      <strong>Estado:</strong> {personalData.estado || 'N/A'}
+                    </Card.Text>
+                  </div>
+                </Card.Body>
+              </Card>
 
               <div className="registro-operaciones-mt-4 d-flex justify-content-center">
                 <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowOperationForm(true)}>Registrar Operación</Button>
@@ -169,7 +176,6 @@ function RegistroOperaciones() {
 
               {showOperationForm && (
                 <div className="registro-operaciones-mt-4">
-                    <br></br>
                   <h4 className="registro-operaciones-text-center registro-operaciones-mb-4"></h4>
                   <Form>
                     <Form.Group controlId="formOperacion">
@@ -201,10 +207,18 @@ function RegistroOperaciones() {
 
                     <Form.Group controlId="formAutorizadoPor" className="registro-operaciones-mt-3">
                       <Form.Label>Autorizado por:</Form.Label>
-                      <Form.Control as="select" value={autorizadoPor} onChange={(e) => setAutorizadoPor(e.target.value)}>
+                      <Form.Control 
+                        as="select" 
+                        onChange={(e) => {
+                          const selectedUser = listaUsuarios.find(usuario => usuario.ci === e.target.value);
+                          if (selectedUser) {
+                            setAutorizadoPor(`${selectedUser.grado ? selectedUser.grado + ' ' : ''}${selectedUser.nombre} ${selectedUser.apellidoPaterno} ${selectedUser.apellidoMaterno}`);
+                          }
+                        }}
+                      >
                         <option value="">Seleccione...</option>
                         {listaUsuarios.map((usuario) => (
-                          <option key={usuario.ci} value={usuario.nombre}>
+                          <option key={usuario.ci} value={usuario.ci}>
                             {usuario.grado ? `${usuario.grado} ` : ''}{usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}
                           </option>
                         ))}
@@ -237,4 +251,3 @@ function RegistroOperaciones() {
 }
 
 export default RegistroOperaciones;
-
