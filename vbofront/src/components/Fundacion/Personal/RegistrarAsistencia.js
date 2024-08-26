@@ -46,6 +46,7 @@ function RegistroAsistencia() {
     if (date) {
       const db = getDatabase();
       const personalRef = ref(db, 'fundacion/personal');
+      const dateKey = date.toISOString().split('T')[0]; // YYYY-MM-DD
 
       onValue(personalRef, (snapshot) => {
         const personalData = snapshot.val();
@@ -53,6 +54,18 @@ function RegistroAsistencia() {
           ? Object.values(personalData).filter((personal) => 
               personal.unidad === userUnit && personal.estado === 'Activo')
           : [];
+
+        // Verificar si ya tienen asistencia registrada en la fecha seleccionada
+        personalDeUnidad.forEach((personal) => {
+          const asistenciaRef = ref(db, `fundacion/personal/${personal.ci}/asistencia/${dateKey}`);
+          onValue(asistenciaRef, (asistenciaSnapshot) => {
+            if (asistenciaSnapshot.exists()) {
+              personal.asistio = asistenciaSnapshot.val().asistio;
+            } else {
+              personal.asistio = false;
+            }
+          });
+        });
 
         setAsistenciaData(personalDeUnidad);
         setSortedData(personalDeUnidad); // Inicializa con los datos sin ordenar
@@ -96,17 +109,15 @@ function RegistroAsistencia() {
     const dateKey = selectedDate.toISOString().split('T')[0]; // YYYY-MM-DD
 
     sortedData.forEach((personal) => {
-      if (personal.asistio) {
-        const asistenciaRef = ref(db, `fundacion/personal/${personal.ci}/asistencia/${dateKey}`);
-        const asistenciaData = {
-          fecha: dateKey,
-          unidad: personal.unidad,
-          asistio: personal.asistio
-        };
-        update(asistenciaRef, asistenciaData).catch((error) => {
-          console.error("Error al guardar la asistencia:", error);
-        });
-      }
+      const asistenciaRef = ref(db, `fundacion/personal/${personal.ci}/asistencia/${dateKey}`);
+      const asistenciaData = {
+        fecha: dateKey,
+        unidad: personal.unidad,
+        asistio: personal.asistio || false, // Guarda como false si no asistió
+      };
+      update(asistenciaRef, asistenciaData).catch((error) => {
+        console.error("Error al guardar la asistencia:", error);
+      });
     });
 
     setShowModal(true); // Mostrar el modal después de guardar
@@ -202,3 +213,4 @@ function RegistroAsistencia() {
 }
 
 export default RegistroAsistencia;
+
