@@ -177,6 +177,10 @@ function SeguimientoPersonal() {
 
   const handleSaveReconocimiento = () => {
     const db = getDatabase();
+    const autorizadoUsuario = listaUsuarios.find(usuario => usuario.ci === autorizadoPor);
+
+    
+
     if (personalData && personalData.ci) {
       const nuevoHistorial = {
         fecha: new Date().toISOString(),
@@ -187,25 +191,38 @@ function SeguimientoPersonal() {
         tipoMemo: tipoReconocimiento === 'memorandum' ? tipoMemo : null,
         grado: tipoMemo === 'Ascenso' ? grado : null, // Guardar el grado solo si es ascenso
         motivo,
-        autorizadoPor: tipoReconocimiento === 'memorandum' ? autorizadoPor : null,
+        autorizadoPor: autorizadoUsuario ? `${autorizadoUsuario.nombre} ${autorizadoUsuario.apellidoPaterno} ${autorizadoUsuario.apellidoMaterno}` : '',
       };
-  
-      update(ref(db, `fundacion/personal/${personalData.ci}`), {
-        historial: [...historial, nuevoHistorial],
-      }).then(() => {
-        setPersonalData((prev) => ({ ...prev, historial: [...historial, nuevoHistorial] }));
-        setShowReconocimientoModal(false);
-        setMensajeGuardado('Reconocimiento guardado exitosamente.');
-        setTimeout(() => {
-          setMensajeGuardado('');
-        }, 2000);
-      }).catch((error) => {
-        console.error("Error updating reconocimiento:", error);
-      });
-    } else {
-      console.error("No se pudo guardar el reconocimiento porque el ID es indefinido.");
+   // Definir el objeto updates aquí
+   const updates = {
+    historial: [...historial, nuevoHistorial],
+};
+       // Si es un ascenso, actualizar el grado fuera del historial también
+       if (tipoMemo === 'Ascenso') {
+        updates.grado = grado;
     }
-  };
+
+  
+      update(ref(db, `fundacion/personal/${personalData.ci}`), updates)
+            .then(() => {
+                setPersonalData((prev) => ({
+                    ...prev,
+                    historial: [...historial, nuevoHistorial],
+                    grado: tipoMemo === 'Ascenso' ? grado : prev.grado, // Actualizar el grado en personalData
+                }));
+                setShowReconocimientoModal(false);
+                setMensajeGuardado('Reconocimiento guardado exitosamente.');
+                setTimeout(() => {
+                    setMensajeGuardado('');
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error("Error updating reconocimiento:", error);
+            });
+    } else {
+        console.error("No se pudo guardar el reconocimiento porque el ID es indefinido.");
+    }
+};
 
   const toggleHistorial = () => {
     setShowHistorial(!showHistorial);
@@ -246,7 +263,7 @@ function SeguimientoPersonal() {
                     />
                     <div className="name-section">
                       <h4 className="name-text">{personalData.nombre} {personalData.apellidoPaterno} {personalData.apellidoMaterno}</h4>
-                      <h6 className="role-text">{gradoActual || 'Voluntario'}</h6>
+                      <h6 className="role-text">{personalData.grado || 'Voluntario'}</h6>
                     </div>
                   </div>
                   <div className="card-right">
