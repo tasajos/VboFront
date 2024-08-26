@@ -305,8 +305,8 @@ function SeguimientoPersonal() {
         <>
           <strong>Tipo de Memorandum:</strong> {entry.tipoMemo} <br />
           <strong>Autorizado por:</strong> 
-          {entry.grado ? `${entry.grado} ` : ''} 
-          {entry.autorizadoPor || 'N/A'}   {personalData.apellidoPaterno || 'N/A'} {personalData.apellidoMaterno || 'N/A'} <br />
+          {personalData.grado ? `${personalData.grado} ` : ''} 
+          {entry.autorizadoPor || 'N/A'}   {entry.apellidoPaterno || ''} {entry.apellidoMaterno || ''} <br />
         </>
       )}
     </>
