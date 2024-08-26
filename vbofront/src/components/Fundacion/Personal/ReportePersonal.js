@@ -174,9 +174,10 @@ function ReportePersonal() {
                 <Button variant="success" className="mt-3" onClick={downloadExcel}>
                   Descargar en XLS
                 </Button>
+              {/*
                 <Button variant="info" className="mt-3 ml-2" onClick={shareOnSocialMedia}>
                   Compartir por Redes Sociales
-                </Button>
+                </Button>*/}
               </div>
             </>
           )}
