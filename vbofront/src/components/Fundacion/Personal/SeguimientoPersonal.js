@@ -179,31 +179,32 @@ function SeguimientoPersonal() {
     const db = getDatabase();
     const autorizadoUsuario = listaUsuarios.find(usuario => usuario.ci === autorizadoPor);
 
-    
+    //const autorizadoUsuario = listaUsuarios.find(usuario => usuario.ci === autorizadoPor);
 
-    if (personalData && personalData.ci) {
-      const nuevoHistorial = {
-        fecha: new Date().toISOString(),
-        tipoReconocimiento,
-        institucion,
-        fechaReconocimiento,
-        anioReconocimiento,
-        tipoMemo: tipoReconocimiento === 'memorandum' ? tipoMemo : null,
-        grado: tipoMemo === 'Ascenso' ? grado : null, // Guardar el grado solo si es ascenso
-        motivo,
-        autorizadoPor: autorizadoUsuario ? `${autorizadoUsuario.nombre} ${autorizadoUsuario.apellidoPaterno} ${autorizadoUsuario.apellidoMaterno}` : '',
-      };
-   // Definir el objeto updates aquí
-   const updates = {
-    historial: [...historial, nuevoHistorial],
-};
-       // Si es un ascenso, actualizar el grado fuera del historial también
-       if (tipoMemo === 'Ascenso') {
-        updates.grado = grado;
-    }
 
-  
-      update(ref(db, `fundacion/personal/${personalData.ci}`), updates)
+    if (personalData && personalData.ci && autorizadoUsuario) {
+        const nuevoHistorial = {
+            fecha: new Date().toISOString(),
+            tipoReconocimiento,
+            institucion,
+            fechaReconocimiento,
+            anioReconocimiento,
+            tipoMemo: tipoReconocimiento === 'memorandum' ? tipoMemo : null,
+            grado: tipoMemo === 'Ascenso' ? grado : null, // Guardar el grado solo si es ascenso
+            motivo,
+            autorizadoPor: `${autorizadoUsuario.grado} ${autorizadoUsuario.nombre} ${autorizadoUsuario.apellidoPaterno} ${autorizadoUsuario.apellidoMaterno}`,
+        };
+
+        const updates = {
+            historial: [...historial, nuevoHistorial],
+        };
+
+        // Si es un ascenso, actualizar el grado fuera del historial también
+        if (tipoMemo === 'Ascenso') {
+            updates.grado = grado;
+        }
+
+        update(ref(db, `fundacion/personal/${personalData.ci}`), updates)
             .then(() => {
                 setPersonalData((prev) => ({
                     ...prev,
@@ -220,7 +221,7 @@ function SeguimientoPersonal() {
                 console.error("Error updating reconocimiento:", error);
             });
     } else {
-        console.error("No se pudo guardar el reconocimiento porque el ID es indefinido.");
+        console.error("No se pudo guardar el reconocimiento porque el ID es indefinido o no se encontró al usuario autorizado.");
     }
 };
 
@@ -467,17 +468,17 @@ function SeguimientoPersonal() {
                         </Form.Group>
                       )}
 
-                      <Form.Group controlId="formAutorizadoPor" className="mt-3">
-                        <Form.Label>Autorizado por:</Form.Label>
-                        <Form.Control as="select" value={autorizadoPor} onChange={(e) => setAutorizadoPor(e.target.value)}>
-                          <option value="">Seleccione...</option>
-                          {listaUsuarios.map((usuario) => (
-                            <option key={usuario.ci} value={usuario.nombre} >
-                              {usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}
-                            </option>
-                          ))}
-                        </Form.Control>
-                      </Form.Group>
+<Form.Group controlId="formAutorizadoPor" className="mt-3">
+    <Form.Label>Autorizado por:</Form.Label>
+    <Form.Control as="select" value={autorizadoPor} onChange={(e) => setAutorizadoPor(e.target.value)}>
+        <option value="">Seleccione...</option>
+        {listaUsuarios.map((usuario) => (
+            <option key={usuario.ci} value={usuario.ci}>
+             {usuario.grado}  {usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}
+            </option>
+        ))}
+    </Form.Control>
+</Form.Group>
                     </>
                   )}
                 </Modal.Body>
