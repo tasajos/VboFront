@@ -185,7 +185,7 @@ function SeguimientoPersonal() {
         fechaReconocimiento,
         anioReconocimiento,
         tipoMemo: tipoReconocimiento === 'memorandum' ? tipoMemo : null,
-        grado: tipoMemo === 'ascenso' ? grado : null, // Guardar el grado solo si es ascenso
+        grado: tipoMemo === 'Ascenso' ? grado : null, // Guardar el grado solo si es ascenso
         motivo,
         autorizadoPor: tipoReconocimiento === 'memorandum' ? autorizadoPor : null,
       };
@@ -212,7 +212,7 @@ function SeguimientoPersonal() {
   };
 
   const gradoActual = historial.find(entry => entry.grado)?.grado;
-  
+
   return (
     <div>
       <NavBar handleSignOut={handleSignOut} />
@@ -422,13 +422,14 @@ function SeguimientoPersonal() {
                         <Form.Label>Seleccione:</Form.Label>
                         <Form.Control as="select" value={tipoMemo} onChange={(e) => setTipoMemo(e.target.value)}>
                           <option value="">Seleccione...</option>
-                          <option value="ascenso">Ascenso</option>
+                          <option value="Ascenso">Ascenso</option>
                           <option value="suspension">Suspensión</option>
                           <option value="mision">Misión</option>
+                          <option value="Designacion">Designacion</option>
                         </Form.Control>
                       </Form.Group>
 
-                      {tipoMemo === 'ascenso' && (
+                      {tipoMemo === 'Ascenso' && (
                         <Form.Group controlId="formGrado" className="mt-3">
                           <Form.Label>Grado:</Form.Label>
                           <Form.Control as="select" value={grado} onChange={(e) => setGrado(e.target.value)}>
