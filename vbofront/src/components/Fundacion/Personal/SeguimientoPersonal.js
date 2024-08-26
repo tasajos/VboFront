@@ -179,9 +179,6 @@ function SeguimientoPersonal() {
     const db = getDatabase();
     const autorizadoUsuario = listaUsuarios.find(usuario => usuario.ci === autorizadoPor);
 
-    //const autorizadoUsuario = listaUsuarios.find(usuario => usuario.ci === autorizadoPor);
-
-
     if (personalData && personalData.ci && autorizadoUsuario) {
         const nuevoHistorial = {
             fecha: new Date().toISOString(),
@@ -192,7 +189,7 @@ function SeguimientoPersonal() {
             tipoMemo: tipoReconocimiento === 'memorandum' ? tipoMemo : null,
             grado: tipoMemo === 'Ascenso' ? grado : null, // Guardar el grado solo si es ascenso
             motivo,
-            autorizadoPor: `${autorizadoUsuario.grado} ${autorizadoUsuario.nombre} ${autorizadoUsuario.apellidoPaterno} ${autorizadoUsuario.apellidoMaterno}`,
+            autorizadoPor: `${autorizadoUsuario.grado} ${autorizadoUsuario.nombre} ${autorizadoUsuario.apellidoPaterno} ${autorizadoUsuario.apellidoMaterno}`, // Solo los datos del usuario seleccionado
         };
 
         const updates = {
@@ -224,7 +221,6 @@ function SeguimientoPersonal() {
         console.error("No se pudo guardar el reconocimiento porque el ID es indefinido o no se encontró al usuario autorizado.");
     }
 };
-
   const toggleHistorial = () => {
     setShowHistorial(!showHistorial);
   };
@@ -324,7 +320,7 @@ function SeguimientoPersonal() {
         <>
           <strong>Tipo de Memorandum:</strong> {entry.tipoMemo} <br />
           <strong>Autorizado por:</strong> 
-          {personalData.grado ? `${personalData.grado} ` : ''} 
+          
           {entry.autorizadoPor || 'N/A'}   {entry.apellidoPaterno || ''} {entry.apellidoMaterno || ''} <br />
         </>
       )}
@@ -474,7 +470,7 @@ function SeguimientoPersonal() {
         <option value="">Seleccione...</option>
         {listaUsuarios.map((usuario) => (
             <option key={usuario.ci} value={usuario.ci}>
-             {usuario.grado}  {usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}
+                {usuario.grado} {usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}
             </option>
         ))}
     </Form.Control>
