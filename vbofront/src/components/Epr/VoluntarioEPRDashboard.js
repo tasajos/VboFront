@@ -5,7 +5,7 @@ import NavBar from '../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
 import { auth } from '../../firebase';
-
+import ListPost from '../Fundacion/Personal/ListaPost';
 
 function VoluntarioEPRDashboard() {
     const navigate = useNavigate(); // Utiliza useNavigate
@@ -29,6 +29,7 @@ function VoluntarioEPRDashboard() {
     <div className="admin-epr-dashboard-container">
       <h1>Dashboard de Voluntario EPR</h1>
   
+      <ListPost></ListPost>
     </div>
     
      </div>

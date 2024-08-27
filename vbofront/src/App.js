@@ -61,7 +61,9 @@ import SeguimientoPersonal from './components/Fundacion/Personal/SeguimientoPers
 import CertCapac from './components/Fundacion/Capacitacion/CertificadoForm'; 
 import RegOpe from './components/Fundacion/Operaciones/RegistroOperaciones'; 
 import RegAsis from './components/Fundacion/Personal/RegistrarAsistencia';
-import RepPers from './components/Fundacion/Personal/ReportePersonal'; 
+import RepPers from './components/Fundacion/Personal/ReportePersonal';
+import ActPers from './components/Fundacion/Personal/ActividadesPersonal'; 
+import ListPost from './components/Fundacion/Personal/ListaPost'; 
 
 //Voluntario
 
@@ -150,6 +152,8 @@ function App() {
           <Route path="/rgope" element={<RegOpe />} />
           <Route path="/rgasis" element={<RegAsis />} />
           <Route path="/repper" element={<RepPers />} />
+          <Route path="/accper" element={<ActPers />} />
+          <Route path="/listapost" element={<ListPost />} />
 
            {/* Voluntario */}
            <Route path="/pervol" element={<VolPers />} />

@@ -5,6 +5,8 @@ import NavBar from '../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
 import { auth } from '../../firebase';
+import ActividadesPersonal from '../Fundacion/Personal/ActividadesPersonal';
+import ListPost from '../Fundacion/Personal/ListaPost';
 
 function AdminEprDashboard() {
 
@@ -28,6 +30,11 @@ function AdminEprDashboard() {
     
     <div className="admin-epr-dashboard-container">
       <h1>Dashboard de Administrador EPR</h1>
+
+      <br>
+      </br>
+
+      
    {/* 
       <div className="admin-epr-options">
         <Link to="/Eventos" className="admin-epr-option">
@@ -49,8 +56,9 @@ function AdminEprDashboard() {
           Listar Unidades
         </Link>
       </div>*/}
+     <ListPost></ListPost>
     </div>
-    
+   
      </div>
   );
 }

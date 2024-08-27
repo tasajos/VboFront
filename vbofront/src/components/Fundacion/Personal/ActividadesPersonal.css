@@ -1,0 +1,39 @@
+.actividades-personal-container {
+    background-color: #ffffff;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  .actividades-personal-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .posts-list {
+    margin-top: 20px;
+  }
+  
+  .posts-list .card {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+  }
+  
+  .post-meta {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .post-user {
+    font-weight: bold;
+  }
+  
+  .post-date {
+    font-style: italic;
+  }
+  

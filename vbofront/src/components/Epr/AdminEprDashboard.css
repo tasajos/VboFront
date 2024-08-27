@@ -1,7 +1,7 @@
 .admin-epr-dashboard-container {
+  background-color: #ffffff;
     padding: 20px;
-    background-color: #f9f9f9;
-    text-align: center;
+    min-height: 100vh;
   }
   
   .admin-epr-dashboard-container h1 {

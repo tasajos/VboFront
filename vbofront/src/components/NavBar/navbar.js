@@ -200,7 +200,7 @@ function NavBar({ handleSignOut }) {
                     <NavDropdown.Item href="rgasis">Registro Asistencia</NavDropdown.Item>
                     <NavDropdown.Item href="repper">Reportes de Personal</NavDropdown.Item>
                     <NavDropdown.Item href="segpersonal">Seguimiento de Personal</NavDropdown.Item>
-                    <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="accper">Actividades del Personal</NavDropdown.Item>
                   </NavDropdown>
 
                   {/* Menú Logística */}
