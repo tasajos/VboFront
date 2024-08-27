@@ -247,8 +247,8 @@ function NavBar({ handleSignOut }) {
               <>
                {/* Menú Operaciones */}
 
-               <NavDropdown title="Operaciones" id="navbarScrollingDropdownOperaciones">
-                    <NavDropdown.Item href="rgope">Registro de Operaciones</NavDropdown.Item>
+               <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
+                    <NavDropdown.Item href="rgope">Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="/operaciones/reportes">Reportes de Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>

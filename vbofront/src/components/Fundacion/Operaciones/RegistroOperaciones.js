@@ -27,13 +27,16 @@ function RegistroOperaciones() {
   const [listaUsuarios, setListaUsuarios] = useState([]);
   const [grado, setGrado] = useState([]);
   const [historial, setHistorial] = useState([]);
+  const [userRole, setUserRole] = useState('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const unidadAutenticada = localStorage.getItem('userUnit');
+    const rolAutenticado = localStorage.getItem('userRole');
     if (unidadAutenticada) {
       setUserUnit(unidadAutenticada);
+      setUserRole(rolAutenticado);
       cargarUsuarios(unidadAutenticada); // Cargar los usuarios de la misma unidad
     }
   }, []);
@@ -172,11 +175,13 @@ function RegistroOperaciones() {
               </Card>
 
               <div className="registro-operaciones-buttons d-flex justify-content-center mt-4">
-                <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowOperationForm(true)}>Registrar Operación</Button>
+                {userRole !== 'Voluntario' && (
+                  <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowOperationForm(true)}>Registrar Operación</Button>
+                )}
                 <Button variant="warning" className="registro-operaciones-mx-3" onClick={() => setShowOperationsList(true)}>Ver Operaciones</Button>
               </div>
 
-              {showOperationForm && (
+              {showOperationForm && userRole !== 'Voluntario' && (
                 <div className="registro-operaciones-section registro-operaciones-mt-4">
                   <h4 className="registro-operaciones-text-center registro-operaciones-mb-4">Nueva Operación</h4>
                   <Form>
