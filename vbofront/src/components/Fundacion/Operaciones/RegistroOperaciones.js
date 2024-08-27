@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import './RegistroOperaciones.css';  // Asegúrate de cambiar la ruta si es necesario
+import './RegistroOperaciones.css';
 import NavBar from '../../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,7 @@ function RegistroOperaciones() {
   const [userUnit, setUserUnit] = useState('');
   const [showOperationForm, setShowOperationForm] = useState(false);
   const [showOperationsList, setShowOperationsList] = useState(false);
+  const [showValidateOperations, setShowValidateOperations] = useState(false);
   const [operacion, setOperacion] = useState('');
   const [fechaOperacion, setFechaOperacion] = useState(null);
   const [autorizadoPor, setAutorizadoPor] = useState('');
@@ -37,7 +38,7 @@ function RegistroOperaciones() {
     if (unidadAutenticada) {
       setUserUnit(unidadAutenticada);
       setUserRole(rolAutenticado);
-      cargarUsuarios(unidadAutenticada); // Cargar los usuarios de la misma unidad
+      cargarUsuarios(unidadAutenticada);
     }
   }, []);
 
@@ -100,11 +101,11 @@ function RegistroOperaciones() {
         fechaOperacion: fechaOperacion ? fechaOperacion.toISOString() : null,
         autorizadoPor,  
         observaciones,
+        estado: userRole === 'Voluntario' ? 'Pendiente' : 'Aprobado',
       };
 
       const operacionesActuales = Array.isArray(personalData.operaciones) ? personalData.operaciones : [];
 
-      // Actualizar solo el array de operaciones
       update(ref(db, `fundacion/personal/${personalData.ci}`), {
         operaciones: [...operacionesActuales, nuevaOperacion],
       }).then(() => {
@@ -118,6 +119,30 @@ function RegistroOperaciones() {
       });
     } else {
       console.error("No se pudo guardar la operación porque el ID es indefinido.");
+    }
+  };
+
+  const handleValidateOperation = (index, nuevoEstado) => {
+    const db = getDatabase();
+    if (personalData && personalData.operaciones) {
+      const operacionesActuales = [...personalData.operaciones];
+      const operacion = operacionesActuales.filter(op => op.estado === 'Pendiente')[index];
+      
+      // Cambiar el estado de la operación
+      if (operacion) {
+        operacion.estado = nuevoEstado;
+
+        update(ref(db, `fundacion/personal/${personalData.ci}`), {
+          operaciones: operacionesActuales,
+        }).then(() => {
+          setPersonalData((prev) => ({
+            ...prev,
+            operaciones: operacionesActuales,
+          }));
+        }).catch((error) => {
+          console.error("Error al actualizar la operación:", error);
+        });
+      }
     }
   };
 
@@ -168,20 +193,22 @@ function RegistroOperaciones() {
                       <strong>Dirección:</strong> {personalData.direccion} <br />
                       <strong>Ciudad:</strong> {personalData.ciudad} <br />
                       <strong>Unidad:</strong> {personalData.unidad} <br />
-                      <strong>Estado:</strong> {personalData.estado || 'N/A'}
+                      <strong>Estado:</strong> {personalData.estado || 'N/A'} <br />
+                      <strong>Código:</strong> {personalData.codigo || 'N/A'}
                     </Card.Text>
                   </div>
                 </Card.Body>
               </Card>
 
               <div className="registro-operaciones-buttons d-flex justify-content-center mt-4">
-                {userRole !== 'Voluntario' && (
-                  <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowOperationForm(true)}>Registrar Operación</Button>
-                )}
+                <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowOperationForm(true)}>Registrar Operación</Button>
                 <Button variant="warning" className="registro-operaciones-mx-3" onClick={() => setShowOperationsList(true)}>Ver Operaciones</Button>
+                {userRole !== 'Voluntario' && (
+                  <Button variant="primary" className="registro-operaciones-mx-3" onClick={() => setShowValidateOperations(true)}>Validar Operación</Button>
+                )}
               </div>
 
-              {showOperationForm && userRole !== 'Voluntario' && (
+              {showOperationForm && (
                 <div className="registro-operaciones-section registro-operaciones-mt-4">
                   <h4 className="registro-operaciones-text-center registro-operaciones-mb-4">Nueva Operación</h4>
                   <Form>
@@ -198,6 +225,7 @@ function RegistroOperaciones() {
                         <option value="Rescate Acuatico">Rescate Acuático</option>
                         <option value="Deslave">Deslave</option>
                         <option value="Desastre">Desastre</option>
+                        <option value="MatPel">MatPel</option>
                         <option value="Otros">Otros</option>
                       </Form.Control>
                     </Form.Group>
@@ -263,6 +291,7 @@ function RegistroOperaciones() {
                             </Card.Title>
                             <Card.Text>
                               <strong>Operación:</strong> {operacion.operacion} <br />
+                              <strong>Estado:</strong> {operacion.estado || 'N/A'} <br />
                               <strong>Autorizado por:</strong> {operacion.autorizadoPor || 'N/A'} <br />
                               <strong>Observaciones:</strong> {operacion.observaciones || 'N/A'} <br />
                             </Card.Text>
@@ -272,6 +301,36 @@ function RegistroOperaciones() {
                     </div>
                   ) : (
                     <p>No se han registrado operaciones.</p>
+                  )}
+                </div>
+              )}
+
+              {showValidateOperations && userRole !== 'Voluntario' && (
+                <div className="registro-operaciones-section registro-operaciones-mt-4">
+                  <h4 className="registro-operaciones-text-center registro-operaciones-mb-4">Validar Operaciones Pendientes</h4>
+                  {personalData?.operaciones?.filter(op => op.estado === 'Pendiente').length > 0 ? (
+                    <div className="operaciones-cards">
+                      {personalData.operaciones.filter(op => op.estado === 'Pendiente').map((operacion, index) => (
+                        <Card key={index} className="mb-3">
+                          <Card.Body>
+                            <Card.Title>
+                              {format(new Date(operacion.fechaOperacion || operacion.fecha), "dd/MM/yyyy", { locale: es })}
+                            </Card.Title>
+                            <Card.Text>
+                              <strong>Operación:</strong> {operacion.operacion} <br />
+                              <strong>Estado:</strong> {operacion.estado || 'N/A'} <br />
+                              <strong>Autorizado por:</strong> {operacion.autorizadoPor || 'N/A'} <br />
+                              <strong>Observaciones:</strong> {operacion.observaciones || 'N/A'} <br />
+                            </Card.Text>
+                            <Button variant="success" onClick={() => handleValidateOperation(index, 'Aprobado')}>Aprobar</Button>
+                            <Button variant="danger" className="ms-2" onClick={() => handleValidateOperation(index, 'Eliminado')}>Eliminar</Button>
+                            <Button variant="warning" className="ms-2" onClick={() => handleValidateOperation(index, 'No Cumple')}>No Cumple</Button>
+                          </Card.Body>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <p>No hay operaciones pendientes de validación.</p>
                   )}
                 </div>
               )}
