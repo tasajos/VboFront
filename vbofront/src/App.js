@@ -51,6 +51,7 @@ import ListarUnidades from './components/Voluntarios/ListarUnidades';
 import ReporteEmergencias from './components/Emergencias/ReporteEmergencia/ReporteEmergencia';
 import NavBar from './components/NavBar/navbar';
 import AdminEprDashboard from './components/Epr/AdminEprDashboard'; // Nueva página para Administrador EPR
+import VolEprDashboard from './components/Epr/VoluntarioEPRDashboard'; // Nueva página para Voluntario EPR
 
 
 //Fundacion
@@ -134,6 +135,7 @@ function App() {
           <Route path="/listarUn" element={<ListarUnidades />} />
           <Route path="/listarreporteE" element={<ReporteEmergencias />} />
           <Route path="/admin-epr-dashboard" element={<AdminEprDashboard />} />
+          <Route path="/vol-epr-dashboard" element={<VolEprDashboard />} />
 
           {/* Fundacion */}
 

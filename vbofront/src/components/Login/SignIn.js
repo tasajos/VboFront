@@ -43,6 +43,8 @@ function SignIn() {
           navigate('/admin-epr-dashboard');
         } else if (userData.rol === 'Administrador') {
           navigate('/dashboard');
+        } else if (userData.rol === 'Voluntario') {
+          navigate('/vol-epr-dashboard');  // Redirigir a voluntarios a su dashboard
         } else {
           setAccessDenied(true);
           signOut(auth); 
