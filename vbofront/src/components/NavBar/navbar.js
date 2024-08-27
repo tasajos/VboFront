@@ -125,49 +125,57 @@ function NavBar({ handleSignOut }) {
                   <NavDropdown.Item href="/listarUn">Listar Unidades</NavDropdown.Item>
                 </NavDropdown>
 
-                {/* Menú Fundación */}
-                <NavDropdown title="Fundación" id="navbarScrollingDropdownFundacion">
-                  {/* Menú Personal */}
-                  <NavDropdown title="Personal" id="navbarScrollingDropdownPersonal">
-                    <NavDropdown.Item href="/personal/registro">Registro de Personal</NavDropdown.Item>
-                    <NavDropdown.Item href="/personal/reportes">Reportes de Personal</NavDropdown.Item>
-                    <NavDropdown.Item href="/personal/seguimiento">Seguimiento de Personal</NavDropdown.Item>
-                    <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>
-                  </NavDropdown>
+             {/* Menú Fundación */}
+             <NavDropdown title="Fundación" id="navbarScrollingDropdownFundacion">
 
-                  {/* Menú Logística */}
-                  <NavDropdown title="Logística" id="navbarScrollingDropdownLogistica">
-                    <NavDropdown.Item href="/logistica/inventario">Inventario</NavDropdown.Item>
-                    <NavDropdown.Item href="/logistica/proveedores">Proveedores</NavDropdown.Item>
-                    <NavDropdown.Item href="/logistica/transporte">Transporte y Almacenamiento</NavDropdown.Item>
-                    <NavDropdown.Item href="/logistica/mantenimiento">Mantenimiento Logístico</NavDropdown.Item>
-                  </NavDropdown>
+            {/* Menú Personal */}
 
-                  {/* Menú Finanzas */}
-                  <NavDropdown title="Finanzas" id="navbarScrollingDropdownFinanzas">
-                    <NavDropdown.Item href="/finanzas/pagos">Pagos y Cobros</NavDropdown.Item>
-                    <NavDropdown.Item href="/finanzas/reportes">Reportes Financieros</NavDropdown.Item>
-                    <NavDropdown.Item href="/finanzas/presupuesto">Presupuesto</NavDropdown.Item>
-                    <NavDropdown.Item href="/finanzas/inversiones">Inversiones</NavDropdown.Item>
-                  </NavDropdown>
+            <NavDropdown title="Personal" id="navbarScrollingDropdownPersonal">
+            <NavDropdown.Item href="regpersoF">Registro de Personal</NavDropdown.Item>
+            <NavDropdown.Item href="listpersoF">Lista de Personal</NavDropdown.Item>
+            <NavDropdown.Item href="rgasis">Registro Asistencia</NavDropdown.Item>
+            <NavDropdown.Item href="repper">Reportes de Personal</NavDropdown.Item>
+            <NavDropdown.Item href="segpersonal">Seguimiento de Personal</NavDropdown.Item>
+            <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>
+            </NavDropdown>
 
-                  {/* Menú Operaciones */}
-                  <NavDropdown title="Operaciones" id="navbarScrollingDropdownOperaciones">
-                    <NavDropdown.Item href="/operaciones/registro">Registro de Operaciones</NavDropdown.Item>
-                    <NavDropdown.Item href="/operaciones/reportes">Reportes de Operaciones</NavDropdown.Item>
-                    <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
-                    <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>
-                  </NavDropdown>
+            {/* Menú Logística */}
 
-                  {/* Menú Capacitación */}
-                  <NavDropdown title="Capacitación" id="navbarScrollingDropdownCapacitacion">
-                    <NavDropdown.Item href="/capacitacion/cursos">Cursos</NavDropdown.Item>
-                    <NavDropdown.Item href="certgene">Generar Certificados</NavDropdown.Item>
-                    <NavDropdown.Item href="/capacitacion/reportes">Reportes de Capacitación</NavDropdown.Item>
-                    <NavDropdown.Item href="/capacitacion/planes">Planes de Capacitación</NavDropdown.Item>
-                    <NavDropdown.Item href="/capacitacion/evaluacion">Evaluación de Capacitación</NavDropdown.Item>
-                  </NavDropdown>
-                </NavDropdown>
+            <NavDropdown title="Logística" id="navbarScrollingDropdownLogistica">
+            <NavDropdown.Item href="/logistica/inventario">Inventario</NavDropdown.Item>
+            <NavDropdown.Item href="/logistica/proveedores">Proveedores</NavDropdown.Item>
+            <NavDropdown.Item href="/logistica/transporte">Transporte y Almacenamiento</NavDropdown.Item>
+            <NavDropdown.Item href="/logistica/mantenimiento">Mantenimiento Logístico</NavDropdown.Item>
+          </NavDropdown>
+
+            {/* Menú Finanzas */}
+
+            <NavDropdown title="Finanzas" id="navbarScrollingDropdownFinanzas">
+              <NavDropdown.Item href="/finanzas/pagos">Pagos y Cobros</NavDropdown.Item>
+              <NavDropdown.Item href="/finanzas/reportes">Reportes Financieros</NavDropdown.Item>
+              <NavDropdown.Item href="/finanzas/presupuesto">Presupuesto</NavDropdown.Item>
+              <NavDropdown.Item href="/finanzas/inversiones">Inversiones</NavDropdown.Item>
+            </NavDropdown>
+
+            {/* Menú Operaciones */}
+
+            <NavDropdown title="Operaciones" id="navbarScrollingDropdownOperaciones">
+              <NavDropdown.Item href="rgope">Registro de Operaciones</NavDropdown.Item>
+              <NavDropdown.Item href="/operaciones/reportes">Reportes de Operaciones</NavDropdown.Item>
+              <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
+              <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>
+            </NavDropdown>
+
+            {/* Menú Capacitación */}
+
+            <NavDropdown title="Capacitación" id="navbarScrollingDropdownCapacitacion">
+              <NavDropdown.Item href="/capacitacion/cursos">Cursos</NavDropdown.Item>
+              <NavDropdown.Item href="certgene">Generar Certificados</NavDropdown.Item>
+              <NavDropdown.Item href="/capacitacion/reportes">Reportes de Capacitación</NavDropdown.Item>
+              <NavDropdown.Item href="/capacitacion/planes">Planes de Capacitación</NavDropdown.Item>
+              <NavDropdown.Item href="/capacitacion/evaluacion">Evaluación de Capacitación</NavDropdown.Item>
+            </NavDropdown>
+            </NavDropdown>
               </>
             )}
             {userRole === 'Administrador_epr' && (
