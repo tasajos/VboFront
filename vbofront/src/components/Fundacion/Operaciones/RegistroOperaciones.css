@@ -136,6 +136,13 @@
 .registro-operaciones-buttons {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
+    justify-content: space-around;
+    flex-wrap: nowrap;
     gap: 20px; /* Añade un espacio entre los botones */
+}
+.registro-operaciones-mx-3 {
+    flex: 1; /* Hace que cada botón ocupe el mismo espacio disponible */
+    text-align: center; /* Centra el texto de los botones */
+    max-width: 200px; /* Establece un ancho máximo para los botones */
 }
