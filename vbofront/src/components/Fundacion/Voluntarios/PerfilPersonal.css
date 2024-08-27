@@ -1,0 +1,67 @@
+/* Estilos generales para el contenedor del perfil */
+.perfil-personal-container {
+    background-color: #ffffff;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.perfil-personal-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-personal-text-center {
+    text-align: center;
+    color: #343a40;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Estilo para la card del perfil personal */
+.perfil-personal-card {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.perfil-personal-card-left {
+    text-align: center;
+    padding-right: 20px;
+    border-right: 2px solid #e0e0e0;
+}
+
+.perfil-personal-profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #d8d8d8; /* Placeholder background color */
+}
+
+.perfil-personal-card-right {
+    flex: 1;
+    padding-left: 40px;
+    color: #2495f8;
+}
+
+.perfil-personal-card-text {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+    color: rgb(22, 75, 153) !important;
+    font-weight: normal !important;
+}
+
+/* Texto específico dentro de la card */
+.perfil-personal-card-text strong {
+    color: #007bff;
+    font-weight: 600;
+}

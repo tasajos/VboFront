@@ -63,6 +63,10 @@ import RegOpe from './components/Fundacion/Operaciones/RegistroOperaciones';
 import RegAsis from './components/Fundacion/Personal/RegistrarAsistencia';
 import RepPers from './components/Fundacion/Personal/ReportePersonal'; 
 
+//Voluntario
+
+import VolPers from './components/Fundacion/Voluntarios/PerfilPersonal'; 
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -146,6 +150,9 @@ function App() {
           <Route path="/rgope" element={<RegOpe />} />
           <Route path="/rgasis" element={<RegAsis />} />
           <Route path="/repper" element={<RepPers />} />
+
+           {/* Voluntario */}
+           <Route path="/pervol" element={<VolPers />} />
           
         </Routes>
       </div>
