@@ -19,12 +19,13 @@ function RegistroOperaciones() {
   const [error, setError] = useState('');
   const [userUnit, setUserUnit] = useState('');
   const [showOperationForm, setShowOperationForm] = useState(false);
+  const [showOperationsList, setShowOperationsList] = useState(false);
   const [operacion, setOperacion] = useState('');
   const [fechaOperacion, setFechaOperacion] = useState(null);
   const [autorizadoPor, setAutorizadoPor] = useState('');
   const [observaciones, setObservaciones] = useState('');
   const [listaUsuarios, setListaUsuarios] = useState([]);
-  const [grado, setGrado] = useState('');
+  const [grado, setGrado] = useState([]);
   const [historial, setHistorial] = useState([]);
 
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ function RegistroOperaciones() {
         fecha: new Date().toISOString(),
         operacion,
         fechaOperacion: fechaOperacion ? fechaOperacion.toISOString() : null,
-        autorizadoPor,  // Aquí, guardamos la cadena combinada
+        autorizadoPor,  
         observaciones,
       };
 
@@ -170,13 +171,14 @@ function RegistroOperaciones() {
                 </Card.Body>
               </Card>
 
-              <div className="registro-operaciones-mt-4 d-flex justify-content-center">
+              <div className="registro-operaciones-buttons d-flex justify-content-center mt-4">
                 <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowOperationForm(true)}>Registrar Operación</Button>
+                <Button variant="warning" className="registro-operaciones-mx-3" onClick={() => setShowOperationsList(true)}>Ver Operaciones</Button>
               </div>
 
               {showOperationForm && (
-                <div className="registro-operaciones-mt-4">
-                  <h4 className="registro-operaciones-text-center registro-operaciones-mb-4"></h4>
+                <div className="registro-operaciones-section registro-operaciones-mt-4">
+                  <h4 className="registro-operaciones-text-center registro-operaciones-mb-4">Nueva Operación</h4>
                   <Form>
                     <Form.Group controlId="formOperacion">
                       <Form.Label>Operación:</Form.Label>
@@ -240,6 +242,32 @@ function RegistroOperaciones() {
                       Guardar Operación
                     </Button>
                   </Form>
+                </div>
+              )}
+
+              {showOperationsList && (
+                <div className="registro-operaciones-section registro-operaciones-mt-4">
+                  <h4 className="registro-operaciones-text-center registro-operaciones-mb-4">Operaciones Registradas</h4>
+                  {personalData?.operaciones?.length > 0 ? (
+                    <div className="operaciones-cards">
+                      {personalData.operaciones.map((operacion, index) => (
+                        <Card key={index} className="mb-3">
+                          <Card.Body>
+                            <Card.Title>
+                              {format(new Date(operacion.fechaOperacion || operacion.fecha), "dd/MM/yyyy", { locale: es })}
+                            </Card.Title>
+                            <Card.Text>
+                              <strong>Operación:</strong> {operacion.operacion} <br />
+                              <strong>Autorizado por:</strong> {operacion.autorizadoPor || 'N/A'} <br />
+                              <strong>Observaciones:</strong> {operacion.observaciones || 'N/A'} <br />
+                            </Card.Text>
+                          </Card.Body>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <p>No se han registrado operaciones.</p>
+                  )}
                 </div>
               )}
             </>
