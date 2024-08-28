@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, update } from 'firebase/database';
+import { getDatabase, ref, onValue, update, push } from 'firebase/database';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
+import Modal from 'react-bootstrap/Modal';
 import "react-datepicker/dist/react-datepicker.css";
 import './RegistroOperaciones.css';
 import NavBar from '../../NavBar/navbar';
@@ -21,14 +22,24 @@ function RegistroOperaciones() {
   const [showOperationForm, setShowOperationForm] = useState(false);
   const [showOperationsList, setShowOperationsList] = useState(false);
   const [showValidateOperations, setShowValidateOperations] = useState(false);
+  const [showMissionForm, setShowMissionForm] = useState(false);
   const [operacion, setOperacion] = useState('');
   const [fechaOperacion, setFechaOperacion] = useState(null);
+  const [fechaMisionInicio, setFechaMisionInicio] = useState(null);
+  const [fechaMisionFin, setFechaMisionFin] = useState(null);
   const [autorizadoPor, setAutorizadoPor] = useState('');
   const [observaciones, setObservaciones] = useState('');
+  const [mision, setMision] = useState('');
+  const [voluntariosMision, setVoluntariosMision] = useState([]);
   const [listaUsuarios, setListaUsuarios] = useState([]);
   const [grado, setGrado] = useState([]);
   const [historial, setHistorial] = useState([]);
   const [userRole, setUserRole] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [showMissionModal, setShowMissionModal] = useState(false);
+  const [missionModalMessage, setMissionModalMessage] = useState('');
+
 
   const navigate = useNavigate();
 
@@ -48,7 +59,7 @@ function RegistroOperaciones() {
     onValue(usuariosRef, (snapshot) => {
       const usuarios = snapshot.val();
       const usuariosDeUnidad = usuarios
-        ? Object.values(usuarios).filter((usuario) => usuario.unidad === unidad)
+        ? Object.values(usuarios).filter((usuario) => usuario.unidad === unidad && usuario.estado === 'Activo')
         : [];
       setListaUsuarios(usuariosDeUnidad);
     });
@@ -70,9 +81,9 @@ function RegistroOperaciones() {
 
     onValue(personalRef, (snapshot) => {
       const personalData = snapshot.val();
-      const foundPersonal = personalData 
-        ? Object.values(personalData).find(personal => 
-            (personal.ci === ciOrCode || personal.codigo === ciOrCode) && personal.unidad === userUnit) 
+      const foundPersonal = personalData
+        ? Object.values(personalData).find(personal =>
+          (personal.ci === ciOrCode || personal.codigo === ciOrCode) && personal.unidad === userUnit)
         : null;
 
       if (foundPersonal) {
@@ -99,7 +110,7 @@ function RegistroOperaciones() {
         fecha: new Date().toISOString(),
         operacion,
         fechaOperacion: fechaOperacion ? fechaOperacion.toISOString() : null,
-        autorizadoPor,  
+        autorizadoPor,
         observaciones,
         estado: userRole === 'Voluntario' ? 'Pendiente' : 'Aprobado',
       };
@@ -122,13 +133,50 @@ function RegistroOperaciones() {
     }
   };
 
+  const handleSaveMission = () => {
+    const db = getDatabase();
+    if (mision && fechaMisionInicio && fechaMisionFin && voluntariosMision.length > 0) {
+      const nuevaMision = {
+        mision,
+        fechaInicio: fechaMisionInicio.toISOString(),
+        fechaFin: fechaMisionFin.toISOString(),
+        voluntarios: voluntariosMision,
+        unidad: userUnit
+       
+      };
+
+      // Mostrar el modal de confirmación antes de registrar la misión
+      setMissionModalMessage('Misión especial registrada con éxito.');
+      setShowMissionModal(true);
+
+
+      push(ref(db, `fundacion/misionespecial`), nuevaMision).then(() => {
+        setMision('');
+        setFechaMisionInicio(null);
+        setFechaMisionFin(null);
+        setVoluntariosMision([]);
+        setShowMissionForm(false);
+      }).catch((error) => {
+        console.error("Error al registrar la misión:", error);
+      });
+    } else {
+      console.error("Todos los campos son obligatorios para registrar la misión.");
+    }
+  };
+
+  const addVoluntario = (ci) => {
+    const voluntario = listaUsuarios.find(user => user.ci === ci);
+    if (voluntario) {
+      setVoluntariosMision((prev) => [...prev, voluntario]);
+    }
+  };
+
   const handleValidateOperation = (index, nuevoEstado) => {
     const db = getDatabase();
     if (personalData && personalData.operaciones) {
       const operacionesActuales = [...personalData.operaciones];
       const operacion = operacionesActuales.filter(op => op.estado === 'Pendiente')[index];
-      
-      // Cambiar el estado de la operación
+
       if (operacion) {
         operacion.estado = nuevoEstado;
 
@@ -139,6 +187,8 @@ function RegistroOperaciones() {
             ...prev,
             operaciones: operacionesActuales,
           }));
+          setModalMessage(`El estado de la operación ha sido cambiado a ${nuevoEstado}.`);
+          setShowModal(true);
         }).catch((error) => {
           console.error("Error al actualizar la operación:", error);
         });
@@ -200,9 +250,35 @@ function RegistroOperaciones() {
                 </Card.Body>
               </Card>
 
+              {/* Modal para la misión */}
+<Modal show={showMissionModal} onHide={() => setShowMissionModal(false)} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Registro de Misión</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <p>{missionModalMessage}</p>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="primary" onClick={() => setShowMissionModal(false)}>
+      Cerrar
+    </Button>
+  </Modal.Footer>
+</Modal>
+
               <div className="registro-operaciones-buttons d-flex justify-content-center mt-4">
                 <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowOperationForm(true)}>Registrar Operación</Button>
                 <Button variant="warning" className="registro-operaciones-mx-3" onClick={() => setShowOperationsList(true)}>Ver Operaciones</Button>
+                {userRole === 'Administrador_epr' && (
+  <Button variant="info" className="registro-operaciones-mx-3" onClick={() => setShowMissionForm(true)}>
+    Registrar Misión
+  </Button>
+
+  
+)
+
+}
+
+
                 {userRole !== 'Voluntario' && (
                   <Button variant="primary" className="registro-operaciones-mx-3" onClick={() => setShowValidateOperations(true)}>Validar Operación</Button>
                 )}
@@ -242,8 +318,8 @@ function RegistroOperaciones() {
 
                     <Form.Group controlId="formAutorizadoPor" className="registro-operaciones-mt-3">
                       <Form.Label>Autorizado por:</Form.Label>
-                      <Form.Control 
-                        as="select" 
+                      <Form.Control
+                        as="select"
                         onChange={(e) => {
                           const selectedUser = listaUsuarios.find(usuario => usuario.ci === e.target.value);
                           if (selectedUser) {
@@ -273,6 +349,71 @@ function RegistroOperaciones() {
 
                     <Button variant="primary" className="registro-operaciones-mt-3" onClick={handleSaveOperation}>
                       Guardar Operación
+                    </Button>
+                  </Form>
+                </div>
+              )}
+
+              {showMissionForm && (
+                <div className="registro-operaciones-section registro-operaciones-mt-4">
+                  <h4 className="registro-operaciones-text-center registro-operaciones-mb-4">Registrar Misión</h4>
+                  <Form>
+                    <Form.Group controlId="formMision">
+                      <Form.Label>Misión:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={mision}
+                        onChange={(e) => setMision(e.target.value)}
+                        placeholder="Nombre de la misión"
+                      />
+                    </Form.Group>
+
+                    <Form.Group controlId="formFechaMision" className="registro-operaciones-mt-3">
+                      <Form.Label>Fecha de Misión (Inicio - Fin):</Form.Label>
+                      <div className="d-flex">
+                        <DatePicker
+                          selected={fechaMisionInicio}
+                          onChange={(date) => setFechaMisionInicio(date)}
+                          dateFormat="dd/MM/yyyy"
+                          className="form-control"
+                          placeholderText="Fecha de inicio"
+                        />
+                        <DatePicker
+                          selected={fechaMisionFin}
+                          onChange={(date) => setFechaMisionFin(date)}
+                          dateFormat="dd/MM/yyyy"
+                          className="form-control ms-2"
+                          placeholderText="Fecha de fin"
+                        />
+                      </div>
+                    </Form.Group>
+
+                    <Form.Group controlId="formVoluntarios" className="registro-operaciones-mt-3">
+                      <Form.Label>Agregar Voluntarios:</Form.Label>
+                      <Form.Control
+                        as="select"
+                        onChange={(e) => addVoluntario(e.target.value)}
+                      >
+                        <option value="">Seleccione voluntario</option>
+                        {listaUsuarios.map((usuario) => (
+                          <option key={usuario.ci} value={usuario.ci}>
+                            {usuario.grado ? `${usuario.grado} ` : ''}{usuario.nombre} {usuario.apellidoPaterno} {usuario.apellidoMaterno}
+                          </option>
+                        ))}
+                      </Form.Control>
+                      {voluntariosMision.length > 0 && (
+                        <ul className="mt-3">
+                          {voluntariosMision.map((vol, index) => (
+                            <li key={index}>
+                              {vol.grado ? `${vol.grado} ` : ''}{vol.nombre} {vol.apellidoPaterno} {vol.apellidoMaterno}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </Form.Group>
+
+                    <Button variant="primary" className="registro-operaciones-mt-3" onClick={handleSaveMission}>
+                      Guardar Misión
                     </Button>
                   </Form>
                 </div>
@@ -338,8 +479,23 @@ function RegistroOperaciones() {
           )}
         </div>
       </div>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Estado Actualizado</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{modalMessage}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => setShowModal(false)}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
 
 export default RegistroOperaciones;
+
