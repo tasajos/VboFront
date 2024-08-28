@@ -1,7 +1,7 @@
 /* InformeOperacionesDiario.css */
 
 .informe-operaciones-diario-container {
-    background-color: #f8f9fa; /* Un fondo claro para el contenedor principal */
+    background-color: #ffffff;
     padding: 20px;
     min-height: 100vh;
   }
@@ -31,7 +31,7 @@
   }
   
   .informe-operaciones-diario-table th {
-    background-color: #007bff;
+    background-color: #337bc9;
     color: white;
     font-weight: bold;
   }
@@ -78,3 +78,29 @@
     background-color: #0056b3;
   }
   
+  .informe-operaciones-diario-container {
+    padding: 20px;
+  }
+  
+  .informe-operaciones-diario-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .informe-operaciones-diario-table {
+    margin-bottom: 20px;
+  }
+  
+  .informe-operaciones-diario-pagination {
+    margin-top: 20px;
+    justify-content: center;
+  }
+  
+  .informe-operaciones-diario-date-filter {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .d-flex.justify-content-end {
+    margin-top: 20px;
+  }
