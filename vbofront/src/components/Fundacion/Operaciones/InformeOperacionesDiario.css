@@ -1,0 +1,80 @@
+/* InformeOperacionesDiario.css */
+
+.informe-operaciones-diario-container {
+    background-color: #f8f9fa; /* Un fondo claro para el contenedor principal */
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  .informe-operaciones-diario-header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .informe-operaciones-diario-table {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .informe-operaciones-diario-table th, 
+  .informe-operaciones-diario-table td {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+  }
+  
+  .informe-operaciones-diario-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .informe-operaciones-diario-table td {
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .informe-operaciones-diario-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .informe-operaciones-diario-table tr:hover {
+    background-color: #e9ecef;
+  }
+  
+  .informe-operaciones-diario-pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .informe-operaciones-diario-date-filter {
+    margin-bottom: 20px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .informe-operaciones-diario-pagination-item {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .informe-operaciones-diario-pagination-item:hover {
+    background-color: #0056b3;
+  }
+  
+  .informe-operaciones-diario-pagination-item.active {
+    background-color: #0056b3;
+  }
+  

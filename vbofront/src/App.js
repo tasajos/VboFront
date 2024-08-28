@@ -63,7 +63,9 @@ import RegOpe from './components/Fundacion/Operaciones/RegistroOperaciones';
 import RegAsis from './components/Fundacion/Personal/RegistrarAsistencia';
 import RepPers from './components/Fundacion/Personal/ReportePersonal';
 import ActPers from './components/Fundacion/Personal/ActividadesPersonal'; 
-import ListPost from './components/Fundacion/Personal/ListaPost'; 
+import ListPost from './components/Fundacion/Personal/ListaPost';
+import InfOpD from './components/Fundacion/Operaciones/InformeOperacionesDiario';
+
 
 //Voluntario
 
@@ -154,6 +156,7 @@ function App() {
           <Route path="/repper" element={<RepPers />} />
           <Route path="/accper" element={<ActPers />} />
           <Route path="/listapost" element={<ListPost />} />
+          <Route path="/infopdi" element={<InfOpD />} />
 
            {/* Voluntario */}
            <Route path="/pervol" element={<VolPers />} />
