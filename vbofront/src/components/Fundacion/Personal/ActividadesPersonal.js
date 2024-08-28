@@ -24,30 +24,30 @@ function ActividadesPersonal() {
  const navigate = useNavigate();
 
  useEffect(() => {
-   const user = auth.currentUser;
-   if (user) {
-     const db = getDatabase();
-     const userRef = ref(db, `UsuariosVbo/${user.uid}`);
-     onValue(userRef, (snapshot) => {
-       const userData = snapshot.val();
-       if (userData) {
-         setUserUnit(userData.unidad || '');
-         setUserName(userData.nombre || '');
-         
-         const postsRef = ref(db, 'fundacion/post');
-         onValue(postsRef, (snapshot) => {
-           const allPosts = snapshot.val();
-           const filteredPosts = allPosts 
-             ? Object.entries(allPosts)
-                 .filter(([_, post]) => post.unidad === userData.unidad)
-                 .map(([id, post]) => ({ id, ...post }))
-             : [];
-           setPosts(filteredPosts);
-         });
-       }
-     });
-   }
- }, []);
+  const user = auth.currentUser;
+  if (user) {
+    const db = getDatabase();
+    const userRef = ref(db, `UsuariosVbo/${user.uid}`);
+    onValue(userRef, (snapshot) => {
+      const userData = snapshot.val();
+      if (userData) {
+        setUserUnit(userData.unidad || '');
+        setUserName(userData.nombre || '');
+        
+        const postsRef = ref(db, 'fundacion/post');
+        onValue(postsRef, (snapshot) => {
+          const allPosts = snapshot.val();
+          const filteredPosts = allPosts 
+            ? Object.entries(allPosts)
+                .filter(([_, post]) => post.unidad === userData.unidad && post.estado === 'Activo')
+                .map(([id, post]) => ({ id, ...post }))
+            : [];
+          setPosts(filteredPosts);
+        });
+      }
+    });
+  }
+}, []);
 
  const handleSignOut = async () => {
    try {
@@ -59,32 +59,32 @@ function ActividadesPersonal() {
  };
 
  const handlePost = () => {
-   if (!postContent.trim()) {
-     setError('El contenido del post no puede estar vacío.');
-     return;
-   }
+  if (!postContent.trim()) {
+    setError('El contenido del post no puede estar vacío.');
+    return;
+  }
 
-   const db = getDatabase();
-   const postRef = ref(db, 'fundacion/post');
-   const newPost = {
-     contenido: postContent,
-     unidad: userUnit,
-     usuario: userName,
-     fecha: new Date().toISOString(),
-     estado: postStatus,
-   };
+  const db = getDatabase();
+  const postRef = ref(db, 'fundacion/post');
+  const newPost = {
+    contenido: postContent,
+    unidad: userUnit || 'Sin Unidad',  // Ensure a default value if userUnit is empty
+    usuario: userName || 'Anónimo',    // Ensure a default value if userName is empty
+    fecha: new Date().toISOString(),
+    estado: postStatus,
+  };
 
-   push(postRef, newPost)
-     .then(() => {
-       setPostContent('');
-       setPostStatus('Activo');
-       setError('');
-     })
-     .catch(error => {
-       console.error('Error al registrar el post:', error);
-       setError('Hubo un error al registrar el post.');
-     });
- };
+  push(postRef, newPost)
+    .then(() => {
+      setPostContent('');
+      setPostStatus('Activo');
+      setError('');
+    })
+    .catch(error => {
+      console.error('Error al registrar el post:', error);
+      setError('Hubo un error al registrar el post.');
+    });
+};
 
  const handleDeletePost = (postId) => {
    const db = getDatabase();
