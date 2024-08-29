@@ -12,7 +12,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './LibroNovedades.css';
 
 function LibroDeNovedades() {
-    const [fecha, setFecha] = useState(null);
+    const [fecha, setFecha] = useState(new Date());
     const [oficialDeGuardia, setOficialDeGuardia] = useState('');
     const [voluntariosServicio, setVoluntariosServicio] = useState([]);
     const [vehiculos, setVehiculos] = useState([]);
@@ -22,11 +22,10 @@ function LibroDeNovedades() {
     const [unidad, setUnidad] = useState('');
     const [listaVoluntarios, setListaVoluntarios] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [nuevaNovedad, setNuevaNovedad] = useState('');
+    const [formVisible, setFormVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [isOficialGuardado, setIsOficialGuardado] = useState(false);
-    const [isTemporalGuardado, setIsTemporalGuardado] = useState(false);
-    const [nuevaNovedad, setNuevaNovedad] = useState('');  // Corregido: Definir 'nuevaNovedad' y 'setNuevaNovedad'
-    const [formVisible, setFormVisible] = useState(false);
 
     const navigate = useNavigate();
 
@@ -39,43 +38,39 @@ function LibroDeNovedades() {
 
         onValue(voluntariosRef, (snapshot) => {
             const voluntariosData = snapshot.val();
-            const voluntariosArray = voluntariosData ? Object.values(voluntariosData).filter(vol => vol.unidad === unidadAutenticada) : [];
+            const voluntariosArray = voluntariosData 
+                ? Object.values(voluntariosData).filter(vol => vol.unidad === unidadAutenticada && vol.estado === 'Activo')
+                : [];
             setListaVoluntarios(voluntariosArray);
         });
     }, []);
 
     const handleDateChange = (date) => {
         setFecha(date);
-        verificarGuardadoOficial(date);
+        verificarLibroCerrado(date);
     };
 
-    const verificarGuardadoOficial = (selectedDate) => {
+    const verificarLibroCerrado = (fechaSeleccionada) => {
         const db = getDatabase();
-        const fechaFormato = selectedDate instanceof Date && !isNaN(selectedDate) ? selectedDate.toISOString().split('T')[0] : null;
-
-        if (!fechaFormato) {
-            console.error("Fecha no válida");
-            return;
-        }
-
+        const fechaFormato = fechaSeleccionada ? fechaSeleccionada.toISOString().split('T')[0] : null;
         const libroNovedadesOficialRef = ref(db, `libroNovedadesOficial/${unidad}`);
+
         onValue(libroNovedadesOficialRef, (snapshot) => {
             const novedadesOficiales = snapshot.val();
             const existeRegistroOficial = novedadesOficiales
                 ? Object.values(novedadesOficiales).some(novedad => {
                     const fechaNovedad = new Date(novedad.fecha);
-                    return fechaNovedad instanceof Date && !isNaN(fechaNovedad) && fechaNovedad.toISOString().split('T')[0] === fechaFormato;
+                    return !isNaN(fechaNovedad) && fechaNovedad.toISOString().split('T')[0] === fechaFormato;
                 })
                 : false;
 
             if (existeRegistroOficial) {
-                setIsOficialGuardado(true);
-                setModalMessage('El libro de novedades ya fue cerrado para esta fecha.');
+                setModalMessage('El libro ya fue cerrado para esa fecha.');
                 setShowModal(true);
+                setFormVisible(false);
             } else {
-                setIsOficialGuardado(false);
                 setFormVisible(true);
-                cargarDatosTemporales();  // Cargar los datos temporales si la fecha está disponible
+                cargarDatosTemporales();
             }
         });
     };
@@ -93,7 +88,6 @@ function LibroDeNovedades() {
                 setInventario(tempData.inventario);
                 setNovedades(tempData.novedades || []);
                 setFirma(tempData.firma);
-                setIsTemporalGuardado(true);
             } else {
                 limpiarFormulario();
             }
@@ -107,7 +101,21 @@ function LibroDeNovedades() {
         setInventario('');
         setNovedades([]);
         setFirma('');
-        setNuevaNovedad('');
+    };
+
+    const handleAddVoluntarioServicio = () => {
+        setVoluntariosServicio([...voluntariosServicio, '']);
+    };
+
+    const handleVoluntarioServicioChange = (index, value) => {
+        const updatedVoluntarios = [...voluntariosServicio];
+        updatedVoluntarios[index] = value;
+        setVoluntariosServicio(updatedVoluntarios);
+    };
+
+    const handleRemoveVoluntarioServicio = (index) => {
+        const updatedVoluntarios = voluntariosServicio.filter((_, i) => i !== index);
+        setVoluntariosServicio(updatedVoluntarios);
     };
 
     const handleAddNovedad = () => {
@@ -132,9 +140,8 @@ function LibroDeNovedades() {
             firma,
             unidad,
         }).then(() => {
-            setIsTemporalGuardado(true);
             setShowModal(true);
-            setModalMessage('El libro de novedades ha sido guardado temporalmente.');
+            setModalMessage('El libro de novedades se ha guardado temporalmente.');
         }).catch(error => {
             console.error('Error al guardar temporalmente el libro de novedades:', error);
         });
@@ -160,13 +167,9 @@ function LibroDeNovedades() {
         }).then(() => {
             const libroNovedadesTempRef = ref(db, `libroNovedadesTemporal/${auth.currentUser.uid}`);
             remove(libroNovedadesTempRef);
-            setIsTemporalGuardado(false);
             setIsOficialGuardado(true);
             setShowModal(true);
             setModalMessage('El libro de novedades ha sido guardado oficialmente.');
-            setFormVisible(false);  // Ocultar el formulario
-            limpiarFormulario();  // Limpiar el formulario
-            setFecha(new Date());  // Avanzar al día siguiente
         }).catch(error => {
             console.error('Error al guardar oficialmente el libro de novedades:', error);
         });
@@ -217,22 +220,43 @@ function LibroDeNovedades() {
                                 ))}
                             </Form.Control>
                         </Form.Group>
+
                         <Form.Group className="mb-3">
                             <Form.Label>Voluntario de Servicio</Form.Label>
-                            <Form.Control
-                                as="select"
-                                multiple
-                                value={voluntariosServicio}
-                                onChange={(e) => setVoluntariosServicio([...e.target.selectedOptions].map(option => option.value))}
-                                disabled={isOficialGuardado}
+                            {voluntariosServicio.map((voluntario, index) => (
+                                <div key={index} className="d-flex align-items-center mb-2">
+                                    <Form.Control
+                                        as="select"
+                                        value={voluntario}
+                                        onChange={(e) => handleVoluntarioServicioChange(index, e.target.value)}
+                                        disabled={isOficialGuardado}
+                                    >
+                                        <option value="">Seleccionar Voluntario</option>
+                                        {listaVoluntarios.map((vol) => (
+                                            <option key={vol.ci} value={vol.ci}>
+                                                {vol.grado} {vol.nombre} {vol.apellidoPaterno} {vol.apellidoMaterno}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                    <Button
+                                        variant="danger"
+                                        className="ms-2"
+                                        onClick={() => handleRemoveVoluntarioServicio(index)}
+                                        disabled={isOficialGuardado}
+                                    >
+                                        Eliminar
+                                    </Button>
+                                </div>
+                            ))}
+                            <Button
+                                variant="primary"
+                                onClick={handleAddVoluntarioServicio}
+                                disabled={voluntariosServicio.length >= 8 || isOficialGuardado}
                             >
-                                {listaVoluntarios.map((vol) => (
-                                    <option key={vol.ci} value={vol.ci}>
-                                        {vol.grado} {vol.nombre} {vol.apellidoPaterno} {vol.apellidoMaterno}
-                                    </option>
-                                ))}
-                            </Form.Control>
+                                + Añadir Voluntario
+                            </Button>
                         </Form.Group>
+
                         <Form.Group className="mb-3">
                             <Form.Label>Vehículos</Form.Label>
                             <Form.Control
@@ -288,8 +312,20 @@ function LibroDeNovedades() {
                             </Form.Control>
                         </Form.Group>
                         <div className="d-flex justify-content-between">
-                            <Button variant="warning" onClick={handleGuardarTemporal} disabled={isOficialGuardado}>Guardar Temporalmente</Button>
-                            <Button variant="success" onClick={handleGuardarOficial} disabled={isOficialGuardado}>Guardar Oficialmente</Button>
+                            <Button
+                                variant="warning"
+                                onClick={handleGuardarTemporal}
+                                disabled={isOficialGuardado}
+                            >
+                                Guardar Temporalmente
+                            </Button>
+                            <Button
+                                variant="success"
+                                onClick={handleGuardarOficial}
+                                disabled={isOficialGuardado}
+                            >
+                                Guardar Oficialmente
+                            </Button>
                         </div>
                     </Form>
                 )}
