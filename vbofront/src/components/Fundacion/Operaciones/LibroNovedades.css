@@ -1,0 +1,119 @@
+.libro-novedades-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.novedades-container {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ced4da;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f0f4f7;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+.novedades-item {
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.novedades-item:last-child {
+    border-bottom: none;
+}
+
+.novedades-item-time {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+button {
+    background-color: #007bff;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.modal-content {
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px 0;
+    font-size: 1rem;
+    color: #495057;
+}
+
+.modal-footer {
+    border-top: none;
+    padding-top: 20px;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;
+}
