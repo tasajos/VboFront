@@ -65,6 +65,7 @@ import RepPers from './components/Fundacion/Personal/ReportePersonal';
 import ActPers from './components/Fundacion/Personal/ActividadesPersonal'; 
 import ListPost from './components/Fundacion/Personal/ListaPost';
 import InfOpD from './components/Fundacion/Operaciones/InformeOperacionesDiario';
+import InfMD from './components/Fundacion/Operaciones/InformeMision';
 
 
 //Voluntario
@@ -157,6 +158,7 @@ function App() {
           <Route path="/accper" element={<ActPers />} />
           <Route path="/listapost" element={<ListPost />} />
           <Route path="/infopdi" element={<InfOpD />} />
+          <Route path="/infomissi" element={<InfMD />} />
 
            {/* Voluntario */}
            <Route path="/pervol" element={<VolPers />} />

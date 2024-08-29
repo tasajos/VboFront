@@ -226,7 +226,7 @@ function NavBar({ handleSignOut }) {
                   <NavDropdown title="Operaciones" id="navbarScrollingDropdownOperaciones">
                     <NavDropdown.Item href="rgope">Registro de Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="infopdi">Informe Operaciones Diario</NavDropdown.Item>
-                    <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="infomissi">informe Mision</NavDropdown.Item>
                     <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>
                   </NavDropdown>
 
