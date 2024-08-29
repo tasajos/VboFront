@@ -3,6 +3,7 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import NavBar from '../../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,8 @@ function InformeMisiones() {
     const [misiones, setMisiones] = useState([]);
     const [filtroMes, setFiltroMes] = useState('');
     const [filtroAno, setFiltroAno] = useState('');
+    const [patrulla, setPatrulla] = useState([]);
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
     const meses = [
@@ -44,21 +47,7 @@ function InformeMisiones() {
         });
     }, []);
 
-    const handleExportToExcel = () => {
-        const datosParaExportar = misiones.map((mision, index) => ({
-            Nro: index + 1,
-            Misión: mision.mision,
-            "Fecha Inicio": format(new Date(mision.fechaInicio), "dd/MM/yyyy", { locale: es }),
-            "Fecha Fin": format(new Date(mision.fechaFin), "dd/MM/yyyy", { locale: es }),
-            Unidad: mision.unidad,
-        }));
-
-        const worksheet = XLSX.utils.json_to_sheet(datosParaExportar);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Misiones");
-        XLSX.writeFile(workbook, "InformeMisiones.xlsx");
-    };
-
+    // Aquí se define misionesFiltradas correctamente
     const misionesFiltradas = misiones.filter(mision => {
         const fechaInicio = new Date(mision.fechaInicio);
         const mes = (fechaInicio.getMonth() + 1).toString(); // Obtener el mes de la fecha de inicio
@@ -67,6 +56,33 @@ function InformeMisiones() {
         return (filtroMes ? mes === filtroMes : true) && (filtroAno ? ano === filtroAno : true);
     });
 
+    const handleExportToExcel = () => {
+        const datosParaExportar = misionesFiltradas.map((mision, index) => {
+            const misionData = {
+                Nro: index + 1,
+                Misión: mision.mision,
+                "Fecha Inicio": format(new Date(mision.fechaInicio), "dd/MM/yyyy", { locale: es }),
+                "Fecha Fin": format(new Date(mision.fechaFin), "dd/MM/yyyy", { locale: es }),
+                Unidad: mision.unidad,
+            };
+
+            const patrullaData = mision.voluntarios.map((voluntario, idx) => ({
+                [`Patrulla ${idx + 1} - Grado`]: voluntario.grado || 'N/A',
+                [`Patrulla ${idx + 1} - Nombre`]: voluntario.nombre,
+                [`Patrulla ${idx + 1} - Apellido Paterno`]: voluntario.apellidoPaterno,
+                [`Patrulla ${idx + 1} - Apellido Materno`]: voluntario.apellidoMaterno,
+                [`Patrulla ${idx + 1} - CI`]: voluntario.ci,
+            }));
+
+            return { ...misionData, ...Object.assign({}, ...patrullaData) };
+        });
+
+        const worksheet = XLSX.utils.json_to_sheet(datosParaExportar);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Misiones");
+        XLSX.writeFile(workbook, "InformeMisiones.xlsx");
+    };
+
     const handleSignOut = async () => {
         try {
             await signOut(auth);
@@ -74,6 +90,11 @@ function InformeMisiones() {
         } catch (error) {
             console.error('Error al cerrar sesión', error);
         }
+    };
+
+    const handleRowClick = (mision) => {
+        setPatrulla(mision.voluntarios || []);
+        setShowModal(true);
     };
 
     return (
@@ -113,7 +134,7 @@ function InformeMisiones() {
                     </thead>
                     <tbody>
                         {misionesFiltradas.map((mision, index) => (
-                            <tr key={index}>
+                            <tr key={index} onClick={() => handleRowClick(mision)} style={{ cursor: 'pointer' }}>
                                 <td>{index + 1}</td>
                                 <td>{mision.mision}</td>
                                 <td>{format(new Date(mision.fechaInicio), "dd/MM/yyyy", { locale: es })}</td>
@@ -126,6 +147,46 @@ function InformeMisiones() {
                 <div className="export-button-container">
                     <Button variant="success" onClick={handleExportToExcel}>Exportar a Excel</Button>
                 </div>
+
+              {/* Modal para mostrar la patrulla */}
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered dialogClassName="modal-wide">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Detalles de la Patrulla</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {patrulla.length > 0 ? (
+                            <Table striped bordered hover responsive className="text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Grado</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido Paterno</th>
+                                        <th>Apellido Materno</th>
+                                        <th>CI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {patrulla.map((voluntario, index) => (
+                                        <tr key={index}>
+                                            <td>{voluntario.grado || 'N/A'}</td>
+                                            <td>{voluntario.nombre}</td>
+                                            <td>{voluntario.apellidoPaterno}</td>
+                                            <td>{voluntario.apellidoMaterno}</td>
+                                            <td>{voluntario.ci}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        ) : (
+                            <p>No hay información disponible de la patrulla.</p>
+                        )}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowModal(false)}>
+                            Cerrar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </div>
     );
