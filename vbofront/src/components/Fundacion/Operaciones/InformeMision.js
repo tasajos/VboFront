@@ -149,44 +149,44 @@ function InformeMisiones() {
                 </div>
 
               {/* Modal para mostrar la patrulla */}
-                <Modal show={showModal} onHide={() => setShowModal(false)} centered dialogClassName="modal-wide">
-                    <Modal.Header closeButton>
-                        <Modal.Title>Detalles de la Patrulla</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        {patrulla.length > 0 ? (
-                            <Table striped bordered hover responsive className="text-center">
-                                <thead>
-                                    <tr>
-                                        <th>Grado</th>
-                                        <th>Nombre</th>
-                                        <th>Apellido Paterno</th>
-                                        <th>Apellido Materno</th>
-                                        <th>CI</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {patrulla.map((voluntario, index) => (
-                                        <tr key={index}>
-                                            <td>{voluntario.grado || 'N/A'}</td>
-                                            <td>{voluntario.nombre}</td>
-                                            <td>{voluntario.apellidoPaterno}</td>
-                                            <td>{voluntario.apellidoMaterno}</td>
-                                            <td>{voluntario.ci}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        ) : (
-                            <p>No hay información disponible de la patrulla.</p>
-                        )}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowModal(false)}>
-                            Cerrar
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+              <Modal show={showModal} onHide={() => setShowModal(false)} centered dialogClassName="modal-wide">
+    <Modal.Header closeButton>
+        <Modal.Title>Detalles de la Patrulla</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+        {patrulla.length > 0 ? (
+            <Table striped bordered hover className="table-modal">
+                <thead>
+                    <tr>
+                        <th>Grado</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>CI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {patrulla.map((voluntario, index) => (
+                        <tr key={index}>
+                            <td>{voluntario.grado || 'N/A'}</td>
+                            <td>{voluntario.nombre}</td>
+                            <td>{voluntario.apellidoPaterno}</td>
+                            <td>{voluntario.apellidoMaterno}</td>
+                            <td>{voluntario.ci}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+        ) : (
+            <p>No hay información disponible de la patrulla.</p>
+        )}
+    </Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cerrar
+        </Button>
+    </Modal.Footer>
+</Modal>
             </div>
         </div>
     );

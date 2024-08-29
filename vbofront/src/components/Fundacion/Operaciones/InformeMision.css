@@ -1,6 +1,6 @@
 .informe-misiones-container {
+    background-color: #ffffff;
     padding: 20px;
-    background-color: #f8f9fa;
     min-height: 100vh;
 }
 
@@ -34,19 +34,21 @@
 }
 
 .modal-wide .modal-dialog {
-    max-width: 600px; /* Mantén el ancho del modal */
-    width: 100%; /* Asegura que el modal use todo el ancho disponible */
+    max-width: 100%; /* Utiliza el 95% del ancho de la pantalla */
+    width: 100%; /* Asegura que el modal use el 95% del ancho disponible */
 }
 
 .modal-wide .modal-content {
-    max-height: 90vh; /* Aumenta la altura del modal al 90% del viewport */
-    overflow-y: auto; /* Permite el scroll vertical si es necesario */
+    width: 100%; /* Asegura que el contenido del modal ocupe todo el ancho */
 }
 
-.table-responsive {
-    width: 100%;
+.modal-wide .modal-body {
+    width: 100%; /* Asegura que el cuerpo del modal ocupe todo el ancho */
+    padding: 20px; /* Opcional: espacio alrededor de la tabla */
 }
 
-.table {
-    width: 100%; /* Asegura que la tabla ocupe el ancho completo del modal */
+.table-modal {
+    width: 100%; /* Asegura que la tabla ocupe el ancho completo */
+    table-layout: auto; /* Deja que las columnas se ajusten automáticamente */
+    word-wrap: break-word; /* Evita que el texto largo cause un desbordamiento horizontal */
 }
