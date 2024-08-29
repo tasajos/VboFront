@@ -49,7 +49,7 @@ import Reportescp from './components/Informes/ReportePersonalTabla';
 import RegistrarU from './components/Voluntarios/RegistrarUnidad';
 import ListarUnidades from './components/Voluntarios/ListarUnidades';
 import ReporteEmergencias from './components/Emergencias/ReporteEmergencia/ReporteEmergencia';
-import NavBar from './components/NavBar/navbar';
+//import NavBar from './components/NavBar/navbar';
 import AdminEprDashboard from './components/Epr/AdminEprDashboard'; // Nueva página para Administrador EPR
 import VolEprDashboard from './components/Epr/VoluntarioEPRDashboard'; // Nueva página para Voluntario EPR
 
