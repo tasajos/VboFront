@@ -67,6 +67,7 @@ import ListPost from './components/Fundacion/Personal/ListaPost';
 import InfOpD from './components/Fundacion/Operaciones/InformeOperacionesDiario';
 import InfMD from './components/Fundacion/Operaciones/InformeMision';
 import LibNov from './components/Fundacion/Operaciones/LibroNovedades';
+import RepoTipoE from './components/Fundacion/Operaciones/ReporteporTipo';
 
 
 //Voluntario
@@ -161,6 +162,7 @@ function App() {
           <Route path="/infopdi" element={<InfOpD />} />
           <Route path="/infomissi" element={<InfMD />} />
           <Route path="/libroNove" element={<LibNov />} />
+          <Route path="/repote" element={<RepoTipoE />} />
 
            {/* Voluntario */}
            <Route path="/pervol" element={<VolPers />} />
