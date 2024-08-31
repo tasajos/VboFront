@@ -227,7 +227,8 @@ function NavBar({ handleSignOut }) {
                     <NavDropdown.Item href="rgope">Registro de Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="infopdi">Informe Operaciones Diario</NavDropdown.Item>
                     <NavDropdown.Item href="infomissi">informe Mision</NavDropdown.Item>
-                    <NavDropdown.Item href="libroNove">Libro de Novedades</NavDropdown.Item>
+                    <NavDropdown.Item href="libroNove">Registro Libro de Novedades</NavDropdown.Item>
+                    <NavDropdown.Item href="libroNov">Informe Libro de Novedades</NavDropdown.Item>
                     <NavDropdown.Item href="repote">Reporte por Tipo</NavDropdown.Item>                  
                   </NavDropdown>
 

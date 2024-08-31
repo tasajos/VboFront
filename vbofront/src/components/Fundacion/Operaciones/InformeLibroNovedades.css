@@ -1,0 +1,116 @@
+.informe-libro-novedades-container {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 900px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .informe-libro-novedades-header {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  
+  .date-selector {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .date-selector label {
+    font-size: 1.2rem;
+    color: #555;
+    margin-right: 10px;
+  }
+  
+  .date-selector select {
+    width: 150px;
+    padding: 10px;
+    margin: 0 5px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .novedades-hoja {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .novedades-encabezado {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .novedades-encabezado h3 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-bottom: 10px;
+  }
+  
+  .novedades-encabezado h4 {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 0;
+  }
+  
+  .novedades-cuerpo {
+    text-align: left;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .novedad-item {
+    margin-bottom: 30px;
+  }
+  
+  .novedad-item h5 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #007bff;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  .novedad-item p {
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .novedad-item ul {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+  
+  .novedad-item ul li {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .novedad-item ul li::before {
+    content: '•';
+    color: #007bff;
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+  }
+  
+  .novedad-item p strong {
+    color: #007bff;
+  }
+  
+  .novedad-item p:last-child {
+    font-weight: bold;
+    text-align: right;
+    color: #333;
+  }
+  
