@@ -75,6 +75,9 @@ import LibroNove from './components/Fundacion/Operaciones/InformeLibroNovedades'
 
 import VolPers from './components/Fundacion/Voluntarios/PerfilPersonal'; 
 
+//Logistica
+import ClasCod from './components/Fundacion/Logistica/AsignacionCodigo/ClasificacionCodigo'; // ClasificacionCodigo
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -169,6 +172,11 @@ function App() {
            {/* Voluntario */}
            <Route path="/pervol" element={<VolPers />} />
           
+              {/* Logistica */}
+
+              <Route path="/clcodig" element={<ClasCod />} />
+
+
         </Routes>
       </div>
     </Router>

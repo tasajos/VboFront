@@ -206,7 +206,7 @@ function NavBar({ handleSignOut }) {
                   {/* Menú Logística */}
 
                   <NavDropdown title="Logística" id="navbarScrollingDropdownLogistica">
-                    <NavDropdown.Item href="/logistica/inventario">Inventario</NavDropdown.Item>
+                    <NavDropdown.Item href="clcodig">Clasificacion de Codigo</NavDropdown.Item>
                     <NavDropdown.Item href="/logistica/proveedores">Proveedores</NavDropdown.Item>
                     <NavDropdown.Item href="/logistica/transporte">Transporte y Almacenamiento</NavDropdown.Item>
                     <NavDropdown.Item href="/logistica/mantenimiento">Mantenimiento Logístico</NavDropdown.Item>
