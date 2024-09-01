@@ -17,6 +17,8 @@
   
   .clasificacion-codigo-form .form-group {
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
   }
   
   .clasificacion-codigo-form label {
@@ -27,10 +29,28 @@
   }
   
   .clasificacion-codigo-form .form-control {
-    width: 100%;
+    flex: 1;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+  
+  .clasificacion-codigo-form .btn-secondary {
+    margin-left: 10px;
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .clasificacion-codigo-form .btn-secondary:hover {
+    background-color: #218838;
+    transform: scale(1.05);
   }
   
   .clasificacion-codigo-form .btn-primary {
@@ -70,6 +90,7 @@
     border-radius: 4px;
     display: inline-block;
   }
+  
   .modal.show .modal-dialog {
     display: flex;
     align-items: center;
