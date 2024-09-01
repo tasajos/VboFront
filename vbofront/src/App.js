@@ -77,6 +77,7 @@ import VolPers from './components/Fundacion/Voluntarios/PerfilPersonal';
 
 //Logistica
 import ClasCod from './components/Fundacion/Logistica/AsignacionCodigo/ClasificacionCodigo'; // ClasificacionCodigo
+import RegEq from './components/Fundacion/Logistica/RegistroEquipo/RegistrarEquipo'; // Registrar Equipo
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -175,6 +176,7 @@ function App() {
               {/* Logistica */}
 
               <Route path="/clcodig" element={<ClasCod />} />
+              <Route path="/requps" element={<RegEq />} />
 
 
         </Routes>

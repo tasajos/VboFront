@@ -10,7 +10,10 @@ import { auth } from '../../../../firebase';
 
 function ClasificacionCodigo() {
   const [tipoEquipo, setTipoEquipo] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
   const [fechaAdquisicion, setFechaAdquisicion] = useState('');
+  const [estado, setEstado] = useState('Nuevo');
   const [unidadUsuario, setUnidadUsuario] = useState(localStorage.getItem('userUnit') || '');
   const [codigoGenerado, setCodigoGenerado] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -46,7 +49,7 @@ function ClasificacionCodigo() {
   };
 
   const handleGenerateCode = () => {
-    if (tipoEquipo && fechaAdquisicion && unidadUsuario) {
+    if (tipoEquipo && nombre && descripcion && fechaAdquisicion && estado && unidadUsuario) {
       const fecha = new Date(fechaAdquisicion);
       const year = fecha.getFullYear();
       const month = String(fecha.getMonth() + 1).padStart(2, '0');
@@ -63,9 +66,11 @@ function ClasificacionCodigo() {
 
         return push(equipoRef, {
           tipoEquipo,
+          nombre,
+          descripcion,
           fechaAdquisicion,
+          estado,
           codigo,
-          estado: 'Activo',
         });
       }).then(() => {
         setModalTitle('Registro Exitoso');
@@ -102,10 +107,10 @@ function ClasificacionCodigo() {
         setModalTitle('Nuevo Tipo Registrado');
         setModalMessage('El nuevo tipo de equipo ha sido registrado exitosamente.');
         setShowModal(true);
-        setShowNewTypeModal(false);  // Cierra el modal de nuevo tipo
-        setNewType('');  // Limpia el campo de tipo
-        setNewDescription('');  // Limpia el campo de descripción
-        setTiposEquipos({ ...tiposEquipos, [newType]: { nombre: newDescription, prefijo: newType } });  // Actualiza la lista local
+        setShowNewTypeModal(false);
+        setNewType('');
+        setNewDescription('');
+        setTiposEquipos({ ...tiposEquipos, [newType]: { nombre: newDescription, prefijo: newType } });
       }).catch((error) => {
         setModalTitle('Error al Registrar');
         setModalMessage('Error al registrar el nuevo tipo de equipo: ' + error.message);
@@ -135,7 +140,7 @@ function ClasificacionCodigo() {
       <NavBar handleSignOut={handleSignOut} />
 
       <div className="clasificacion-codigo-container">
-        <h2 className="clasificacion-codigo-header">Clasificación de Códigos</h2>
+        <h2 className="clasificacion-codigo-header">Registro Equipos</h2>
         <div className="clasificacion-codigo-form">
           <div className="form-group">
             <label htmlFor="tipoEquipo">Tipo de Equipo:</label>
@@ -157,6 +162,25 @@ function ClasificacionCodigo() {
             </button>
           </div>
           <div className="form-group">
+            <label htmlFor="nombre">Nombre del Equipo:</label>
+            <input
+              type="text"
+              id="nombre"
+              className="form-control"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="descripcion">Descripción:</label>
+            <textarea
+              id="descripcion"
+              className="form-control"
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
             <label htmlFor="fechaAdquisicion">Fecha de Adquisición:</label>
             <input
               type="date"
@@ -165,6 +189,19 @@ function ClasificacionCodigo() {
               value={fechaAdquisicion}
               onChange={(e) => setFechaAdquisicion(e.target.value)}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="estado">Estado:</label>
+            <select
+              id="estado"
+              className="form-control"
+              value={estado}
+              onChange={(e) => setEstado(e.target.value)}
+            >
+              <option value="Nuevo">Nuevo</option>
+              <option value="Usado">Usado</option>
+              <option value="Dañado">Dañado</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="unidadUsuario">Unidad del Usuario:</label>
