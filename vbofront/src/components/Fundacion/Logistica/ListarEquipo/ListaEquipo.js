@@ -62,7 +62,8 @@ function ListaEquipos() {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
     setFilteredEquipos(equipos.filter(equipo => 
-      equipo.nombre.toLowerCase().includes(term) || equipo.codigo.toLowerCase().includes(term)
+      (equipo.nombre && equipo.nombre.toLowerCase().includes(term)) || 
+      (equipo.codigo && equipo.codigo.toLowerCase().includes(term))
     ));
   };
 
@@ -148,7 +149,6 @@ function ListaEquipos() {
             <Dropdown.Item eventKey="Nuevo">Nuevo</Dropdown.Item>
             <Dropdown.Item eventKey="Usado">Usado</Dropdown.Item>
             <Dropdown.Item eventKey="Dañado">Dañado</Dropdown.Item>
-            <Dropdown.Item eventKey="Baja">Baja</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 
@@ -220,7 +220,6 @@ function ListaEquipos() {
               <option value="Nuevo">Nuevo</option>
               <option value="Usado">Usado</option>
               <option value="Dañado">Dañado</option>
-              <option value="Baja">Baja</option>
             </select>
           </div>
         </Modal.Body>
