@@ -138,7 +138,7 @@ function ClasificacionCodigo() {
               value={tipoEquipo}
               onChange={(e) => setTipoEquipo(e.target.value)}
             >
-              <option value="">Seleccione un tipo de equipo</option>
+              <option value="">Seleccione</option>
               {Object.entries(tiposEquipos).map(([key, value]) => (
                 <option key={key} value={key}>
                   {value.nombre}

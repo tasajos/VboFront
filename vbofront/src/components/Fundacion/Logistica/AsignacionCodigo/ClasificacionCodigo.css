@@ -30,9 +30,9 @@
   
   .clasificacion-codigo-form .form-control {
     flex: 1;
-    padding: 8px;
+    padding: 5px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
   }
   
   .clasificacion-codigo-form .btn-secondary {
