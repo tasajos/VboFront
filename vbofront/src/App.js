@@ -80,6 +80,7 @@ import ClasCod from './components/Fundacion/Logistica/AsignacionCodigo/Clasifica
 import RegEq from './components/Fundacion/Logistica/RegistroEquipo/RegistrarEquipo'; // Registrar Equipo
 import ListEq from './components/Fundacion/Logistica/ListarEquipo/ListaEquipo'; // Lista Equipo
 import AsigEq from './components/Fundacion/Logistica/AsignacionEquipo/AsignarEquipo'; // Asignar Equipo
+import HistAsig from './components/Fundacion/Logistica/HistorialAsignaciones/HistorialAsignaciones'; // Historial Asignaciones
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -181,6 +182,7 @@ function App() {
               <Route path="/requps" element={<RegEq />} />
               <Route path="/Listq" element={<ListEq />} />
               <Route path="/AsigEq" element={<AsigEq />} />
+              <Route path="/Histasig" element={<HistAsig />} />
 
 
         </Routes>

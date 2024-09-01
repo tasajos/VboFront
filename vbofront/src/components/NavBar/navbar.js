@@ -210,6 +210,7 @@ function NavBar({ handleSignOut }) {
                     <NavDropdown.Item href="clcodig">Registrar Equipo</NavDropdown.Item>
                     <NavDropdown.Item href="Listq">Lista de Equipos</NavDropdown.Item>
                     <NavDropdown.Item href="AsigEq">Asignar Equipo</NavDropdown.Item>
+                    <NavDropdown.Item href="Histasig">Historial Asignaciones</NavDropdown.Item>
                   </NavDropdown>
 
                   {/* Menú Finanzas */}
