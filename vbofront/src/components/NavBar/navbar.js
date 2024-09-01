@@ -208,7 +208,7 @@ function NavBar({ handleSignOut }) {
                   <NavDropdown title="Logística" id="navbarScrollingDropdownLogistica">
                     {/*<NavDropdown.Item href="clcodig">Clasificacion de Codigo</NavDropdown.Item>*/}
                     <NavDropdown.Item href="clcodig">Registrar Equipo</NavDropdown.Item>
-                    <NavDropdown.Item href="/logistica/transporte">Transporte y Almacenamiento</NavDropdown.Item>
+                    <NavDropdown.Item href="Listq">Lista de Equipos</NavDropdown.Item>
                     <NavDropdown.Item href="/logistica/mantenimiento">Mantenimiento Logístico</NavDropdown.Item>
                   </NavDropdown>
 
