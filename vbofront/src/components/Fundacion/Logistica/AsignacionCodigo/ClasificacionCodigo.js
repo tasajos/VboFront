@@ -85,6 +85,13 @@ function ClasificacionCodigo() {
 
   const handleAddNewType = () => {
     if (newType && newDescription) {
+      if (tiposEquipos.hasOwnProperty(newType)) {
+        setModalTitle('Error de Registro');
+        setModalMessage(`Las siglas '${newType}' ya existen. Por favor, elige unas diferentes.`);
+        setShowModal(true);
+        return;
+      }
+
       const db = getDatabase();
       const tiposRef = ref(db, `fundacion/tiposEquipos/${newType}`);
       
@@ -128,7 +135,7 @@ function ClasificacionCodigo() {
       <NavBar handleSignOut={handleSignOut} />
 
       <div className="clasificacion-codigo-container">
-        <h2 className="clasificacion-codigo-header"> Clasificación de Códigos</h2>
+        <h2 className="clasificacion-codigo-header">Clasificación de Códigos</h2>
         <div className="clasificacion-codigo-form">
           <div className="form-group">
             <label htmlFor="tipoEquipo">Tipo de Equipo:</label>
@@ -138,7 +145,7 @@ function ClasificacionCodigo() {
               value={tipoEquipo}
               onChange={(e) => setTipoEquipo(e.target.value)}
             >
-              <option value="">Seleccione</option>
+              <option value="">Seleccione un tipo de equipo</option>
               {Object.entries(tiposEquipos).map(([key, value]) => (
                 <option key={key} value={key}>
                   {value.nombre}
