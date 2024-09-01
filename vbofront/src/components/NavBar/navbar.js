@@ -209,7 +209,7 @@ function NavBar({ handleSignOut }) {
                     {/*<NavDropdown.Item href="clcodig">Clasificacion de Codigo</NavDropdown.Item>*/}
                     <NavDropdown.Item href="clcodig">Registrar Equipo</NavDropdown.Item>
                     <NavDropdown.Item href="Listq">Lista de Equipos</NavDropdown.Item>
-                    <NavDropdown.Item href="/logistica/mantenimiento">Mantenimiento Logístico</NavDropdown.Item>
+                    <NavDropdown.Item href="AsigEq">Asignar Equipo</NavDropdown.Item>
                   </NavDropdown>
 
                   {/* Menú Finanzas */}

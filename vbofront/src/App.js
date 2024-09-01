@@ -79,6 +79,7 @@ import VolPers from './components/Fundacion/Voluntarios/PerfilPersonal';
 import ClasCod from './components/Fundacion/Logistica/AsignacionCodigo/ClasificacionCodigo'; // ClasificacionCodigo
 import RegEq from './components/Fundacion/Logistica/RegistroEquipo/RegistrarEquipo'; // Registrar Equipo
 import ListEq from './components/Fundacion/Logistica/ListarEquipo/ListaEquipo'; // Lista Equipo
+import AsigEq from './components/Fundacion/Logistica/AsignacionEquipo/AsignarEquipo'; // Asignar Equipo
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -179,6 +180,7 @@ function App() {
               <Route path="/clcodig" element={<ClasCod />} />
               <Route path="/requps" element={<RegEq />} />
               <Route path="/Listq" element={<ListEq />} />
+              <Route path="/AsigEq" element={<AsigEq />} />
 
 
         </Routes>

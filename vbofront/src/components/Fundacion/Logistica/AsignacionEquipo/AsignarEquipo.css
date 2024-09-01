@@ -1,0 +1,112 @@
+.asignar-equipo-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .asignar-equipo-header {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .asignar-equipo-container .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .asignar-equipo-container label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .asignar-equipo-container .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .asignar-equipo-container .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  }
+  
+  .asignar-equipo-container .btn-primary {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .asignar-equipo-container .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal-centered .modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .modal-header {
+    border-bottom: none;
+  }
+  
+  .modal-header .close {
+    margin: -1rem -1rem -1rem auto;
+  }
+  
+  .modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .modal-body {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .modal-footer {
+    border-top: none;
+    justify-content: center;
+  }
+  
+  .modal-footer .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .modal-footer .btn-primary:hover,
+  .modal-footer .btn-secondary:hover {
+    opacity: 0.9;
+  }
+  
