@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, get } from 'firebase/database';
 import './HistorialAsignaciones.css'; // Archivo CSS para el estilo
-import { Table, Form, Dropdown } from 'react-bootstrap';
+import { Table, Form } from 'react-bootstrap';
 import NavBar from '../../../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -9,59 +9,40 @@ import { auth } from '../../../../firebase';
 
 function HistorialAsignaciones() {
   const [historial, setHistorial] = useState([]);
+  const [unidadUsuario, setUnidadUsuario] = useState(localStorage.getItem('userUnit') || '');
   const [filteredHistorial, setFilteredHistorial] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterBy, setFilterBy] = useState('');
-  const [sortBy, setSortBy] = useState('');
+  const [fechaFiltro, setFechaFiltro] = useState('');
   const navigate = useNavigate();
-
-  // ID del equipo seleccionado para ver el historial (ejemplo: pasado como prop o selección previa)
-  const equipoId = "equipo_id_ejemplo";
 
   useEffect(() => {
     const db = getDatabase();
-    const historialRef = ref(db, `asignaciones/${equipoId}`);
+    const equiposRef = ref(db, `fundacion/equipos/${unidadUsuario}`);
 
-    get(historialRef).then((snapshot) => {
-      const historialData = snapshot.val();
+    // Obtener todo el historial de asignaciones agrupado por tipo de equipo
+    get(equiposRef).then((snapshot) => {
+      const equiposData = snapshot.val();
       const historialArray = [];
       
-      if (historialData) {
-        Object.entries(historialData).forEach(([id, asignacion]) => {
-          historialArray.push({
-            id,
-            ...asignacion,
+      if (equiposData) {
+        Object.entries(equiposData).forEach(([tipoEquipo, equiposPorTipo]) => {
+          Object.entries(equiposPorTipo).forEach(([equipoId, equipo]) => {
+            if (equipo.historial) {
+              Object.entries(equipo.historial).forEach(([key, registro]) => {
+                historialArray.push({
+                  id: key,
+                  tipoEquipo,
+                  ...registro,
+                });
+              });
+            }
           });
         });
       }
-
       setHistorial(historialArray);
       setFilteredHistorial(historialArray);
     });
-  }, [equipoId]);
-
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    setFilteredHistorial(historial.filter(asignacion => 
-      asignacion.personalId.toLowerCase().includes(term)
-    ));
-  };
-
-  const handleFilterChange = (filter) => {
-    setFilterBy(filter);
-    setFilteredHistorial(historial.filter(asignacion => asignacion.estado === filter));
-  };
-
-  const handleSortChange = (sort) => {
-    setSortBy(sort);
-    const sortedHistorial = [...filteredHistorial].sort((a, b) => {
-      if (sort === 'fecha') return new Date(a.fechaAsignacion) - new Date(b.fechaAsignacion);
-      if (sort === 'personal') return a.personalId.localeCompare(b.personalId);
-      return 0;
-    });
-    setFilteredHistorial(sortedHistorial);
-  };
+  }, [unidadUsuario]);
 
   const handleSignOut = async () => {
     try {
@@ -73,11 +54,32 @@ function HistorialAsignaciones() {
     }
   };
 
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    filterHistorial(term, fechaFiltro);
+  };
+
+  const handleDateFilter = (e) => {
+    const date = e.target.value;
+    setFechaFiltro(date);
+    filterHistorial(searchTerm, date);
+  };
+
+  const filterHistorial = (term, date) => {
+    const filtered = historial.filter(registro => {
+      const matchesTerm = registro.asignadoA.toLowerCase().includes(term);
+      const matchesDate = date ? new Date(registro.fechaAsignacion).toLocaleDateString() === new Date(date).toLocaleDateString() : true;
+      return matchesTerm && matchesDate;
+    });
+    setFilteredHistorial(filtered);
+  };
+
   return (
     <>
       <NavBar handleSignOut={handleSignOut} />
       <div className="historial-asignaciones-container">
-        <h2 className="historial-asignaciones-header">Historial de Asignaciones</h2>
+        <h2 className="historial-asignaciones-header">Historial de Asignaciones por Tipo de Equipo</h2>
         
         <Form.Control 
           type="text" 
@@ -86,42 +88,31 @@ function HistorialAsignaciones() {
           onChange={handleSearch} 
           className="mb-3"
         />
-        
-        <Dropdown onSelect={handleFilterChange} className="mb-3">
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Filtrar por Estado
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item eventKey="Asignado">Asignado</Dropdown.Item>
-            <Dropdown.Item eventKey="Devuelto">Devuelto</Dropdown.Item>
-            <Dropdown.Item eventKey="Baja">Baja</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
 
-        <Dropdown onSelect={handleSortChange} className="mb-3">
-          <Dropdown.Toggle variant="info" id="dropdown-basic">
-            Ordenar por
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item eventKey="fecha">Fecha de Asignación</Dropdown.Item>
-            <Dropdown.Item eventKey="personal">Personal</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <Form.Control 
+          type="date" 
+          placeholder="Filtrar por fecha..." 
+          value={fechaFiltro} 
+          onChange={handleDateFilter} 
+          className="mb-3"
+        />
 
         <Table striped bordered hover responsive>
           <thead>
             <tr>
-              <th>Personal</th>
+              <th>Tipo de Equipo</th>
+              <th>Asignado A</th>
               <th>Fecha de Asignación</th>
-              <th>Estado</th>
+              <th>Estado en Asignación</th>
             </tr>
           </thead>
           <tbody>
-            {filteredHistorial.map((asignacion, index) => (
+            {filteredHistorial.map((registro, index) => (
               <tr key={index}>
-                <td>{asignacion.personalId}</td> {/* Aquí podrías hacer un lookup para mostrar el nombre real */}
-                <td>{new Date(asignacion.fechaAsignacion).toLocaleDateString()}</td>
-                <td>{asignacion.estado}</td>
+                <td>{registro.tipoEquipo}</td>
+                <td>{registro.asignadoA}</td>
+                <td>{new Date(registro.fechaAsignacion).toLocaleDateString()}</td>
+                <td>{registro.estado}</td>
               </tr>
             ))}
           </tbody>

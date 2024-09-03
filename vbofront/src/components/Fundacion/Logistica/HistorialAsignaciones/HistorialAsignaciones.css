@@ -16,5 +16,18 @@
 }
 
 .mb-3 {
-    margin-bottom: 15px;
+    margin-bottom: 20px !important;
+}
+
+.table {
+    background-color: #fff;
+}
+
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
 }

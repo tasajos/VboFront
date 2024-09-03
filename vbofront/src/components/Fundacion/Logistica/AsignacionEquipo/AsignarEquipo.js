@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, get, update } from 'firebase/database';
+import { getDatabase, ref, get, update, push } from 'firebase/database';
 import './AsignarEquipo.css'; 
 import { Form, Button, Modal } from 'react-bootstrap';
 import NavBar from '../../../NavBar/navbar';
@@ -94,11 +94,19 @@ function AsignarEquipo() {
     if (selectedEquipo && selectedPersonal && fechaAsignacion) {
       const db = getDatabase();
       const equipoRef = ref(db, `fundacion/equipos/${unidadUsuario}/${selectedEquipo.tipoEquipo}/${selectedEquipo.id}`);
+      const historialRef = ref(db, `fundacion/equipos/${unidadUsuario}/${selectedEquipo.tipoEquipo}/${selectedEquipo.id}/historial`);
 
       update(equipoRef, {
         asignadoA: selectedPersonal,
         fechaAsignacion,
         estado: 'Asignado',
+      }).then(() => {
+        // Guardar en el historial
+        return push(historialRef, {
+          personalId: selectedPersonal,
+          fechaAsignacion,
+          estado: 'Asignado',
+        });
       }).then(() => {
         setModalTitle('Asignación Exitosa');
         setModalMessage('El equipo ha sido asignado exitosamente.');
@@ -213,4 +221,3 @@ function AsignarEquipo() {
 }
 
 export default AsignarEquipo;
-             
