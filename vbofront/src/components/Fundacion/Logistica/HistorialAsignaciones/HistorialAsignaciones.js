@@ -43,17 +43,18 @@ function HistorialAsignaciones() {
                             Object.entries(equipo.historial).forEach(([key, registro]) => {
                                 const ciAsignado = registro.personalId; // Utilizar personalId en lugar de asignadoA
                                 const personaAsignada = personal[ciAsignado];
-
+                        
                                 const asignadoA = personaAsignada
                                     ? `${personaAsignada.apellidoPaterno} ${personaAsignada.apellidoMaterno}, ${personaAsignada.nombre}`
                                     : 'Desconocido';
-
+                        
                                 historialArray.push({
                                     id: key,
                                     tipoEquipo,
                                     ...registro,
                                     asignadoA,
-                                    fechaAsignacion: registro.fechaAsignacion // Usar la fecha de asignación del historial
+                                    fechaAsignacion: registro.fechaAsignacion, // Usar la fecha de asignación del historial
+                                    codigo: equipo.codigo // Aquí obtenemos el código del equipo
                                 });
                             });
                         }
@@ -125,6 +126,7 @@ function HistorialAsignaciones() {
                             <th>Asignado A</th>
                             <th>Fecha de Asignación</th>
                             <th>Estado en Asignación</th>
+                            <th>Codigo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -134,6 +136,7 @@ function HistorialAsignaciones() {
                                 <td>{registro.asignadoA}</td>
                                 <td>{registro.fechaAsignacion}</td>
                                 <td>{registro.estado}</td>
+                                <td>{registro.codigo}</td>
                             </tr>
                         ))}
                     </tbody>
