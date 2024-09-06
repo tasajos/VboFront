@@ -220,6 +220,10 @@ function ListaEquipos() {
               <option value="Nuevo">Nuevo</option>
               <option value="Usado">Usado</option>
               <option value="Dañado">Dañado</option>
+              <option value="Repuesto">Repuesto</option>
+              <option value="Perdido">Perdido</option>
+              <option value="Reasignado">Reasignado</option>
+              <option value="Libre">Libre</option>
             </select>
           </div>
         </Modal.Body>
