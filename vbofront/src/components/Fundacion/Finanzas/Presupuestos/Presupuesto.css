@@ -1,0 +1,80 @@
+.budget-container {
+    margin: 40px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .budget-title, .budget-subtitle {
+    text-align: center;
+    color: #343a40;
+  }
+  
+  .budget-form {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .budget-form .budget-form-group {
+    margin-bottom: 20px;
+  }
+  
+  .budget-form label {
+    font-weight: bold;
+    color: #495057;
+  }
+  
+  .budget-form input, .budget-form select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+  }
+  
+  .budget-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+  }
+  
+  .budget-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .budget-table {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .budget-table thead {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .budget-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .budget-alert {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  .budget-alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .budget-alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  

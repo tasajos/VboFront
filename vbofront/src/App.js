@@ -87,6 +87,7 @@ import HistAsig from './components/Fundacion/Logistica/HistorialAsignaciones/His
 import IngFin from './components/Fundacion/Finanzas/Ingresos/Ingresos'; // Ingresos
 import EgrFin from './components/Fundacion/Finanzas/Egresos/Egresos'; // Egresos
 import InfFin from './components/Fundacion/Finanzas/InformeFinanciero/InformeFinanciero'; // Informe Financiero
+import PreFin from './components/Fundacion/Finanzas/Presupuestos/Presupuesto'; // Presupuesto
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -195,6 +196,7 @@ function App() {
               <Route path="/ingfinanz" element={<IngFin />} />
               <Route path="/egrfinanz" element={<EgrFin />} />
               <Route path="/inffinan" element={<InfFin />} />
+              <Route path="/presufin" element={<PreFin />} />
 
         </Routes>
       </div>
