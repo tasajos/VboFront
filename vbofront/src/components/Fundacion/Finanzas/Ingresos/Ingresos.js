@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, push, onValue, child, get } from 'firebase/database';
+import { getDatabase, ref, push, onValue } from 'firebase/database';
 import { Table, Form, Button, Modal } from 'react-bootstrap';
+import { jsPDF } from 'jspdf'; // Importar jsPDF para la generación de PDF
 import './Ingresos.css';
 import NavBar from '../../../NavBar/navbar';
 import { signOut } from 'firebase/auth';
@@ -17,11 +18,11 @@ function Ingresos() {
   const [unidadUsuario, setUnidadUsuario] = useState(localStorage.getItem('userUnit') || '');
   const [showModal, setShowModal] = useState(false);
   const [secuencial, setSecuencial] = useState(1); // Secuencial para las donaciones
+  const [lastIngreso, setLastIngreso] = useState(null); // Guardar el último ingreso registrado
   const navigate = useNavigate();
 
   useEffect(() => {
     const db = getDatabase();
-    //const ingresosRef = ref(db, `fundacion/${unidadUsuario}/finanzas/ingresos`);
     const ingresosRef = ref(db, `fundacion/finanzas/${unidadUsuario}/ingresos`);
 
     onValue(ingresosRef, (snapshot) => {
@@ -47,10 +48,9 @@ function Ingresos() {
 
   const handleRegistrarIngreso = () => {
     const db = getDatabase();
-    //const ingresosRef = ref(db, `fundacion/${unidadUsuario}/finanzas/ingresos`);
     const ingresosRef = ref(db, `fundacion/finanzas/${unidadUsuario}/ingresos`);
     
-    push(ingresosRef, {
+    const nuevoIngreso = {
       fecha,
       tipo,
       descripcion,
@@ -58,7 +58,9 @@ function Ingresos() {
       moneda,
       unidad: unidadUsuario, // Agregar unidad del usuario autenticado
       secuencial // Agregar el número secuencial
-    }).then(() => {
+    };
+
+    push(ingresosRef, nuevoIngreso).then(() => {
       // Limpiar campos y mostrar modal
       setFecha('');
       setTipo('');
@@ -66,12 +68,33 @@ function Ingresos() {
       setMonto('');
       setMoneda('Bs');
       setSecuencial(secuencial + 1); // Incrementar el secuencial para el próximo registro
+      setLastIngreso(nuevoIngreso); // Guardar el último ingreso registrado
       setShowModal(true);
     });
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    
+    // Título del recibo
+    doc.setFontSize(18);
+    doc.text("Recibo de Ingreso", 20, 20);
+
+    // Información del ingreso
+    doc.setFontSize(12);
+    doc.text(`Fecha: ${lastIngreso.fecha}`, 20, 30);
+    doc.text(`Secuencial: ${lastIngreso.secuencial}`, 20, 40);
+    doc.text(`Tipo: ${lastIngreso.tipo}`, 20, 50);
+    doc.text(`Descripción: ${lastIngreso.descripcion}`, 20, 60);
+    doc.text(`Monto: ${lastIngreso.monto} ${lastIngreso.moneda}`, 20, 70);
+    doc.text(`Unidad: ${lastIngreso.unidad}`, 20, 80);
+
+    // Guardar el PDF con un nombre basado en el secuencial
+    doc.save(`Recibo_Ingreso_${lastIngreso.secuencial}.pdf`);
   };
 
   return (
@@ -174,8 +197,11 @@ function Ingresos() {
           El ingreso ha sido registrado exitosamente.
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseModal}>
+          <Button variant="secondary" onClick={handleCloseModal}>
             Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleExportPDF}>
+            Exportar Recibo como PDF
           </Button>
         </Modal.Footer>
       </Modal>
