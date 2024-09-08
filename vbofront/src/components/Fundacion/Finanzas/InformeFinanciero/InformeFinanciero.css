@@ -1,0 +1,59 @@
+/* InformeFinanciero.css */
+
+.informe-financiero-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .informe-financiero-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+  }
+  
+  .informe-financiero-container form {
+    margin-bottom: 30px;
+  }
+  
+  .informe-financiero-container .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .informe-financiero-container .form-group label {
+    font-weight: bold;
+  }
+  
+  .informe-financiero-container .form-control {
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  .informe-financiero-container h3 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .informe-financiero-container table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .informe-financiero-container table thead th {
+    background-color: #2563a5;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .informe-financiero-container table tbody td {
+    padding: 10px;
+    text-align: center;
+  }
+  
