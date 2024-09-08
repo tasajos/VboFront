@@ -1,0 +1,132 @@
+/* Egresos.css */
+
+.egresos-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.egresos-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.egresos-container form {
+    margin-bottom: 30px;
+}
+
+.egresos-container form .form-group {
+    margin-bottom: 20px;
+}
+
+.egresos-container form .form-group label {
+    font-weight: bold;
+    color: #555;
+}
+
+.egresos-container form .form-group input,
+.egresos-container form .form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.egresos-container .d-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.egresos-container .form-control {
+    flex: 1;
+}
+
+.egresos-container .btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.egresos-container .btn:hover {
+    background-color: #0056b3;
+}
+
+.egresos-container h3 {
+    margin-top: 40px;
+    color: #333;
+    text-align: center;
+    font-size: 24px;
+}
+
+.egresos-container table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.egresos-container table thead th {
+    background-color: #2563a5;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.egresos-container table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.egresos-container table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para el modal */
+.modal-centered .modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-centered .modal-header {
+    background-color: #007bff;
+    color: white;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-centered .modal-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-centered .modal-body {
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-centered .modal-footer {
+    border-top: none;
+}
+
+.modal-centered .btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.modal-centered .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
