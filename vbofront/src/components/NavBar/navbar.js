@@ -216,7 +216,7 @@ function NavBar({ handleSignOut }) {
                   {/* Menú Finanzas */}
 
                   <NavDropdown title="Finanzas" id="navbarScrollingDropdownFinanzas">
-                    <NavDropdown.Item href="/finanzas/pagos">Pagos y Cobros</NavDropdown.Item>
+                    <NavDropdown.Item href="ingfinanz">Registrar Ingresos</NavDropdown.Item>
                     <NavDropdown.Item href="/finanzas/reportes">Reportes Financieros</NavDropdown.Item>
                     <NavDropdown.Item href="/finanzas/presupuesto">Presupuesto</NavDropdown.Item>
                     <NavDropdown.Item href="/finanzas/inversiones">Inversiones</NavDropdown.Item>

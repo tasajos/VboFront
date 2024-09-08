@@ -82,6 +82,10 @@ import ListEq from './components/Fundacion/Logistica/ListarEquipo/ListaEquipo'; 
 import AsigEq from './components/Fundacion/Logistica/AsignacionEquipo/AsignarEquipo'; // Asignar Equipo
 import HistAsig from './components/Fundacion/Logistica/HistorialAsignaciones/HistorialAsignaciones'; // Historial Asignaciones
 
+
+//Finanzas
+import IngFin from './components/Fundacion/Finanzas/Ingresos/Ingresos'; // Ingresos
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -183,6 +187,10 @@ function App() {
               <Route path="/Listq" element={<ListEq />} />
               <Route path="/AsigEq" element={<AsigEq />} />
               <Route path="/Histasig" element={<HistAsig />} />
+
+              {/* Finanzas */}
+
+              <Route path="/ingfinanz" element={<IngFin />} />
 
 
         </Routes>
