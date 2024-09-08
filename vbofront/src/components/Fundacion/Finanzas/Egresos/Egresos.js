@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, push, onValue } from 'firebase/database';
+import { getDatabase, ref, push, onValue, update } from 'firebase/database';
 import { Table, Form, Button, Modal } from 'react-bootstrap';
 import { jsPDF } from 'jspdf';
 import './Egresos.css';
@@ -10,6 +10,8 @@ import { auth } from '../../../../firebase';
 
 function Egresos() {
   const [egresos, setEgresos] = useState([]);
+  const [presupuestos, setPresupuestos] = useState([]); // Presupuestos activos
+  const [presupuestoSeleccionado, setPresupuestoSeleccionado] = useState(''); // Presupuesto seleccionado
   const [fecha, setFecha] = useState('');
   const [tipo, setTipo] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -24,6 +26,7 @@ function Egresos() {
   useEffect(() => {
     const db = getDatabase();
     const egresosRef = ref(db, `fundacion/finanzas/${unidadUsuario}/egresos`);
+    const presupuestosRef = ref(db, `fundacion/presupuestos/${unidadUsuario}`);
 
     onValue(egresosRef, (snapshot) => {
       const data = snapshot.val();
@@ -33,6 +36,13 @@ function Egresos() {
       // Calcular el secuencial basado en el último egreso
       const lastSecuencial = egresosArray.length > 0 ? Math.max(...egresosArray.map(egreso => egreso.secuencial || 0)) : 0;
       setSecuencial(lastSecuencial + 1);
+    });
+
+    // Obtener presupuestos activos
+    onValue(presupuestosRef, (snapshot) => {
+      const data = snapshot.val();
+      const presupuestosArray = data ? Object.entries(data).map(([id, value]) => ({ id, ...value })) : [];
+      setPresupuestos(presupuestosArray);
     });
   }, [unidadUsuario]);
 
@@ -45,7 +55,7 @@ function Egresos() {
       console.error('Error al cerrar sesión', error);
     }
   };
-
+  
   const handleRegistrarEgreso = () => {
     const db = getDatabase();
     const egresosRef = ref(db, `fundacion/finanzas/${unidadUsuario}/egresos`);
@@ -56,11 +66,20 @@ function Egresos() {
       descripcion,
       monto: parseFloat(monto),
       moneda,
-      unidad: unidadUsuario, // Agregar unidad del usuario autenticado
-      secuencial // Agregar el número secuencial
+      unidad: unidadUsuario,
+      secuencial,
+      proyecto: presupuestoSeleccionado.project || '' // Guardar el proyecto del presupuesto seleccionado
     };
 
     push(egresosRef, nuevoEgreso).then(() => {
+      // Actualizar el presupuesto seleccionado
+      if (tipo === 'Presupuesto' && presupuestoSeleccionado) {
+        const presupuestoRef = ref(db, `fundacion/presupuestos/${unidadUsuario}/${presupuestoSeleccionado.id}`);
+        const nuevoMontoPresupuesto = presupuestoSeleccionado.monto - parseFloat(monto);
+
+        update(presupuestoRef, { monto: nuevoMontoPresupuesto });
+      }
+
       // Limpiar campos y mostrar modal
       setFecha('');
       setTipo('');
@@ -92,6 +111,7 @@ function Egresos() {
     doc.text(`Descripción: ${lastEgreso.descripcion}`, 20, 60);
     doc.text(`Monto: ${lastEgreso.monto} ${lastEgreso.moneda}`, 20, 70);
     doc.text(`Unidad: ${lastEgreso.unidad}`, 20, 80);
+    doc.text(`Proyecto: ${lastEgreso.proyecto || 'N/A'}`, 20, 90); // Agregar nombre del proyecto
 
     // Guardar el PDF con un nombre basado en el secuencial
     doc.save(`Recibo_Egreso_${lastEgreso.secuencial}.pdf`);
@@ -123,9 +143,29 @@ function Egresos() {
               <option value="">Seleccione</option>
               <option value="Compra">Compra</option>
               <option value="Servicio">Servicio</option>
+              <option value="Presupuesto">Presupuesto</option>
               <option value="Otro">Otro</option>
             </Form.Control>
           </Form.Group>
+
+          {/* Mostrar presupuestos activos si el tipo es "Presupuesto" */}
+          {tipo === 'Presupuesto' && (
+            <Form.Group controlId="presupuestoEgreso" className="mt-3">
+              <Form.Label>Seleccione un Presupuesto</Form.Label>
+              <Form.Control 
+                as="select" 
+                value={presupuestoSeleccionado.id || ''} 
+                onChange={(e) => setPresupuestoSeleccionado(presupuestos.find(p => p.id === e.target.value))}
+              >
+                <option value="">Seleccione un presupuesto</option>
+                {presupuestos.map((presupuesto) => (
+                  <option key={presupuesto.id} value={presupuesto.id}>
+                    {presupuesto.project} - {presupuesto.monto} Bs
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          )}
 
           <Form.Group controlId="descripcionEgreso" className="mt-3">
             <Form.Label>Descripción</Form.Label>
@@ -163,25 +203,27 @@ function Egresos() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>#</th> {/* Columna de secuencial */}
+              <th>#</th>
               <th>Fecha</th>
               <th>Tipo</th>
               <th>Descripción</th>
               <th>Monto</th>
               <th>Moneda</th>
               <th>Unidad</th>
+              <th>Proyecto</th> {/* Mostrar nombre del proyecto */}
             </tr>
           </thead>
           <tbody>
             {egresos.map((egreso) => (
               <tr key={egreso.id}>
-                <td>{egreso.secuencial}</td> {/* Mostrar el secuencial */}
+                <td>{egreso.secuencial}</td>
                 <td>{egreso.fecha}</td>
                 <td>{egreso.tipo}</td>
                 <td>{egreso.descripcion}</td>
                 <td>{egreso.monto}</td>
                 <td>{egreso.moneda}</td>
-                <td>{egreso.unidad}</td> {/* Mostrar la unidad registrada */}
+                <td>{egreso.unidad}</td>
+                <td>{egreso.proyecto || 'N/A'}</td> {/* Mostrar el proyecto si existe */}
               </tr>
             ))}
           </tbody>
