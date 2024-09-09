@@ -20,7 +20,7 @@ function Presupuesto() {
   
     useEffect(() => {
       const db = getDatabase();
-      const budgetRef = ref(db, `fundacion/presupuestos/${userUnit}`);
+      const budgetRef = ref(db, `fundacion/finanzas/${userUnit}/presupuestos/`);
       const expensesRef = ref(db, `fundacion/finanzas/${userUnit}/egresos`);
   
       // Obtener presupuestos
@@ -55,7 +55,9 @@ function Presupuesto() {
   
     const handleRegisterBudget = () => {
       const db = getDatabase();
-      const budgetRef = ref(db, `fundacion/presupuestos/${userUnit}`);
+     // const budgetRef = ref(db, `fundacion/presupuestos/${userUnit}`);
+
+      const budgetRef = ref(db, `fundacion/finanzas/${userUnit}/presupuestos/`);
   
       push(budgetRef, {
         department,

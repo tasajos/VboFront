@@ -26,7 +26,8 @@ function Egresos() {
   useEffect(() => {
     const db = getDatabase();
     const egresosRef = ref(db, `fundacion/finanzas/${unidadUsuario}/egresos`);
-    const presupuestosRef = ref(db, `fundacion/presupuestos/${unidadUsuario}`);
+    //const presupuestosRef = ref(db, `fundacion/presupuestos/${unidadUsuario}`);
+    const presupuestosRef = ref(db, `fundacion/finanzas/${unidadUsuario}/presupuestos/`);
 
     onValue(egresosRef, (snapshot) => {
       const data = snapshot.val();
@@ -74,7 +75,8 @@ function Egresos() {
     push(egresosRef, nuevoEgreso).then(() => {
       // Actualizar el presupuesto seleccionado
       if (tipo === 'Presupuesto' && presupuestoSeleccionado) {
-        const presupuestoRef = ref(db, `fundacion/presupuestos/${unidadUsuario}/${presupuestoSeleccionado.id}`);
+        //const presupuestoRef = ref(db, `fundacion/presupuestos/${unidadUsuario}/${presupuestoSeleccionado.id}`);
+        const presupuestoRef = ref(db, `fundacion/finanzas/${unidadUsuario}/presupuestos/${presupuestoSeleccionado.id}`);
         const nuevoMontoPresupuesto = presupuestoSeleccionado.monto - parseFloat(monto);
 
         update(presupuestoRef, { monto: nuevoMontoPresupuesto });
