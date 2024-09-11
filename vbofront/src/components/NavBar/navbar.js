@@ -131,13 +131,13 @@ function NavBar({ handleSignOut }) {
             {/* Menú Personal */}
 
             <NavDropdown title="Personal" id="navbarScrollingDropdownPersonal">
-            <NavDropdown.Item href="regpersoF">Registro de Personal</NavDropdown.Item>
-            <NavDropdown.Item href="listpersoF">Lista de Personal</NavDropdown.Item>
-            <NavDropdown.Item href="rgasis">Registro Asistencia</NavDropdown.Item>
-            <NavDropdown.Item href="repper">Reportes de Personal</NavDropdown.Item>
-            <NavDropdown.Item href="segpersonal">Seguimiento de Personal</NavDropdown.Item>
-            <NavDropdown.Item href="/personal/actividades">Actividades del Personal</NavDropdown.Item>
-            </NavDropdown>
+                    <NavDropdown.Item href="regpersoF">Registro de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="listpersoF">Lista de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="rgasis">Registro Asistencia</NavDropdown.Item>
+                    <NavDropdown.Item href="repper">Reportes de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="segpersonal">Seguimiento de Personal</NavDropdown.Item>
+                    <NavDropdown.Item href="accper">Actividades del Personal</NavDropdown.Item>
+                  </NavDropdown>
 
             {/* Menú Logística */}
 
@@ -160,11 +160,13 @@ function NavBar({ handleSignOut }) {
             {/* Menú Operaciones */}
 
             <NavDropdown title="Operaciones" id="navbarScrollingDropdownOperaciones">
-              <NavDropdown.Item href="rgope">Registro de Operaciones</NavDropdown.Item>
-              <NavDropdown.Item href="/operaciones/reportes">Reportes de Operaciones</NavDropdown.Item>
-              <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
-              <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>
-            </NavDropdown>
+                    <NavDropdown.Item href="rgope">Registro de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="infopdi">Informe Operaciones Diario</NavDropdown.Item>
+                    <NavDropdown.Item href="infomissi">informe Mision</NavDropdown.Item>
+                    <NavDropdown.Item href="libroNove">Registro Libro de Novedades</NavDropdown.Item>
+                    <NavDropdown.Item href="libroNov">Informe Libro de Novedades</NavDropdown.Item>
+                    <NavDropdown.Item href="repote">Reporte por Tipo</NavDropdown.Item>                  
+                  </NavDropdown>
 
             {/* Menú Capacitación */}
 
