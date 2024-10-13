@@ -158,21 +158,26 @@ function InformeMisiones() {
             <Table striped bordered hover className="table-modal">
                 <thead>
                     <tr>
+                    <th>Codigo</th>
                         <th>Grado</th>
+                        
                         <th>Nombre</th>
                         <th>Apellido Paterno</th>
                         <th>Apellido Materno</th>
-                        <th>CI</th>
+                       {/* <th>CI</th>*/}
                     </tr>
                 </thead>
                 <tbody>
                     {patrulla.map((voluntario, index) => (
                         <tr key={index}>
+                             <td>{voluntario.codigo}</td>
                             <td>{voluntario.grado || 'N/A'}</td>
+                           
                             <td>{voluntario.nombre}</td>
                             <td>{voluntario.apellidoPaterno}</td>
                             <td>{voluntario.apellidoMaterno}</td>
-                            <td>{voluntario.ci}</td>
+                            {/*  <td>{voluntario.ci}</td>*/}
+                          
                         </tr>
                     ))}
                 </tbody>
