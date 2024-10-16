@@ -11,6 +11,10 @@ import Pagination from 'react-bootstrap/Pagination';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import * as XLSX from 'xlsx';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function InformeOperacionesDiario() {
   const [operacionesList, setOperacionesList] = useState([]);
@@ -57,11 +61,10 @@ function InformeOperacionesDiario() {
 
   useEffect(() => {
     if (searchDate === '') {
-      // Si no hay una fecha de búsqueda, mostramos todas las operaciones
       setFilteredOperaciones(operacionesList);
     } else {
       const results = operacionesList.filter((operacion) => {
-        const fechaOperacionISO = operacion.fechaOperacion.split('T')[0]; // Tomamos solo la parte de la fecha
+        const fechaOperacionISO = operacion.fechaOperacion.split('T')[0];
         return fechaOperacionISO === searchDate;
       });
       setFilteredOperaciones(results);
@@ -98,15 +101,75 @@ function InformeOperacionesDiario() {
     setCurrentPage(1);
   };
 
-  // Función para formatear la fecha
   const formatFecha = (fechaISO) => {
-    const date = new Date(fechaISO); // Convertimos la fecha en un objeto de fecha
-    const day = String(date.getDate()).padStart(2, '0'); // Obtenemos el día y lo formateamos a dos dígitos
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Obtenemos el mes (los meses empiezan en 0) y lo formateamos
-    const year = date.getFullYear(); // Obtenemos el año
-  
-    return `${day}/${month}/${year}`; // Retornamos la fecha en formato dd/mm/aaaa
+    const date = new Date(fechaISO);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   };
+
+  const agruparPorVoluntarioYOperacion = (operaciones) => {
+    const agrupados = {};
+    operaciones.forEach((operacion) => {
+      const voluntario = `${operacion.nombre} ${operacion.apellidoPaterno} ${operacion.apellidoMaterno}`;
+      const tipoOperacion = operacion.operacion;
+
+      if (!agrupados[voluntario]) {
+        agrupados[voluntario] = {};
+      }
+      if (!agrupados[voluntario][tipoOperacion]) {
+        agrupados[voluntario][tipoOperacion] = 0;
+      }
+      agrupados[voluntario][tipoOperacion]++;
+    });
+    return agrupados;
+  };
+
+  const calcularTotalOperacionesPorVoluntario = (operaciones) => {
+    const totales = {};
+    operaciones.forEach((operacion) => {
+      const voluntario = `${operacion.nombre} ${operacion.apellidoPaterno} ${operacion.apellidoMaterno}`;
+      if (!totales[voluntario]) {
+        totales[voluntario] = 0;
+      }
+      totales[voluntario]++;
+    });
+    return totales;
+  };
+
+  const generarDatosDeGrafico = (agrupados) => {
+    const voluntarios = Object.keys(agrupados);
+    const tiposDeOperacion = [...new Set(Object.values(agrupados).flatMap((op) => Object.keys(op)))];
+  
+    const datasets = tiposDeOperacion.map((operacion) => ({
+      label: operacion,
+      data: voluntarios.map((voluntario) => agrupados[voluntario][operacion] || 0),
+      backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.7)`,
+    }));
+  
+    return {
+      labels: voluntarios,
+      datasets: datasets,
+    };
+  };
+
+
+  const generarDatosDeGraficoPorVoluntario = (totales) => {
+    const voluntarios = Object.keys(totales);
+    const cantidades = voluntarios.map((voluntario) => totales[voluntario]);
+
+    return {
+      labels: voluntarios,
+      datasets: [{
+        label: 'Cantidad de Operaciones',
+        data: cantidades,
+        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+      }],
+    };
+  };
+
+  const dataDeGrafico = generarDatosDeGrafico(agruparPorVoluntarioYOperacion(filteredOperaciones));
 
   return (
     <div>
@@ -152,7 +215,6 @@ function InformeOperacionesDiario() {
                 <td>{operacion.apellidoPaterno}</td>
                 <td>{operacion.apellidoMaterno}</td>
                 <td>{operacion.ci}</td>
-                {/* Aplicamos la función de formato a la fecha */}
                 <td>{formatFecha(operacion.fechaOperacion)}</td>
                 <td>{operacion.operacion}</td>
                 <td>{operacion.autorizadoPor}</td>
@@ -161,6 +223,44 @@ function InformeOperacionesDiario() {
             ))}
           </tbody>
         </Table>
+
+        {/* Resumen de operaciones agrupadas */}
+        <div className="resumen-container">
+          <h5>Resumen por Voluntario y Operación</h5>
+          <Table striped bordered hover responsive className="resumen-operaciones-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Operación</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(agruparPorVoluntarioYOperacion(filteredOperaciones)).map((voluntario) => (
+                Object.keys(agruparPorVoluntarioYOperacion(filteredOperaciones)[voluntario]).map((operacion, index) => (
+                  <tr key={voluntario + operacion + index}>
+                    <td>{voluntario}</td>
+                    <td>{operacion}</td>
+                    <td>{agruparPorVoluntarioYOperacion(filteredOperaciones)[voluntario][operacion]}</td>
+                  </tr>
+                ))
+              ))}
+            </tbody>
+          </Table>
+        </div>
+
+        {/* Gráfico de barras por tipo de operación */}
+        <div className="grafico-container">
+          <h5>Estadísticas por Operación</h5>
+          <Bar data={dataDeGrafico} options={{ maintainAspectRatio: false }} />
+        </div>
+
+        {/* Gráfico de barras por voluntario */}
+        <div className="grafico-container">
+          <h5>Operaciones Totales por Voluntario</h5>
+          <Bar data={generarDatosDeGraficoPorVoluntario(calcularTotalOperacionesPorVoluntario(filteredOperaciones))} options={{ maintainAspectRatio: false }} />
+        </div>
+
         <div className="d-flex justify-content-end">
           <Button variant="success" className="mt-3" onClick={handleExportToExcel}>
             Exportar a Excel
