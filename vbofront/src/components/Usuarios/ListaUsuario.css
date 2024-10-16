@@ -117,5 +117,32 @@ input[type="text"] {
         margin: 10px 0; /* Margen arriba y abajo del buscador */
         padding: 8px; /* Padding interno para el buscador */
         border-radius: 4px; /* Bordes redondeados para el buscador */
-        border: 1px solid #ddd; /* Borde sutil para el buscador */
+        border: 1px solid #7f84e3; /* Borde sutil para el buscador */
       }
+      .listausuarios-table {
+        width: 100%; /* Asegura que la tabla use todo el ancho disponible */
+        border-collapse: collapse; /* Elimina el espacio entre bordes de celdas */
+        margin-top: 10px; /* Espacio después del buscador */
+      }
+      
+      .listausuarios-table, .listausuarios-table th, .listausuarios-table td {
+        border: 1px solid #547ad4; /* Bordes sutiles para la tabla y celdas */
+      }
+      
+      .listausuarios-table th, .listausuarios-table td {
+        text-align: left; /* Alineación del texto en las celdas */
+        padding: 8px; /* Espaciado interno en las celdas para texto más legible */
+      }
+      
+      .listausuarios-table th {
+        background-color: #4f3aa4; /* Color de fondo para los encabezados */
+      }
+      
+      .listausuarios-table tr:nth-child(even) {
+        background-color: #f9f9f9; /* Color de fondo para las filas pares */
+      }
+      
+      .listausuarios-table tr:hover {
+        background-color: #e8f4ff; /* Color de fondo al pasar el mouse sobre las filas */
+      }
+      

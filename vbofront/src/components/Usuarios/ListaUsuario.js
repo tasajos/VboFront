@@ -144,43 +144,43 @@ function ListaUsuarios() {
         onChange={(e) => setBusqueda(e.target.value.toLowerCase())}
         className="search-input"
       />
-      <table className="usuarios-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Apellido Paterno</th>
-            <th>Apellido Materno</th>
-            <th>Correo Electrónico</th>
-            <th>Teléfono</th>
-            <th>Unidad</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuariosFiltrados.map((usuario) => (
-            <tr key={usuario.id}>
-              <td>{usuario.nombre || 'No especificado'}</td>
-              <td>{usuario.apellidoPaterno || 'No especificado'}</td>
-              <td>{usuario.apellidoMaterno || 'No especificado'}</td>
-              <td>{usuario.correo || 'No especificado'}</td>
-              <td>{usuario.telefono || 'No especificado'}</td>
-              <td>{usuario.unidad || 'No especificado'}</td>
-              <td>{usuario.rol || 'No especificado'}</td>
-              <td>
-                <FaEdit 
-                  onClick={() => handleEditClick(usuario)} 
-                  style={{ cursor: 'pointer', color: 'blue', marginRight: '10px' }} 
-                />
-                <FaTrash 
-                  onClick={() => handleDeleteClick(usuario)} 
-                  style={{ cursor: 'pointer', color: 'red' }} 
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+     <table className="listausuarios-table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido Paterno</th>
+      <th>Apellido Materno</th>
+      <th>Correo Electrónico</th>
+      <th>Teléfono</th>
+      <th>Unidad</th>
+      <th>Rol</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {usuariosFiltrados.map((usuario) => (
+      <tr key={usuario.id}>
+        <td>{usuario.nombre || 'No especificado'}</td>
+        <td>{usuario.apellidoPaterno || 'No especificado'}</td>
+        <td>{usuario.apellidoMaterno || 'No especificado'}</td>
+        <td>{usuario.correo || 'No especificado'}</td>
+        <td>{usuario.telefono || 'No especificado'}</td>
+        <td>{usuario.unidad || 'No especificado'}</td>
+        <td>{usuario.rol || 'No especificado'}</td>
+        <td>
+          <FaEdit 
+            onClick={() => handleEditClick(usuario)} 
+            style={{ cursor: 'pointer', color: 'blue', marginRight: '10px' }} 
+          />
+          <FaTrash 
+            onClick={() => handleDeleteClick(usuario)} 
+            style={{ cursor: 'pointer', color: 'red' }} 
+          />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
 
       <Modal show={editModalIsOpen} onHide={closeEditModal}>
         <Modal.Header closeButton>
