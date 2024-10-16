@@ -136,7 +136,7 @@ function InformeOperacionesDiario() {
                 <td>{operacion.apellidoPaterno}</td>
                 <td>{operacion.apellidoMaterno}</td>
                 <td>{operacion.ci}</td>
-                <td>{operacion.fecha}</td>
+                <td>{operacion.fechaOperacion}</td>
                 <td>{operacion.operacion}</td>
                 <td>{operacion.autorizadoPor}</td>
                 <td>{operacion.observaciones}</td>
