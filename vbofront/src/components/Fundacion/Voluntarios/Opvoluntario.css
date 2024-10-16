@@ -1,0 +1,24 @@
+.opvoluntario-container {
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .opvoluntario-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .opvoluntario-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .opvoluntario-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mt-3 {
+    margin-top: 1rem;
+  }
+  

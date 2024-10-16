@@ -253,7 +253,7 @@ function NavBar({ handleSignOut }) {
                {/* Menú Operaciones */}
 
                <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
-                    <NavDropdown.Item href="rgope">Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="opervol">Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="pervol">Perfil</NavDropdown.Item>
                     <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>

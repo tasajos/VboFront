@@ -74,6 +74,7 @@ import LibroNove from './components/Fundacion/Operaciones/InformeLibroNovedades'
 //Voluntario
 
 import VolPers from './components/Fundacion/Voluntarios/PerfilPersonal'; 
+import OpVol from './components/Fundacion/Voluntarios/Opvoluntario'; 
 
 //Logistica
 import ClasCod from './components/Fundacion/Logistica/AsignacionCodigo/ClasificacionCodigo'; // ClasificacionCodigo
@@ -182,6 +183,7 @@ function App() {
 
            {/* Voluntario */}
            <Route path="/pervol" element={<VolPers />} />
+           <Route path="opervol" element={<OpVol />} />
           
               {/* Logistica */}
 
