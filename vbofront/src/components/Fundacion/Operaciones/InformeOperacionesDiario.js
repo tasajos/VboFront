@@ -92,6 +92,16 @@ function InformeOperacionesDiario() {
     setCurrentPage(1);
   };
 
+  // Función para formatear la fecha
+  const formatFecha = (fechaISO) => {
+    const date = new Date(fechaISO); // Convertimos la fecha en un objeto de fecha
+    const day = String(date.getDate()).padStart(2, '0'); // Obtenemos el día y lo formateamos a dos dígitos
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Obtenemos el mes (los meses empiezan en 0) y lo formateamos
+    const year = date.getFullYear(); // Obtenemos el año
+  
+    return `${day}/${month}/${year}`; // Retornamos la fecha en formato dd/mm/aaaa
+  };
+
   return (
     <div>
       <NavBar handleSignOut={handleSignOut} />
@@ -136,7 +146,8 @@ function InformeOperacionesDiario() {
                 <td>{operacion.apellidoPaterno}</td>
                 <td>{operacion.apellidoMaterno}</td>
                 <td>{operacion.ci}</td>
-                <td>{operacion.fechaOperacion}</td>
+                {/* Aplicamos la función de formato a la fecha */}
+                <td>{formatFecha(operacion.fechaOperacion)}</td>
                 <td>{operacion.operacion}</td>
                 <td>{operacion.autorizadoPor}</td>
                 <td>{operacion.observaciones}</td>
