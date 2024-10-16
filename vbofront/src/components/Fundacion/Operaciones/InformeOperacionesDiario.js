@@ -56,10 +56,16 @@ function InformeOperacionesDiario() {
   }, [unidad]);
 
   useEffect(() => {
-    const results = operacionesList.filter((operacion) =>
-      operacion.fecha.includes(searchDate)
-    );
-    setFilteredOperaciones(results);
+    if (searchDate === '') {
+      // Si no hay una fecha de búsqueda, mostramos todas las operaciones
+      setFilteredOperaciones(operacionesList);
+    } else {
+      const results = operacionesList.filter((operacion) => {
+        const fechaOperacionISO = operacion.fechaOperacion.split('T')[0]; // Tomamos solo la parte de la fecha
+        return fechaOperacionISO === searchDate;
+      });
+      setFilteredOperaciones(results);
+    }
   }, [searchDate, operacionesList]);
 
   const handleSignOut = async () => {
