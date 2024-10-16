@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, onValue, off, update, remove } from 'firebase/database';
-import { getAuth, deleteUser } from 'firebase/auth';
 import { Modal, Button } from 'react-bootstrap';
 import './ListaUsuario.css'; 
 import NavBar from '../NavBar/navbar';
@@ -8,7 +7,6 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'; // Usa useNavigate en lugar de Navigate
 import { auth } from '../../firebase';
-
 
 function ListaUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -26,7 +24,6 @@ function ListaUsuarios() {
     rol: ''
   });
   const [isSaved, setIsSaved] = useState(false);
-
 
   const handleSignOut = async () => {
     try {
@@ -89,28 +86,20 @@ function ListaUsuarios() {
     });
   };
 
+  // Función para eliminar el usuario seleccionado de la lista
   const handleDeleteUser = () => {
     const db = getDatabase();
-    const auth = getAuth();
-    const usuarioRef = ref(db, `UsuariosVbo/${usuarioEditando.id}`);
+    const usuarioRef = ref(db, `UsuariosVbo/${usuarioEditando.id}`); // Usuario que se quiere eliminar
+
+    // Elimina al usuario de la base de datos, pero no al usuario autenticado
     remove(usuarioRef)
       .then(() => {
-        const user = auth.currentUser;
-        if (user) {
-          deleteUser(user)
-            .then(() => {
-              alert("Usuario eliminado exitosamente.");
-            })
-            .catch((error) => {
-              console.error("Error al eliminar el usuario:", error);
-              alert("Error al eliminar el usuario.");
-            });
-        }
-        setDeleteModalIsOpen(false);
+        alert('Usuario eliminado exitosamente de la lista.');
+        setDeleteModalIsOpen(false); // Cerrar modal
       })
       .catch((error) => {
-        console.error("Error al eliminar el usuario de la base de datos:", error);
-        alert("Error al eliminar el usuario de la base de datos.");
+        console.error('Error al eliminar el usuario de la base de datos:', error);
+        alert('Error al eliminar el usuario de la base de datos.');
       });
   };
 
@@ -145,43 +134,44 @@ function ListaUsuarios() {
         className="search-input"
       />
      <table className="listausuarios-table">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Apellido Paterno</th>
-      <th>Apellido Materno</th>
-      <th>Correo Electrónico</th>
-      <th>Teléfono</th>
-      <th>Unidad</th>
-      <th>Rol</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    {usuariosFiltrados.map((usuario) => (
-      <tr key={usuario.id}>
-        <td>{usuario.nombre || 'No especificado'}</td>
-        <td>{usuario.apellidoPaterno || 'No especificado'}</td>
-        <td>{usuario.apellidoMaterno || 'No especificado'}</td>
-        <td>{usuario.correo || 'No especificado'}</td>
-        <td>{usuario.telefono || 'No especificado'}</td>
-        <td>{usuario.unidad || 'No especificado'}</td>
-        <td>{usuario.rol || 'No especificado'}</td>
-        <td>
-          <FaEdit 
-            onClick={() => handleEditClick(usuario)} 
-            style={{ cursor: 'pointer', color: 'blue', marginRight: '10px' }} 
-          />
-          <FaTrash 
-            onClick={() => handleDeleteClick(usuario)} 
-            style={{ cursor: 'pointer', color: 'red' }} 
-          />
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Correo Electrónico</th>
+            <th>Teléfono</th>
+            <th>Unidad</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {usuariosFiltrados.map((usuario) => (
+            <tr key={usuario.id}>
+              <td>{usuario.nombre || 'No especificado'}</td>
+              <td>{usuario.apellidoPaterno || 'No especificado'}</td>
+              <td>{usuario.apellidoMaterno || 'No especificado'}</td>
+              <td>{usuario.correo || 'No especificado'}</td>
+              <td>{usuario.telefono || 'No especificado'}</td>
+              <td>{usuario.unidad || 'No especificado'}</td>
+              <td>{usuario.rol || 'No especificado'}</td>
+              <td>
+                <FaEdit 
+                  onClick={() => handleEditClick(usuario)} 
+                  style={{ cursor: 'pointer', color: 'blue', marginRight: '10px' }} 
+                />
+                <FaTrash 
+                  onClick={() => handleDeleteClick(usuario)} 
+                  style={{ cursor: 'pointer', color: 'red' }} 
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
+      {/* Modal para edición */}
       <Modal show={editModalIsOpen} onHide={closeEditModal}>
         <Modal.Header closeButton>
           <Modal.Title>{isSaved ? 'Usuario Modificado' : 'Editar Usuario'}</Modal.Title>
@@ -242,7 +232,6 @@ function ListaUsuarios() {
                   <option value="Voluntario">Voluntario</option>
                   <option value="Seguridad">Seguridad</option>
                   <option value="Bombero">Bombero</option>
-                  {/* Añade más roles según sea necesario */}
                 </select>
               </div>
             </form>
@@ -262,6 +251,7 @@ function ListaUsuarios() {
         </Modal.Footer>
       </Modal>
 
+      {/* Modal para eliminación */}
       <Modal show={deleteModalIsOpen} onHide={closeDeleteModal}>
         <Modal.Header closeButton>
           <Modal.Title>Eliminar Usuario</Modal.Title>
