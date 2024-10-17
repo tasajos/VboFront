@@ -107,26 +107,26 @@ function PerfilPersonal() {
           {/* Mostrar el historial del usuario en tarjetas */}
           <h3 className="perfil-personal-text-center perfil-personal-mt-5">Historial</h3>
           {historial.length > 0 ? (
-            <div className="perfil-personal-historial">
-              {historial.map((entry, index) => (
-                <Card key={index} className="perfil-personal-historial-card mb-3">
-                  <Card.Body>
-                    <Card.Title>{entry.descripcion}</Card.Title>
-                    <Card.Text>
-                      <strong>Fecha:</strong> {format(new Date(entry.fecha), 'dd/MM/yyyy')} <br />
-                      <strong>Estado:</strong> {entry.estado || getLastValue(historial, 'estado')} <br />
-                      <strong>Tipo Memo:</strong> {entry.tipoMemo || getLastValue(historial, 'tipoMemo')} <br />
-                      <strong>Grado:</strong> {entry.grado || getLastValue(historial, 'grado')} <br />
-                      <strong>Motivo:</strong> {entry.motivo || 'No especificado'} <br />
-                      <strong>Autorizado por:</strong> {entry.autorizadoPor || 'No especificado'}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center">No se encontró historial para este usuario.</p>
-          )}
+  <div className="perfil-personal-historial">
+    {historial.map((entry, index) => (
+      <Card key={index} className="perfil-personal-historial-card">
+        <Card.Body>
+          <Card.Title className="perfil-personal-historial-card-title">{entry.descripcion}</Card.Title>
+          <Card.Text className="perfil-personal-historial-card-text">
+            <strong>Fecha:</strong> {format(new Date(entry.fecha), 'dd/MM/yyyy')} <br />
+            <strong>Estado:</strong> {entry.estado || getLastValue(historial, 'estado')} <br />
+            <strong>Tipo Memo:</strong> {entry.tipoMemo || getLastValue(historial, 'tipoMemo')} <br />
+            <strong>Grado:</strong> {entry.grado || getLastValue(historial, 'grado')} <br />
+            <strong>Motivo:</strong> {entry.motivo || 'No especificado'} <br />
+            <strong>Autorizado por:</strong> {entry.autorizadoPor || 'No especificado'}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    ))}
+  </div>
+) : (
+  <p className="text-center">No se encontró historial para este usuario.</p>
+)}
         </div>
       </div>
     </div>

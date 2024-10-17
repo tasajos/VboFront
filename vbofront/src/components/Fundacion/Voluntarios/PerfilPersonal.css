@@ -1,6 +1,6 @@
 /* Estilos generales para el contenedor del perfil */
 .perfil-personal-container {
-    background-color: #ffffff;
+    background-color: #f0f2f5; /* Fondo suave, estilo redes sociales */
     padding: 20px;
     min-height: 100vh;
     margin-top: 20px;
@@ -9,16 +9,13 @@
 .perfil-personal-wrapper {
     max-width: 800px;
     margin: 0 auto;
-    background-color: #ffffff;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .perfil-personal-text-center {
     text-align: center;
-    color: #343a40;
-    font-size: 24px;
+    color: #333;
+    font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -29,49 +26,77 @@
     flex-direction: row;
     margin-top: 20px;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     background-color: #fff;
 }
 
 .perfil-personal-card-left {
     text-align: center;
     padding-right: 20px;
-    border-right: 2px solid #e0e0e0;
 }
 
 .perfil-personal-profile-image {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #d8d8d8; /* Placeholder background color */
+    border: 3px solid #007bff;
 }
 
 .perfil-personal-card-right {
     flex: 1;
-    padding-left: 40px;
-    color: #2495f8;
+    padding-left: 20px;
+    color: #333;
 }
 
 .perfil-personal-card-text {
-    font-size: 18px !important;
-    line-height: 1.2 !important;
-    color: rgb(22, 75, 153) !important;
-    font-weight: normal !important;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #4a4a4a;
 }
 
-/* Texto específico dentro de la card */
 .perfil-personal-card-text strong {
     color: #007bff;
     font-weight: 600;
 }
-.perfil-personal-historial-card {
-    padding: 15px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+
+/* Estilo para las tarjetas del historial */
+.perfil-personal-historial {
+    margin-top: 40px;
 }
 
+.perfil-personal-historial-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.perfil-personal-historial-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-personal-historial-card-title {
+    color: #0056b3;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.perfil-personal-historial-card-text {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.perfil-personal-historial-card-text strong {
+    color: #007bff;
+}
+
+/* Espacio adicional para la sección del historial */
 .perfil-personal-mt-5 {
-    margin-top: 40px;
+    margin-top: 50px;
 }
