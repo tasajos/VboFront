@@ -255,8 +255,8 @@ function NavBar({ handleSignOut }) {
                <NavDropdown title="Voluntarios" id="navbarScrollingDropdownVoluntarios">
                     <NavDropdown.Item href="opervol">Operaciones</NavDropdown.Item>
                     <NavDropdown.Item href="pervol">Perfil</NavDropdown.Item>
-                    <NavDropdown.Item href="/operaciones/planificacion">Planificación de Operaciones</NavDropdown.Item>
-                    <NavDropdown.Item href="/operaciones/ejecucion">Ejecución de Operaciones</NavDropdown.Item>
+                    <NavDropdown.Item href="libroNove">Registro Libro de Novedades</NavDropdown.Item>
+                    <NavDropdown.Item href="libroNov">Informe Libro de Novedades</NavDropdown.Item>
                   </NavDropdown>
               </>
             )}
