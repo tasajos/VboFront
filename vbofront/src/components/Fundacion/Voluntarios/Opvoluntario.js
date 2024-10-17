@@ -95,7 +95,7 @@ function Opvoluntario() {
                   <Card.Title className="opvoluntario-card-title">{operacion.operacion}</Card.Title>
                   {/* Formateamos la fecha para que solo muestre DD/MM/AAAA */}
                   <Card.Subtitle className="mb-2 text-muted">
-                    {format(new Date(operacion.fechaOperacion), 'dd/MM/yyyy')}
+                    Fecha: {format(new Date(operacion.fechaOperacion), 'dd/MM/yyyy')}
                   </Card.Subtitle>
                   <Card.Text>
                     <strong>Estado:</strong> {operacion.estado} <br />
