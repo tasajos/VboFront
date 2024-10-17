@@ -138,10 +138,12 @@ function InformeLibroNovedades() {
             <div className="novedades-encabezado">
               <h3>Unidad: {unidad}</h3>
               <h4>Fecha: {`${selectedDay}/${selectedMonth}/${selectedYear}`}</h4>
+              
             </div>
             <div className="novedades-cuerpo">
               {novedades.map((novedad, index) => (
                 <div key={index} className="novedad-item">
+                  <p><strong>Turno:</strong> {novedad.turno}</p>
                   <h5>Oficial de Guardia: {novedad.oficialDeGuardia}</h5>
                   <p><strong>Voluntarios de Servicio:</strong></p>
                   <ul>
@@ -157,6 +159,7 @@ function InformeLibroNovedades() {
                       <li key={idx}>{nov.hora} - {nov.descripcion}</li>
                     ))}
                   </ul>
+                 
                   <p><strong>Firma:</strong> {novedad.firma}</p>
                 </div>
               ))}
