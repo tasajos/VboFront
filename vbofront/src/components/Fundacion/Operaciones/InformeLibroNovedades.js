@@ -4,6 +4,7 @@ import NavBar from '../../NavBar/navbar';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../firebase';
+import Form from 'react-bootstrap/Form';
 import './InformeLibroNovedades.css';
 
 function InformeLibroNovedades() {
@@ -81,68 +82,80 @@ function InformeLibroNovedades() {
   return (
     <div>
       <NavBar handleSignOut={handleSignOut} />
-      <div className="informe-libro-novedades-container">
-        <h2 className="informe-libro-novedades-header">Informe del Libro de Novedades</h2>
-        <div className="date-selector">
-          <label htmlFor="year">Seleccionar Año:</label>
-          <select
-            id="year"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="form-control"
-          >
-            <option value="">Seleccione un año</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            {/* Añade más opciones de año según sea necesario */}
-          </select>
+      <div className="container-fluid informe-libro-novedades-container">
+        <h2 className="informe-libro-novedades-header text-center">Informe del Libro de Novedades</h2>
 
-          <label htmlFor="month">Seleccionar Mes:</label>
-          <select
-            id="month"
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-            className="form-control"
-          >
-            <option value="">Seleccione un mes</option>
-            <option value="1">Enero</option>
-            <option value="2">Febrero</option>
-            <option value="3">Marzo</option>
-            <option value="4">Abril</option>
-            <option value="5">Mayo</option>
-            <option value="6">Junio</option>
-            <option value="7">Julio</option>
-            <option value="8">Agosto</option>
-            <option value="9">Septiembre</option>
-            <option value="10">Octubre</option>
-            <option value="11">Noviembre</option>
-            <option value="12">Diciembre</option>
-          </select>
+        <div className="row date-selector">
+          <div className="col-12 col-sm-4 mb-3">
+            <Form.Group>
+              <Form.Label>Seleccionar Año</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className="form-select"
+              >
+                <option value="">Seleccione un año</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+              </Form.Control>
+            </Form.Group>
+          </div>
 
-          <label htmlFor="day">Seleccionar Día:</label>
-          <select
-            id="day"
-            value={selectedDay}
-            onChange={(e) => setSelectedDay(e.target.value)}
-            className="form-control"
-          >
-            <option value="">Seleccione un día</option>
-            {selectedMonth && selectedYear && generateDays().map((day) => (
-              <option key={day} value={day}>{day}</option>
-            ))}
-          </select>
+          <div className="col-12 col-sm-4 mb-3">
+            <Form.Group>
+              <Form.Label>Seleccionar Mes</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(e.target.value)}
+                className="form-select"
+              >
+                <option value="">Seleccione un mes</option>
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+              </Form.Control>
+            </Form.Group>
+          </div>
+
+          <div className="col-12 col-sm-4 mb-3">
+            <Form.Group>
+              <Form.Label>Seleccionar Día</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedDay}
+                onChange={(e) => setSelectedDay(e.target.value)}
+                className="form-select"
+              >
+                <option value="">Seleccione un día</option>
+                {selectedMonth && selectedYear && generateDays().map((day) => (
+                  <option key={day} value={day}>{day}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          </div>
         </div>
+
         {novedades.length > 0 ? (
           <div className="novedades-hoja">
             <div className="novedades-encabezado">
               <h3>Unidad: {unidad}</h3>
               <h4>Fecha: {`${selectedDay}/${selectedMonth}/${selectedYear}`}</h4>
-              
             </div>
             <div className="novedades-cuerpo">
               {novedades.map((novedad, index) => (
-                <div key={index} className="novedad-item">
+                <div key={index} className="novedad-item mb-3 p-3 border rounded">
                   <p><strong>Turno:</strong> {novedad.turno}</p>
                   <h5>Oficial de Guardia: {novedad.oficialDeGuardia}</h5>
                   <p><strong>Voluntarios de Servicio:</strong></p>
@@ -159,7 +172,6 @@ function InformeLibroNovedades() {
                       <li key={idx}>{nov.hora} - {nov.descripcion}</li>
                     ))}
                   </ul>
-                 
                   <p><strong>Firma:</strong> {novedad.firma}</p>
                 </div>
               ))}
