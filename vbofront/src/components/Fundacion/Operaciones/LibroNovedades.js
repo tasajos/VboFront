@@ -215,7 +215,7 @@ function LibroDeNovedades() {
                                 <option value="">Seleccionar Oficial de Guardia</option>
                                 {listaVoluntarios.map((vol) => (
                                     <option key={vol.ci} value={vol.ci}>
-                                        {vol.grado} {vol.apellidoPaterno} {vol.apellidoMaterno}
+                                        {vol.grado} {vol.nombre} {vol.apellidoPaterno} {vol.apellidoMaterno}
                                     </option>
                                 ))}
                             </Form.Control>
@@ -306,7 +306,7 @@ function LibroDeNovedades() {
                                 <option value="">Seleccionar Firma</option>
                                 {listaVoluntarios.map((vol) => (
                                     <option key={vol.ci} value={vol.ci}>
-                                        {vol.grado} {vol.apellidoPaterno} {vol.apellidoMaterno}
+                                        {vol.grado} {vol.nombre}{vol.apellidoPaterno} {vol.apellidoMaterno}
                                     </option>
                                 ))}
                             </Form.Control>
