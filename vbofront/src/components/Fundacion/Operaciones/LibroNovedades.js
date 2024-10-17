@@ -13,7 +13,8 @@ import './LibroNovedades.css';
 
 function LibroDeNovedades() {
   const [fecha, setFecha] = useState(new Date());
-  const [turno, setTurno] = useState('mañana'); // Nuevo estado para el turno
+  const [turno, setTurno] = useState(''); // Estado para el turno seleccionado
+  const [turnosDisponibles, setTurnosDisponibles] = useState(['mañana', 'tarde', 'noche']); // Todos los turnos por defecto
   const [oficialDeGuardia, setOficialDeGuardia] = useState('');
   const [voluntariosServicio, setVoluntariosServicio] = useState([]);
   const [vehiculos, setVehiculos] = useState([]);
@@ -48,34 +49,38 @@ function LibroDeNovedades() {
 
   const handleDateChange = (date) => {
     setFecha(date);
-    verificarLibroCerrado(date, turno); // Incluimos el turno
+    verificarTurnosDisponibles(date); // Verificar qué turnos están disponibles al cambiar la fecha
   };
 
-  const verificarLibroCerrado = (fechaSeleccionada, turnoSeleccionado) => {
+  const verificarTurnosDisponibles = (fechaSeleccionada) => {
     const db = getDatabase();
     const fechaFormato = fechaSeleccionada ? fechaSeleccionada.toISOString().split('T')[0] : null;
     const libroNovedadesOficialRef = ref(db, `libroNovedadesOficial/${unidad}`);
 
     onValue(libroNovedadesOficialRef, (snapshot) => {
       const novedadesOficiales = snapshot.val();
-      const existeRegistroOficial = novedadesOficiales
-        ? Object.values(novedadesOficiales).some(novedad => {
+      const turnosCerrados = novedadesOficiales
+        ? Object.values(novedadesOficiales).reduce((cerrados, novedad) => {
             const fechaNovedad = new Date(novedad.fecha);
-            return (
-              !isNaN(fechaNovedad) &&
-              fechaNovedad.toISOString().split('T')[0] === fechaFormato &&
-              novedad.turno === turnoSeleccionado // Verificamos también el turno
-            );
-          })
-        : false;
+            if (!isNaN(fechaNovedad) && fechaNovedad.toISOString().split('T')[0] === fechaFormato) {
+              cerrados.push(novedad.turno); // Agregar el turno cerrado
+            }
+            return cerrados;
+          }, [])
+        : [];
 
-      if (existeRegistroOficial) {
-        setModalMessage(`El libro ya fue cerrado para el turno de ${turnoSeleccionado} en esta fecha.`);
-        setShowModal(true);
-        setFormVisible(false);
-      } else {
-        setFormVisible(true);
+      const turnosDisponibles = ['mañana', 'tarde', 'noche'].filter(t => !turnosCerrados.includes(t));
+      
+      setTurnosDisponibles(turnosDisponibles); // Actualizar el estado con los turnos disponibles
+
+      if (turnosDisponibles.length > 0) {
+        setFormVisible(true); // Mostrar formulario si hay turnos disponibles
+        setTurno(turnosDisponibles[0]); // Seleccionar el primer turno disponible por defecto
         cargarDatosTemporales();
+      } else {
+        setFormVisible(false); // Ocultar formulario si no hay turnos disponibles
+        setModalMessage('El libro de novedades ha sido cerrado para todos los turnos en esta fecha.');
+        setShowModal(true);
       }
     });
   };
@@ -137,7 +142,7 @@ function LibroDeNovedades() {
     const libroNovedadesTempRef = ref(db, `libroNovedadesTemporal/${auth.currentUser.uid}`);
     set(libroNovedadesTempRef, {
       fecha: fecha.toISOString(),
-      turno, // Guardamos el turno
+      turno,
       oficialDeGuardia,
       voluntariosServicio,
       vehiculos,
@@ -163,7 +168,7 @@ function LibroDeNovedades() {
     const libroNovedadesRef = push(ref(db, `libroNovedadesOficial/${unidad}`));
     set(libroNovedadesRef, {
       fecha: fecha.toISOString(),
-      turno, // Guardamos el turno
+      turno,
       oficialDeGuardia,
       voluntariosServicio,
       vehiculos,
@@ -219,9 +224,11 @@ function LibroDeNovedades() {
                 onChange={(e) => setTurno(e.target.value)}
                 disabled={isOficialGuardado}
               >
-                <option value="mañana">Mañana</option>
-                <option value="tarde">Tarde</option>
-                <option value="noche">Noche</option>
+                {turnosDisponibles.map((t, index) => (
+                  <option key={index} value={t}>
+                    {t.charAt(0).toUpperCase() + t.slice(1)}
+                  </option>
+                ))}
               </Form.Control>
             </Form.Group>
 

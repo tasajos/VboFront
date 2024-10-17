@@ -38,11 +38,11 @@ function InformeLibroNovedades() {
           });
 
           onValue(personalRef, (personalSnapshot) => {
-            const personalData = personalSnapshot.val();
+            const personalData = personalSnapshot.val() || {};
             const detailedNovedades = novedadesArray.map((novedad) => {
               const oficial = personalData[novedad.oficialDeGuardia] || {};
               const firmaData = personalData[novedad.firma] || {};
-              const voluntarios = novedad.voluntariosServicio.map((ci) => personalData[ci] || {});
+              const voluntarios = (novedad.voluntariosServicio || []).map((ci) => personalData[ci] || {});
 
               return {
                 ...novedad,
@@ -147,15 +147,15 @@ function InformeLibroNovedades() {
                   <h5>Oficial de Guardia: {novedad.oficialDeGuardia}</h5>
                   <p><strong>Voluntarios de Servicio:</strong></p>
                   <ul>
-                    {novedad.voluntariosServicio.map((voluntario, idx) => (
+                    {(novedad.voluntariosServicio || []).map((voluntario, idx) => (
                       <li key={idx}>{voluntario.numero}. {voluntario.detalle}</li>
                     ))}
                   </ul>
-                  <p><strong>Vehículos:</strong> {novedad.vehiculos.join(', ')}</p>
+                  <p><strong>Vehículos:</strong> {(novedad.vehiculos || []).join(', ')}</p>
                   <p><strong>Inventario:</strong> {novedad.inventario}</p>
                   <p><strong>Novedades:</strong></p>
                   <ul>
-                    {novedad.novedades.map((nov, idx) => (
+                    {(novedad.novedades || []).map((nov, idx) => (
                       <li key={idx}>{nov.hora} - {nov.descripcion}</li>
                     ))}
                   </ul>
