@@ -48,6 +48,17 @@ function PerfilPersonal() {
     return () => unsubscribe();
   }, []);
 
+  // Función para obtener el último valor no vacío de un campo específico del historial
+  const getLastValue = (historial, field) => {
+    // Recorremos el historial de forma inversa para obtener el último valor no vacío
+    for (let i = historial.length - 1; i >= 0; i--) {
+      if (historial[i][field]) {
+        return historial[i][field];
+      }
+    }
+    return 'N/A'; // Si no encuentra ningún valor válido, retorna 'N/A'
+  };
+
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -84,7 +95,7 @@ function PerfilPersonal() {
                     <strong>Apellido Materno:</strong> {personalData.apellidoMaterno} <br />
                     <strong>Teléfono:</strong> {personalData.telefono} <br />
                     <strong>Correo:</strong> {personalData.correo} <br />
-                    <strong>Grado:</strong> {personalData.grado || 'N/A'} <br />
+                    <strong>Grado:</strong> {personalData.grado || getLastValue(historial, 'grado')} <br />
                     <strong>Codigo:</strong> {personalData.codigo || 'N/A'} <br />
                     <strong>Tipo de Sangre:</strong> {personalData.tipoSangre || 'N/A'}
                   </Card.Text>
@@ -103,11 +114,10 @@ function PerfilPersonal() {
                     <Card.Title>{entry.descripcion}</Card.Title>
                     <Card.Text>
                       <strong>Fecha:</strong> {format(new Date(entry.fecha), 'dd/MM/yyyy')} <br />
-                      <strong>Estado:</strong> {entry.estado} <br />
-                      <strong>Tipo Memo:</strong> {entry.tipoMemo} <br />
-                      <strong>Grado:</strong> {entry.grado} <br />
-                      <strong>Motivo:</strong> {entry.motivo} <br />
-                      
+                      <strong>Estado:</strong> {entry.estado || getLastValue(historial, 'estado')} <br />
+                      <strong>Tipo Memo:</strong> {entry.tipoMemo || getLastValue(historial, 'tipoMemo')} <br />
+                      <strong>Grado:</strong> {entry.grado || getLastValue(historial, 'grado')} <br />
+                      <strong>Motivo:</strong> {entry.motivo || 'No especificado'} <br />
                       <strong>Autorizado por:</strong> {entry.autorizadoPor || 'No especificado'}
                     </Card.Text>
                   </Card.Body>
