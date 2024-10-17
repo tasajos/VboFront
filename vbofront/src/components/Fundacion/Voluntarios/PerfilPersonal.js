@@ -7,9 +7,11 @@ import { onAuthStateChanged } from 'firebase/auth';
 import './PerfilPersonal.css';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns'; // Para formatear fechas
 
 function PerfilPersonal() {
   const [personalData, setPersonalData] = useState(null);
+  const [historial, setHistorial] = useState([]); // Estado para almacenar el historial
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -27,24 +29,25 @@ function PerfilPersonal() {
 
           if (foundPersonal) {
             setPersonalData(foundPersonal);
+            setHistorial(foundPersonal.historial || []); // Cargamos el historial desde Firebase
             setError('');
           } else {
             setPersonalData(null);
+            setHistorial([]); // Si no hay historial, inicializamos como vacío
             setError('No se encontró un registro para este usuario.');
           }
         });
       } else {
         setError('No se ha autenticado ningún usuario.');
         setPersonalData(null);
+        setHistorial([]); // Limpia el historial si no hay usuario autenticado
       }
     });
 
     // Limpiar la suscripción cuando el componente se desmonte
     return () => unsubscribe();
-  },
-  
-  
-  []);
+  }, []);
+
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -57,7 +60,7 @@ function PerfilPersonal() {
 
   return (
     <div>
-    <NavBar handleSignOut={handleSignOut} />
+      <NavBar handleSignOut={handleSignOut} />
       <div className="perfil-personal-container">
         <div className="perfil-personal-wrapper">
           <h2 className="perfil-personal-text-center perfil-personal-mb-4">Perfil Personal</h2>
@@ -88,6 +91,31 @@ function PerfilPersonal() {
                 </div>
               </Card.Body>
             </Card>
+          )}
+
+          {/* Mostrar el historial del usuario en tarjetas */}
+          <h3 className="perfil-personal-text-center perfil-personal-mt-5">Historial</h3>
+          {historial.length > 0 ? (
+            <div className="perfil-personal-historial">
+              {historial.map((entry, index) => (
+                <Card key={index} className="perfil-personal-historial-card mb-3">
+                  <Card.Body>
+                    <Card.Title>{entry.descripcion}</Card.Title>
+                    <Card.Text>
+                      <strong>Fecha:</strong> {format(new Date(entry.fecha), 'dd/MM/yyyy')} <br />
+                      <strong>Estado:</strong> {entry.estado} <br />
+                      <strong>Tipo Memo:</strong> {entry.tipoMemo} <br />
+                      <strong>Grado:</strong> {entry.grado} <br />
+                      <strong>Motivo:</strong> {entry.motivo} <br />
+                      
+                      <strong>Autorizado por:</strong> {entry.autorizadoPor || 'No especificado'}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center">No se encontró historial para este usuario.</p>
           )}
         </div>
       </div>

@@ -102,6 +102,7 @@ function Opvoluntario() {
                     <strong>Autorizado por:</strong> {operacion.autorizadoPor} <br />
                     <strong>Observaciones:</strong> {operacion.observaciones}
                   </Card.Text>
+                 {/*
                   <div className="opvoluntario-card-actions">
                     <Button variant="link">
                       <FaThumbsUp /> Me gusta
@@ -113,6 +114,7 @@ function Opvoluntario() {
                       <FaShare /> Compartir
                     </Button>
                   </div>
+                  */}
                 </Card.Body>
               </Card>
             ))}

@@ -3,6 +3,7 @@
     background-color: #ffffff;
     padding: 20px;
     min-height: 100vh;
+    margin-top: 20px;
 }
 
 .perfil-personal-wrapper {
@@ -64,4 +65,13 @@
 .perfil-personal-card-text strong {
     color: #007bff;
     font-weight: 600;
+}
+.perfil-personal-historial-card {
+    padding: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.perfil-personal-mt-5 {
+    margin-top: 40px;
 }
