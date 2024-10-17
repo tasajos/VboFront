@@ -13,6 +13,7 @@ import { auth } from '../../../firebase';
 function Opvoluntario() {
   const [operaciones, setOperaciones] = useState([]);
   const [usuario, setUsuario] = useState(null);
+  const [ciUsuario, setCiUsuario] = useState(null); // Guardar el CI del usuario
   const [showModal, setShowModal] = useState(true); // Modal para pedir la contraseña
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -40,25 +41,41 @@ function Opvoluntario() {
         await reauthenticateWithCredential(user, credential);
         setUsuario(user);
         setShowModal(false); // Cerrar el modal al autenticar correctamente
-        cargarOperaciones(user);
+        cargarCiUsuario(user); // Cargar CI del usuario antes de buscar las operaciones
       } catch (error) {
         setErrorMessage('Error de autenticación. Por favor, verifica tu contraseña.');
       }
     }
   };
 
-  // Cargar operaciones del usuario autenticado
-  const cargarOperaciones = (user) => {
-    if (user) {
-      const db = getDatabase();
-      const operacionesRef = ref(db, `fundacion/personal/${user.uid}/operaciones`);
+  // Cargar el CI del usuario autenticado
+  const cargarCiUsuario = (user) => {
+    const db = getDatabase();
+    const personalRef = ref(db, `fundacion/personal`);
 
-      onValue(operacionesRef, (snapshot) => {
-        const data = snapshot.val();
-        const operacionesArray = data ? Object.values(data) : [];
-        setOperaciones(operacionesArray);
-      });
-    }
+    // Buscamos en la base de datos por el correo electrónico o UID del usuario para obtener su CI
+    onValue(personalRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const usuarioData = Object.values(data).find((personal) => personal.correo === user.email);
+        if (usuarioData) {
+          setCiUsuario(usuarioData.ci); // Guardamos el CI del usuario encontrado
+          cargarOperaciones(usuarioData.ci); // Cargamos las operaciones basadas en el CI
+        }
+      }
+    });
+  };
+
+  // Cargar operaciones del usuario autenticado por CI
+  const cargarOperaciones = (ci) => {
+    const db = getDatabase();
+    const operacionesRef = ref(db, `fundacion/personal/${ci}/operaciones`);
+
+    onValue(operacionesRef, (snapshot) => {
+      const data = snapshot.val();
+      const operacionesArray = data ? Object.values(data) : [];
+      setOperaciones(operacionesArray);
+    });
   };
 
   useEffect(() => {
