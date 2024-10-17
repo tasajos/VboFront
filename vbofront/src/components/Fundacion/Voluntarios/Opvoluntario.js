@@ -6,6 +6,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { FaThumbsUp, FaComment, FaShare } from 'react-icons/fa'; // Añadir iconos
+import { format } from 'date-fns'; // Importamos la función de formateo de fecha
 import './Opvoluntario.css';
 import NavBar from '../../NavBar/navbar';
 import { auth } from '../../../firebase';
@@ -13,24 +15,21 @@ import { auth } from '../../../firebase';
 function Opvoluntario() {
   const [operaciones, setOperaciones] = useState([]);
   const [usuario, setUsuario] = useState(null);
-  const [ciUsuario, setCiUsuario] = useState(null); // Guardar el CI del usuario
-  const [showModal, setShowModal] = useState(true); // Modal para pedir la contraseña
+  const [ciUsuario, setCiUsuario] = useState(null);
+  const [showModal, setShowModal] = useState(true);
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  // Función para cerrar sesión
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      navigate('/signin'); // Redirigir al iniciar sesión
-      console.log('Sesión cerrada');
+      navigate('/signin');
     } catch (error) {
       console.error('Error al cerrar sesión', error);
     }
   };
 
-  // Manejo del envío del formulario de reautenticación
   const handleReauthenticate = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -40,33 +39,30 @@ function Opvoluntario() {
       try {
         await reauthenticateWithCredential(user, credential);
         setUsuario(user);
-        setShowModal(false); // Cerrar el modal al autenticar correctamente
-        cargarCiUsuario(user); // Cargar CI del usuario antes de buscar las operaciones
+        setShowModal(false);
+        cargarCiUsuario(user);
       } catch (error) {
         setErrorMessage('Error de autenticación. Por favor, verifica tu contraseña.');
       }
     }
   };
 
-  // Cargar el CI del usuario autenticado
   const cargarCiUsuario = (user) => {
     const db = getDatabase();
     const personalRef = ref(db, `fundacion/personal`);
 
-    // Buscamos en la base de datos por el correo electrónico o UID del usuario para obtener su CI
     onValue(personalRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         const usuarioData = Object.values(data).find((personal) => personal.correo === user.email);
         if (usuarioData) {
-          setCiUsuario(usuarioData.ci); // Guardamos el CI del usuario encontrado
-          cargarOperaciones(usuarioData.ci); // Cargamos las operaciones basadas en el CI
+          setCiUsuario(usuarioData.ci);
+          cargarOperaciones(usuarioData.ci);
         }
       }
     });
   };
 
-  // Cargar operaciones del usuario autenticado por CI
   const cargarOperaciones = (ci) => {
     const db = getDatabase();
     const operacionesRef = ref(db, `fundacion/personal/${ci}/operaciones`);
@@ -82,7 +78,7 @@ function Opvoluntario() {
     const user = auth.currentUser;
     if (user) {
       setUsuario(user);
-      setShowModal(true); // Mostrar modal para reautenticar
+      setShowModal(true);
     }
   }, []);
 
@@ -94,15 +90,29 @@ function Opvoluntario() {
         {operaciones.length > 0 ? (
           <div className="opvoluntario-cards">
             {operaciones.map((operacion, index) => (
-              <Card key={index} className="mb-3">
+              <Card key={index} className="opvoluntario-card mb-4 shadow-sm">
                 <Card.Body>
-                  <Card.Title>{operacion.operacion}</Card.Title>
+                  <Card.Title className="opvoluntario-card-title">{operacion.operacion}</Card.Title>
+                  {/* Formateamos la fecha para que solo muestre DD/MM/AAAA */}
+                  <Card.Subtitle className="mb-2 text-muted">
+                    {format(new Date(operacion.fechaOperacion), 'dd/MM/yyyy')}
+                  </Card.Subtitle>
                   <Card.Text>
-                    <strong>Fecha:</strong> {operacion.fechaOperacion} <br />
                     <strong>Estado:</strong> {operacion.estado} <br />
                     <strong>Autorizado por:</strong> {operacion.autorizadoPor} <br />
                     <strong>Observaciones:</strong> {operacion.observaciones}
                   </Card.Text>
+                  <div className="opvoluntario-card-actions">
+                    <Button variant="link">
+                      <FaThumbsUp /> Me gusta
+                    </Button>
+                    <Button variant="link">
+                      <FaComment /> Comentar
+                    </Button>
+                    <Button variant="link">
+                      <FaShare /> Compartir
+                    </Button>
+                  </div>
                 </Card.Body>
               </Card>
             ))}

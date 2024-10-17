@@ -1,24 +1,47 @@
 .opvoluntario-container {
-    margin: 20px;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
   }
   
   .opvoluntario-header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #333;
   }
   
   .opvoluntario-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
   
   .opvoluntario-card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
   }
   
-  .mt-3 {
-    margin-top: 1rem;
+  .opvoluntario-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d7ca0;
+  }
+  
+  .opvoluntario-card-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+  
+  .opvoluntario-card-actions button {
+    color: #2d7ca0;
+    font-size: 0.9rem;
+    padding: 5px;
+  }
+  
+  .opvoluntario-card-actions button:hover {
+    text-decoration: underline;
   }
   
