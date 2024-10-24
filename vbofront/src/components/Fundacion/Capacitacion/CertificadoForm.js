@@ -179,7 +179,7 @@ Font.register({
 
   const styles = StyleSheet.create({
     page: {
-      padding: 30,
+      padding: 20, // Reduce el padding para aprovechar mejor el espacio
       fontSize: 12,
       backgroundColor: '#ffffff',
       flexDirection: 'column',
@@ -188,32 +188,32 @@ Font.register({
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginBottom: 20,
+      marginBottom: 10, // Reduce el margen inferior
     },
     logo: {
       width: 60,
       height: 60,
     },
     title: {
-      fontSize: 16,
+      fontSize: 18, // Puedes ajustar el tamaño si es necesario
       fontFamily: 'Roboto',
       textAlign: 'center',
-      margin: 20,
-      fontWeight:'bold'
+      marginBottom: 15, // Reduce los márgenes verticales
+      fontWeight: 'bold',
     },
     code: {
-      fontSize: 12,
+      fontSize: 10, // Ajusta el tamaño del código
       textAlign: 'right',
       position: 'absolute',
-      bottom: 30,
-      right: 30,
+      bottom: 20, // Reduce el espacio al final
+      right: 20,
     },
     subtitle: {
-      fontSize: 15,
+      fontSize: 14,
       textAlign: 'center',
-      marginBottom: 10,
-       fontFamily: 'Montserrat',
-       fontWeight:300
+      marginBottom: 5,
+      fontFamily: 'Montserrat',
+      fontWeight: 300,
     },
     participantName: {
       fontSize: 16,
@@ -221,34 +221,37 @@ Font.register({
       marginBottom: 10,
       textTransform: 'uppercase',
       fontFamily: 'Roboto',
-      
     },
     text: {
-      fontSize: 14,
+      fontSize: 13, // Ajusta el tamaño para mantener todo en una página
       textAlign: 'center',
       marginBottom: 5,
-       fontFamily: 'Montserrat'
+      fontFamily: 'Montserrat',
     },
     certificateBody: {
-      marginTop: 30,
-      fontSize: 14,
+      marginTop: 20, // Reduce el margen superior
+      fontSize: 12, // Ajusta el tamaño para una sola página
       textAlign: 'center',
-      marginBottom: 30,
-      fontFamily: 'Roboto'
+      marginBottom: 20,
+      fontFamily: 'Roboto',
     },
     signature: {
       fontSize: 14,
       textAlign: 'center',
-      marginTop: 70,
-      marginBottom: 10,
-      fontFamily: 'Roboto',
-      textTransform: 'uppercase',
+      marginTop: 40, // Ajusta el espacio sobre la firma
+      alignItems: 'center', // Centra la firma
+    },
+    signatureImage: {
+      height: 'auto', // Ajusta el tamaño de la imagen
+      width: 150,
+      marginBottom: 5, // Ajusta el margen inferior
+      textAlign: 'center' // Asegura que la imagen esté centrada
     },
     footer: {
-      fontSize: 12,
+      fontSize: 10,
       textAlign: 'center',
-      marginTop: 50,
-       fontFamily: 'Roboto'
+      marginTop: 30, // Ajusta el espacio en el pie de página
+      fontFamily: 'Roboto',
     },
   });
 
