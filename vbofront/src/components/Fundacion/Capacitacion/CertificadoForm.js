@@ -134,9 +134,16 @@ Font.register({
         <Text style={styles.text}>MODALIDAD: {certificate.modalidad}</Text>
         <Text style={styles.certificateBody}>{certificate.cuerpoCertificado}</Text>
         <Text style={styles.text}>CON UNA CARGA HORARIA DE:{certificate.horasAcademicas} HORAS ACADÉMICAS</Text>
+        <br></br>
         <View style={styles.signature}>
           {signature && <Image style={styles.signatureImage} src={signature} />}
+          <br></br>
+          <br></br>
+          <p></p>
           <Text>{certificate.instructorPrincipal}</Text>
+          <br></br>
+          <br></br>
+          <p></p>
           <br></br>
           <br></br>
           <p></p>
@@ -232,7 +239,8 @@ Font.register({
     signature: {
       fontSize: 14,
       textAlign: 'center',
-      marginTop: 30,
+      marginTop: 70,
+      marginBottom: 10,
       fontFamily: 'Roboto',
       textTransform: 'uppercase',
     },
